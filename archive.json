@@ -1,0 +1,2122 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2024-03-12T00:44:33.133018+00:00",
+  "repo": "peppelinux/draft-demarco-oauth-status-attestations",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    },
+    {
+      "name": "out-of-scope",
+      "description": "",
+      "color": "E6C656"
+    }
+  ],
+  "issues": [
+    {
+      "number": 3,
+      "id": "I_kwDOK4XJ0s5-J5yj",
+      "title": "Credential jwt in the status attestation request",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/3",
+      "state": "CLOSED",
+      "author": "fmarino-ipzs",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "fmarino-ipzs"
+      ],
+      "labels": [],
+      "body": "For privacy and security reasons, we should remove the credential jwt from the status attestation request. \nThe credential_pop value should be a unique identifier of the credential, for example the hash value of the credential.\nThe credential issuer is able to get the credential from the hash value, check the status and return the status attestation. ",
+      "createdAt": "2024-02-03T15:11:07Z",
+      "updatedAt": "2024-02-23T17:47:38Z",
+      "closedAt": "2024-02-23T17:47:38Z",
+      "comments": [
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "If we proceed with the approach of not accessing the credential in secure storage (thus not requiring user consent), the unique identifier would not be derived from the credential attributes. This means there could be JWTs without a jti or other credential formats lacking unique identifiers. \r\n\r\nConsequently, to uniquely identify a credential, it would be necessary to use a hash of the credential itself. For a JWT, this would involve hashing the JWT; for an mDoc in CBOR format, it would involve hashing its base64 representation, and so forth.",
+          "createdAt": "2024-02-03T15:16:02Z",
+          "updatedAt": "2024-02-03T22:49:39Z"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "id": "I_kwDOK4XJ0s5-io_4",
+      "title": "todo: privacy considerations section",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/4",
+      "state": "CLOSED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "peppelinux"
+      ],
+      "labels": [],
+      "body": "it is really required and also requested be ppl from the IETF ML",
+      "createdAt": "2024-02-07T13:13:09Z",
+      "updatedAt": "2024-02-14T14:08:32Z",
+      "closedAt": "2024-02-14T14:08:31Z",
+      "comments": [
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "> IMO, neither the \"Token Status List\", nor to the \"OAuth Status Attestations\" are the right way to address two privacy considerations: \"Unlinkability between verifiers\" and \"Untrackability by digital credential issuers\".\r\n\r\nhere my notes\r\n\r\n**Unlinkability between verifiers**\r\nStatus Attestations are designed to be privacy-preserving by not requiring verifiers to gather any additional information from third-party entities. This means that each verifier independently verifies the status of a digital credential, though the status attestation, without needing to interact with or reveal information to other verifiers or third-party status list providers. This approach ensures that actions performed by one verifier cannot be linked to actions performed by another verifier, maintaining unlinkability between them.\r\n\r\n**Untrackability by digital credential issuers**\r\nSince Status Attestations can be verified statically without further communication with the credential issuer or any other party, the issuer cannot track when or where the digital credential is being verified. This is in contrast to models where the verifier must query a central status list or the issuer directly, which would allow the issuer to track the usage of the digital credential. By providing all necessary information within the Status Attestation itself, it ensures that the issuer cannot track the verification activities related to a specific digital credential.",
+          "createdAt": "2024-02-07T13:40:31Z",
+          "updatedAt": "2024-02-07T13:40:42Z"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOK4XJ0s5-ipmt",
+      "title": "Change draft name",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/5",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "> it would be good to avoid the term \"attestations\" because it is already used for a different purpose (in the IETF).\r\n\r\nCould it be \"status tokens\" or \"status assertions\"?",
+      "createdAt": "2024-02-07T13:14:29Z",
+      "updatedAt": "2024-02-29T09:52:33Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "What about Status Evidence?\r\n\r\nThis would be close to the Wallet Trust Evidence we have for eIDAS",
+          "createdAt": "2024-02-20T11:43:26Z",
+          "updatedAt": "2024-02-20T11:43:26Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I suggest we have a chat with RATS about this... they use these terms a lot, and will be very unhappy if we do not attempt to foster alignment... as will I : )",
+          "createdAt": "2024-02-28T14:43:29Z",
+          "updatedAt": "2024-02-28T14:43:29Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "NONE",
+          "body": "\"status assertions\" seems reasonably good/appropriate here. The term \"attestation\" is just quite popular right now and carries some assumptions/connotations due to wide use in a different context. The term \"assertion\" is overloaded too (as are most terms) but less problematically so. And I think \"assertion\" does nicely convey the intent. ",
+          "createdAt": "2024-02-28T17:46:07Z",
+          "updatedAt": "2024-02-28T17:46:07Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "I suddenly realized that \"status $something\" misses the subject, the name would therefore be \"Digital Credential Status Assertions\"\r\n\r\nThis specification excludes its use with traditional OAuth 2.0/OIDC tokens. While the OAuth Status List shares some similarities, the OAuth 2.0 Introspection endpoint is deemed sufficient for such tokens due to several key differences:\r\n\r\n- **Interaction**: Parties interact differently in the context of traditional tokens compared to this specification.\r\n- **Privacy**: Distinct privacy requirements apply to each scenario.\r\n- **Offline usage**: Offline use cases, which necessitate this specification, are not a requirement for legacy infrastructures utilizing traditional tokens.",
+          "createdAt": "2024-02-29T09:52:21Z",
+          "updatedAt": "2024-02-29T09:52:33Z"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "id": "I_kwDOK4XJ0s5_BrbI",
+      "title": "Error Codes",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/7",
+      "state": "CLOSED",
+      "author": "fmarino-ipzs",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "peppelinux"
+      ],
+      "labels": [],
+      "body": "If the Status Attestation is requested for a non-existent, expired, revoked, or invalid Digital Credential, or the HTTP Request is not valid (missing or invalid parameters) the Credential Issuer MUST respond with an HTTP Response including the following parameters:\r\n\r\n- error: The proper error code\r\n- error_description: Human-readable text providing additional information, used to assist the Wallet Instance in understanding the error that occurred (e.g. some attributes are changed, revocation reason, etc.)\r\n\r\n```\r\n HTTP/1.1 400 Bad Request\r\n     Content-Type: application/json;charset=UTF-8\r\n     Cache-Control: no-store\r\n     Pragma: no-cache\r\n\r\n     {\r\n       \"error\":\"invalid_request\"\r\n       \"error_description\": \"The signature of credential_pop JWT is not valid\"\r\n     }\r\n```\r\n\r\nIt could be useful to add an error code section.",
+      "createdAt": "2024-02-12T23:06:15Z",
+      "updatedAt": "2024-02-14T14:04:11Z",
+      "closedAt": "2024-02-14T14:04:11Z",
+      "comments": []
+    },
+    {
+      "number": 11,
+      "id": "I_kwDOK4XJ0s5_H--N",
+      "title": "Define Proof of Possession of a Credential",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/11",
+      "state": "CLOSED",
+      "author": "OR13",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "peppelinux"
+      ],
+      "labels": [],
+      "body": "Does it mean just having the bytes?\r\n\r\nDoes it mean having the bytes, and controlling a private key for use with `cnf` ?",
+      "createdAt": "2024-02-13T17:13:00Z",
+      "updatedAt": "2024-02-28T14:08:09Z",
+      "closedAt": "2024-02-28T14:08:08Z",
+      "comments": []
+    },
+    {
+      "number": 13,
+      "id": "I_kwDOK4XJ0s5_NVbM",
+      "title": "implementation requirement",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/13",
+      "state": "CLOSED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "when the VCI issues a credential it must store an hash for the comparison when the status attestation request happen",
+      "createdAt": "2024-02-14T12:01:09Z",
+      "updatedAt": "2024-02-23T17:47:38Z",
+      "closedAt": "2024-02-23T17:47:38Z",
+      "comments": []
+    },
+    {
+      "number": 14,
+      "id": "I_kwDOK4XJ0s5_ONSn",
+      "title": "extended error codes",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/14",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "For the sake of clarity, I explicitly would provide a list of error codes that are useful in this specification. For example, it is not clear how to handle the case of an error response due to a Credential revocation. I don't see a clear error code in the RFC6749 that is clear for this scenario. We could put this in an issue and postpone this discussion if you want.\r\n\r\n_Originally posted by @fmarino-ipzs in https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/10#discussion_r1489337287_\r\n            ",
+      "createdAt": "2024-02-14T14:03:32Z",
+      "updatedAt": "2024-02-14T14:03:32Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 15,
+      "id": "I_kwDOK4XJ0s5_OPc6",
+      "title": "editorial - privacy considerations",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/15",
+      "state": "CLOSED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "from \r\n```\r\nThese privacy considerations are integral to the design of Status Attestations \r\nand reflect a deliberate effort to balance security and privacy needs in the \r\ndigital credential ecosystem. By adhering to these principles, Status Attestations \r\ncontribute to a more secure and privacy-respecting digital world.\r\n````\r\nto\r\n```\r\nStatus Attestations are based on a privacy-by-design approach, reflecting a \r\ndeliberate effort to balance security and privacy needs in the digital credential ecosystem.\r\n```\r\n\r\n_Originally posted by @fmarino-ipzs in https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/9#discussion_r1489361569_\r\n            ",
+      "createdAt": "2024-02-14T14:08:13Z",
+      "updatedAt": "2024-02-28T20:47:04Z",
+      "closedAt": "2024-02-28T20:47:03Z",
+      "comments": []
+    },
+    {
+      "number": 16,
+      "id": "I_kwDOK4XJ0s6AMWMS",
+      "title": "IANA named hash registry, and make sha-256 mandatory to implement.",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/16",
+      "state": "CLOSED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "lets use the IANA named hash registry, and make sha-256 mandatory to implement.\r\n\r\nhttps://www.iana.org/assignments/named-information/named-information.xhtml#hash-alg\r\n\r\nAlternatively, we can use the cose registry which includes hash algorithms:\r\n\r\nhttps://www.iana.org/assignments/cose/cose.xhtml#algorithms\r\n\r\nthe \"COSE\" style for this kind of thing would be:\r\n\r\n```\r\ncredential_hash: [alg, hash]\r\n```\r\n\r\n_Originally posted by @OR13 in https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/6#discussion_r1487916459_\r\n            ",
+      "createdAt": "2024-02-23T09:40:49Z",
+      "updatedAt": "2024-02-23T17:47:38Z",
+      "closedAt": "2024-02-23T17:47:37Z",
+      "comments": [
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "see also https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/6#discussion_r1487918496",
+          "createdAt": "2024-02-23T09:42:19Z",
+          "updatedAt": "2024-02-23T09:42:19Z"
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "id": "I_kwDOK4XJ0s6AQ42s",
+      "title": "credential_pop kid",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/19",
+      "state": "OPEN",
+      "author": "fmarino-ipzs",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We should generalize the key identifier by adding:\r\n\r\n- jwk\r\n- x5c\r\n\r\nOnly one of them MUST be used. ",
+      "createdAt": "2024-02-23T22:39:25Z",
+      "updatedAt": "2024-02-28T14:23:20Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Not info info on this issue to fully follow the request.\r\n\r\nwhen using `cnf` claim in the COSE or JOSE Payload, typically you would have:\r\n\r\nMUST support `\"cnf\": { \"jwk\": ...}}`\r\nMAY support `\"cnf\": { \"kid\": ...}}`\r\n\r\nWhen referring to the issuer's signing keys for the credential in the protected header, typically you would have:\r\n\r\nMUST support `\"kid\":  ...`\r\nMAY support `\"x5t\":  ...`\r\nMAY support `\"jwk\":  ...`\r\n\r\nI would not recommend `x5c`  in protected headers at this point, for new specs.",
+          "createdAt": "2024-02-28T14:16:15Z",
+          "updatedAt": "2024-02-28T14:16:15Z"
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "id": "I_kwDOK4XJ0s6ARKN9",
+      "title": "credential_pop typ",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/20",
+      "state": "OPEN",
+      "author": "fmarino-ipzs",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "peppelinux"
+      ],
+      "labels": [],
+      "body": "The credential_pop is a JWT. I would consider `typ` as OPTIONAL and value it with `jwt`.\r\nIf omitted by default it is assumed to be `jwt`.",
+      "createdAt": "2024-02-24T00:16:16Z",
+      "updatedAt": "2024-03-11T07:59:50Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We might consider addressing the CWT case at the same time here.\r\n\r\nIts against the JWT BCP to omit typ at this point: https://datatracker.ietf.org/doc/html/rfc8725#name-use-explicit-typing\r\n\r\nI'd propose the following:\r\n\r\ncredential_pop MUST be a JWT or CWT.\r\n\r\nThe typ protected header parameter SHOULD be \"kb+jwt\" or \"kb+cwt\".\r\n\r\n",
+          "createdAt": "2024-02-28T14:11:20Z",
+          "updatedAt": "2024-02-28T14:11:20Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "I and @fmarino-ipzs agreed with you, please open a PR if possibile\r\n\r\nthis issue is tagged under the milestone 01",
+          "createdAt": "2024-02-28T14:22:30Z",
+          "updatedAt": "2024-02-28T14:22:30Z"
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "id": "I_kwDOK4XJ0s6AtPRa",
+      "title": "Define Mechanism for Verifiers to Request Fresh Status Attestations",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/22",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [
+        "enhancement",
+        "wontfix",
+        "out-of-scope"
+      ],
+      "body": "In the current implementation of the Status Attestation process, there is a need to introduce a mechanism that allows verifiers to specify how recent (in minutes) a Status Attestation needs to be. This requirement stems from scenarios where the verifier of a digital credential necessitates the Status Attestation to be exceptionally fresh to ensure the highest level of accuracy and security.\r\n\r\nTo accommodate this, we propose the development of a feature within the Status Attestation request protocol that enables verifiers to indicate a maximum age (N minutes) for the Status Attestation. This will ensure that the attestation provided is no older than the specified timeframe, meeting the verifier's requirements for freshness.\r\n\r\nThis feature necessitates the Wallet Instance to have an active internet connection to obtain the most up-to-date Status Attestation from the Credential Issuer, as per the verifier's request. \r\n\r\nThis information should be statically provided, per credential type, within the presentation request or within the presentation definition in the verifier's metadata.",
+      "createdAt": "2024-02-28T16:21:03Z",
+      "updatedAt": "2024-02-29T09:35:03Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "This is out of scope for this draft, just an issue for our awareness related to RP's requirements and claims",
+          "createdAt": "2024-02-28T20:47:53Z",
+          "updatedAt": "2024-02-28T20:47:53Z"
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "id": "I_kwDOK4XJ0s6AyvFE",
+      "title": "aud parameter in credential_pop",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/23",
+      "state": "CLOSED",
+      "author": "fmarino-ipzs",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "`aud` parameter should be set to the endpoint at which the credential_pop is used. ",
+      "createdAt": "2024-02-29T09:19:33Z",
+      "updatedAt": "2024-03-04T15:37:20Z",
+      "closedAt": "2024-03-04T15:37:20Z",
+      "comments": [
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "Already there\r\nhttps://github.com/peppelinux/draft-demarco-oauth-status-attestations/blob/main/draft-demarco-oauth-status-attestations.md?plain=1#L316",
+          "createdAt": "2024-02-29T09:34:29Z",
+          "updatedAt": "2024-02-29T09:34:29Z"
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "id": "I_kwDOK4XJ0s6BvULj",
+      "title": "Need privacy considerations for issuer tracking",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/26",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Requiring continuous credential pop from a wallet so a status attestation is available also impacts holder privacy.\r\n\r\nThere should be privacy considerations that compare the trade offs associated this approach when compared to requesting status lists anonymously",
+      "createdAt": "2024-03-08T19:41:14Z",
+      "updatedAt": "2024-03-08T19:41:14Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOK4XJ0s5hyqCy",
+      "title": "Editorial Revision",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/1",
+      "state": "MERGED",
+      "author": "asharif1990",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-12-12T13:11:45Z",
+      "updatedAt": "2023-12-12T15:42:31Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "7d5de6ace0457c8275377a97406550aa5ddc88c5",
+      "headRepository": "asharif1990/draft-demarco-status-attestations",
+      "headRefName": "revision",
+      "headRefOid": "c88a6f0e1b7056ac6aaeea596377f709a490c1f2",
+      "closedAt": "2023-12-12T15:42:31Z",
+      "mergedAt": "2023-12-12T15:42:31Z",
+      "mergedBy": "peppelinux",
+      "mergeCommit": {
+        "oid": "8c668103f2c6fc0aad9268948e07cdd62d9da07f"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s5p8csk",
+          "commit": {
+            "abbreviatedOid": "9059880"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2023-12-12T13:20:04Z",
+          "updatedAt": "2023-12-12T13:22:37Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "@asharif1990 I used the defined terms after their definition, withing the dedicated section.\r\n\r\nAbstract and introduction sections doesn't define nothing\r\n\r\nI'm available to merge these but I'd like to ask you to get informed from other authors about this before merging",
+              "createdAt": "2023-12-12T13:20:04Z",
+              "updatedAt": "2023-12-12T13:22:37Z"
+            },
+            {
+              "originalPosition": 80,
+              "body": "here we don't have the definition of Digital Credentials for example",
+              "createdAt": "2023-12-12T13:20:43Z",
+              "updatedAt": "2023-12-12T13:22:37Z"
+            },
+            {
+              "originalPosition": 346,
+              "body": "it is a SHOULD since a RP may check the revocation or not, depending by different factors.\r\n\r\nthere are some credentials that even if expired doesn't mean that are not usable, eg: age over.\r\n\r\nthen for RP's viewpoint it is a SHOULD and not a MUST",
+              "createdAt": "2023-12-12T13:22:25Z",
+              "updatedAt": "2023-12-12T13:22:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5p8ec3",
+          "commit": {
+            "abbreviatedOid": "9059880"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2023-12-12T13:23:42Z",
+          "updatedAt": "2023-12-12T13:26:20Z",
+          "comments": [
+            {
+              "originalPosition": 170,
+              "body": "the MUST is listed in each requirement, there may be some requirement in the future with SHOULD. That's why I prefer to use the normative language within each point",
+              "createdAt": "2023-12-12T13:23:43Z",
+              "updatedAt": "2023-12-12T13:26:20Z"
+            },
+            {
+              "originalPosition": 236,
+              "body": "```suggestion\r\n- The Credential Issuer MUST verify the signature of the `credential_pop` object using\r\n```",
+              "createdAt": "2023-12-12T13:24:14Z",
+              "updatedAt": "2023-12-12T13:26:20Z"
+            },
+            {
+              "originalPosition": 263,
+              "body": "`MUST be equal to JWK thumbprint of the key in `cnf` Claim of Wallet Instance Attestation`\r\n\r\nthis is the italian impl profile, not of interest in the IETF OAuth WG, please remove. IT is also not compatible with the DE approach, while we have achieved a compromise that I want to respect in any place.",
+              "createdAt": "2023-12-12T13:25:10Z",
+              "updatedAt": "2023-12-12T13:26:20Z"
+            },
+            {
+              "originalPosition": 263,
+              "body": "```suggestion\r\n| **iss** | Wallet identifier. | {{RFC9126}}, {{RFC7519}} |\r\n```",
+              "createdAt": "2023-12-12T13:25:27Z",
+              "updatedAt": "2023-12-12T13:26:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5p80Cw",
+          "commit": {
+            "abbreviatedOid": "9059880"
+          },
+          "author": "asharif1990",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-12T14:03:48Z",
+          "updatedAt": "2023-12-12T14:03:48Z",
+          "comments": [
+            {
+              "originalPosition": 346,
+              "body": "Okay, this sounds reasonable to me. However, somehow we should include this inside the draft, otherwise having should would be strange if you agree. ",
+              "createdAt": "2023-12-12T14:03:48Z",
+              "updatedAt": "2023-12-12T14:03:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5p9CfR",
+          "commit": {
+            "abbreviatedOid": "9059880"
+          },
+          "author": "asharif1990",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-12T14:30:10Z",
+          "updatedAt": "2023-12-12T14:30:11Z",
+          "comments": [
+            {
+              "originalPosition": 170,
+              "body": "okay. then probably, I will re-write it in a more natural way such as: \"The general requirements for the implementation of  Status Attestation are listed in this section.\"",
+              "createdAt": "2023-12-12T14:30:10Z",
+              "updatedAt": "2023-12-12T14:30:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5p9GEu",
+          "commit": {
+            "abbreviatedOid": "9059880"
+          },
+          "author": "asharif1990",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-12T14:36:28Z",
+          "updatedAt": "2023-12-12T14:36:29Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "Okay, you are right. In the abstract and intro, it is possible to avoid them. I wasn't familiar with IETF style. we can avoid the capitalized terms in the intro and abstract then",
+              "createdAt": "2023-12-12T14:36:29Z",
+              "updatedAt": "2023-12-12T14:36:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5p94mM",
+          "commit": {
+            "abbreviatedOid": "95ccedb"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-12T15:41:57Z",
+          "updatedAt": "2023-12-12T15:41:57Z",
+          "comments": [
+            {
+              "originalPosition": 349,
+              "body": "```suggestion\r\n- check the presence of `status.status_attestation` in the Digital Credential. If true, the Verifier SHOULD:\r\n```",
+              "createdAt": "2023-12-12T15:41:57Z",
+              "updatedAt": "2023-12-12T15:41:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5p95Ro",
+          "commit": {
+            "abbreviatedOid": "c88a6f0"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-12-12T15:42:23Z",
+          "updatedAt": "2023-12-12T15:42:23Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDOK4XJ0s5ls8PL",
+      "title": "added Orie as co-author",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/2",
+      "state": "MERGED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-02-01T13:36:24Z",
+      "updatedAt": "2024-02-01T19:54:14Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "3202bedcfab318cf186432117e2ba8dec58f1d5a",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "headRefName": "orie",
+      "headRefOid": "c6223b86147b3b9ff5badd6b7a5c961de3459e93",
+      "closedAt": "2024-02-01T19:54:13Z",
+      "mergedAt": "2024-02-01T19:54:13Z",
+      "mergedBy": "peppelinux",
+      "mergeCommit": {
+        "oid": "70bc694739ca1b7b7d5db85a3ce5a83e346cb9e5"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s5uqQVo",
+          "commit": {
+            "abbreviatedOid": "c6223b8"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-01T13:59:51Z",
+          "updatedAt": "2024-02-01T13:59:51Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDOK4XJ0s5msEjT",
+      "title": "fix: credential hash in the credential_pop",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/6",
+      "state": "MERGED",
+      "author": "fmarino-ipzs",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR closes #3 \r\n",
+      "createdAt": "2024-02-12T22:44:00Z",
+      "updatedAt": "2024-02-23T12:18:39Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "dev",
+      "baseRefOid": "673a8e16ce50cc4ef409721c70279dc87db80446",
+      "headRepository": "fmarino-ipzs/draft-demarco-oauth-status-attestations",
+      "headRefName": "credential-pop",
+      "headRefOid": "71f5b3aea48af90608f764dbd8cd4d24ec4a95ef",
+      "closedAt": "2024-02-23T12:18:39Z",
+      "mergedAt": "2024-02-23T12:18:39Z",
+      "mergedBy": "peppelinux",
+      "mergeCommit": {
+        "oid": "6e5fae6800ead1fc1a49cf80de9327a74a3a2fb9"
+      },
+      "comments": [
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "I merge on another branch to continue working on this PR and then I reopen the PR",
+          "createdAt": "2024-02-23T12:11:39Z",
+          "updatedAt": "2024-02-23T12:11:39Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s5v2SmY",
+          "commit": {
+            "abbreviatedOid": "5315870"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-12T22:46:19Z",
+          "updatedAt": "2024-02-12T22:46:19Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "@peppelinux probably we could remove the credential_format. \r\nWDYT?",
+              "createdAt": "2024-02-12T22:46:19Z",
+              "updatedAt": "2024-02-12T22:46:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v7yNT",
+          "commit": {
+            "abbreviatedOid": "5315870"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T13:30:32Z",
+          "updatedAt": "2024-02-13T13:30:32Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "yes, I'm on it\r\n",
+              "createdAt": "2024-02-13T13:30:32Z",
+              "updatedAt": "2024-02-13T13:30:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v7z9h",
+          "commit": {
+            "abbreviatedOid": "5315870"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T13:33:00Z",
+          "updatedAt": "2024-02-13T13:33:00Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2024-02-13T13:33:00Z",
+              "updatedAt": "2024-02-13T13:33:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v70m7",
+          "commit": {
+            "abbreviatedOid": "5315870"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T13:33:48Z",
+          "updatedAt": "2024-02-13T13:33:48Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2024-02-13T13:33:48Z",
+              "updatedAt": "2024-02-13T13:33:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v71Yq",
+          "commit": {
+            "abbreviatedOid": "5315870"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "please merge my suggestion",
+          "createdAt": "2024-02-13T13:35:25Z",
+          "updatedAt": "2024-02-13T13:35:25Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v8Ids",
+          "commit": {
+            "abbreviatedOid": "5315870"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T14:03:55Z",
+          "updatedAt": "2024-02-13T14:03:55Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "lets use the IANA named hash registry, and make sha-256 mandatory to implement.\r\n\r\nhttps://www.iana.org/assignments/named-information/named-information.xhtml#hash-alg\r\n\r\nAlternatively, we can use the cose registry which includes hash algorithms:\r\n\r\nhttps://www.iana.org/assignments/cose/cose.xhtml#algorithms\r\n\r\nthe \"COSE\" style for this kind of thing would be:\r\n\r\n```\r\ncredential_hash: [alg, hash]\r\n```",
+              "createdAt": "2024-02-13T14:03:55Z",
+              "updatedAt": "2024-02-13T14:03:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v8JQs",
+          "commit": {
+            "abbreviatedOid": "5315870"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T14:05:11Z",
+          "updatedAt": "2024-02-13T14:05:11Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "SD-JWT uses the IANA registry: https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt-07#section-5.1.1",
+              "createdAt": "2024-02-13T14:05:11Z",
+              "updatedAt": "2024-02-13T14:05:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v83FX",
+          "commit": {
+            "abbreviatedOid": "5315870"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T15:13:33Z",
+          "updatedAt": "2024-02-13T15:13:33Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "seems like the `typ` or `cty` claim might be used here as well.",
+              "createdAt": "2024-02-13T15:13:33Z",
+              "updatedAt": "2024-02-13T15:13:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v9m3F",
+          "commit": {
+            "abbreviatedOid": "5315870"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T16:23:33Z",
+          "updatedAt": "2024-02-13T16:23:33Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "I don't see how having these claims would be useful. How would the Credential Issuer use this information?",
+              "createdAt": "2024-02-13T16:23:33Z",
+              "updatedAt": "2024-02-13T16:23:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v9sRM",
+          "commit": {
+            "abbreviatedOid": "5315870"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T16:32:33Z",
+          "updatedAt": "2024-02-13T16:32:33Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "Regarding the claim name I prefer the first option. \r\nWith regard to the sha-256, I suggest to make the claim OPTIONAL and if omitted we could say that the default value is sha-256. WDYT?",
+              "createdAt": "2024-02-13T16:32:33Z",
+              "updatedAt": "2024-02-13T16:32:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v90TG",
+          "commit": {
+            "abbreviatedOid": "5315870"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T16:45:26Z",
+          "updatedAt": "2024-02-13T16:45:26Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "yes, let's reduce the information about the payload of the credential for an augmented privacy",
+              "createdAt": "2024-02-13T16:45:26Z",
+              "updatedAt": "2024-02-13T16:45:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v91Ix",
+          "commit": {
+            "abbreviatedOid": "5315870"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T16:47:04Z",
+          "updatedAt": "2024-02-13T16:47:05Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "I would make it REQUIRED since I love thing explicit. If a day SHA-256 would be vulnerable and another specification woudl extend this one bringin an updated set of algs, the implementation would then always specify the alg making this aspect not ambiguous",
+              "createdAt": "2024-02-13T16:47:04Z",
+              "updatedAt": "2024-02-13T16:47:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xHNwW",
+          "commit": {
+            "abbreviatedOid": "5315870"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-23T09:39:22Z",
+          "updatedAt": "2024-02-23T09:39:23Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "@OR13 I have asked to remove the credential format, since we give only the credential hash without disclosing any information about the credential",
+              "createdAt": "2024-02-23T09:39:22Z",
+              "updatedAt": "2024-02-23T09:39:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xHO5N",
+          "commit": {
+            "abbreviatedOid": "5315870"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-23T09:41:59Z",
+          "updatedAt": "2024-02-23T09:41:59Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "@OR13 I moved your comment in a [separate issue](https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/16), to unblock this PR related to the hash \r\n\r\nA PR wil be create asap, when this PR will be merged\r\n\r\n",
+              "createdAt": "2024-02-23T09:41:59Z",
+              "updatedAt": "2024-02-23T09:41:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xHPMu",
+          "commit": {
+            "abbreviatedOid": "5315870"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-23T09:42:39Z",
+          "updatedAt": "2024-02-23T09:42:39Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "moved in the issue https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/16",
+              "createdAt": "2024-02-23T09:42:39Z",
+              "updatedAt": "2024-02-23T09:42:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xH_BU",
+          "commit": {
+            "abbreviatedOid": "253579b"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-23T11:36:10Z",
+          "updatedAt": "2024-02-23T11:36:10Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": "```suggestion\r\n| **credential_hash_alg** |  The hash value of a Digital Credential is derived by computing the base64url encoded hash of the Digital Credential. | this specification |\r\n```",
+              "createdAt": "2024-02-23T11:36:10Z",
+              "updatedAt": "2024-02-23T11:40:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xH_Gg",
+          "commit": {
+            "abbreviatedOid": "253579b"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-23T11:36:24Z",
+          "updatedAt": "2024-02-23T11:36:24Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": "@OR13 WDYT?^",
+              "createdAt": "2024-02-23T11:36:24Z",
+              "updatedAt": "2024-02-23T11:36:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xH_PA",
+          "commit": {
+            "abbreviatedOid": "253579b"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-23T11:36:47Z",
+          "updatedAt": "2024-02-23T11:36:47Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\nThe request MUST contain the base64url hash value of the Digital Credential, for which the Status Attestation\r\n```",
+              "createdAt": "2024-02-23T11:36:47Z",
+              "updatedAt": "2024-02-23T11:41:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xH_ch",
+          "commit": {
+            "abbreviatedOid": "253579b"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-23T11:37:19Z",
+          "updatedAt": "2024-02-23T11:37:19Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "See my change suggestion in the form of comment",
+              "createdAt": "2024-02-23T11:37:19Z",
+              "updatedAt": "2024-02-23T11:37:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xIAQC",
+          "commit": {
+            "abbreviatedOid": "253579b"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-23T11:39:34Z",
+          "updatedAt": "2024-02-23T11:39:35Z",
+          "comments": [
+            {
+              "originalPosition": 51,
+              "body": "```suggestion\r\n- `credential_hash_alg_supported`. REQUIRED. The supported Algorithm used by the Wallet Instance to hash the Digital Credential for which the Status Attestation is requested,  using one of the hash algorithms listed in the [IANA - Named Information Hash Algorithm Registry](https://www.iana.org/assignments/named-information/named-information.xhtml#hash-alg).\r\n```",
+              "createdAt": "2024-02-23T11:39:34Z",
+              "updatedAt": "2024-02-23T11:39:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xIAti",
+          "commit": {
+            "abbreviatedOid": "253579b"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-23T11:40:45Z",
+          "updatedAt": "2024-02-23T11:40:45Z",
+          "comments": [
+            {
+              "originalPosition": 60,
+              "body": "```suggestion\r\n- `credential_hash_alg`. REQUIRED.  The hash value of a Digital Credential is derived by computing the base64url encoded hash of the Digital Credential using one of the hash algorithms listed in the [IANA - Named Information Hash Algorithm Registry](https://www.iana.org/assignments/named-information/named-information.xhtml#hash-alg). Among the hash algorithms, `sha-256` is recommended and SHOULD be implemented by all systems.\r\n```",
+              "createdAt": "2024-02-23T11:40:45Z",
+              "updatedAt": "2024-02-23T11:41:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xIGwK",
+          "commit": {
+            "abbreviatedOid": "2db2c8b"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-23T11:57:26Z",
+          "updatedAt": "2024-02-23T11:57:26Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": "```suggestion\r\n| **credential_hash_alg** |  The hash value of a Digital Credential, derived by computing the base64url encoded hash of the Digital Credential. | this specification |\r\n```",
+              "createdAt": "2024-02-23T11:57:26Z",
+              "updatedAt": "2024-02-23T11:57:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xIG7g",
+          "commit": {
+            "abbreviatedOid": "2db2c8b"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-23T11:57:54Z",
+          "updatedAt": "2024-02-23T11:57:54Z",
+          "comments": [
+            {
+              "originalPosition": 60,
+              "body": "```suggestion\r\n- `credential_hash_alg`. REQUIRED. The hash value of a Digital Credential is derived by computing the base64url encoded hash of the Digital Credential using one of the hash algorithms listed in the [IANA - Named Information Hash Algorithm Registry](https://www.iana.org/assignments/named-information/named-information.xhtml#hash-alg). Among the hash algorithms, `sha-256` is recommended and SHOULD be implemented by all systems.\r\n```",
+              "createdAt": "2024-02-23T11:57:54Z",
+              "updatedAt": "2024-02-23T11:57:54Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOK4XJ0s5mwRvT",
+      "title": "OCSP stapling consideration added, distinc figures 1 regarding the flow",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/8",
+      "state": "MERGED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "this PR adds text about how this specification brings a similar approach experienced in ocsp stampling\r\n\r\nit also splits the flow repsentation in two distinct flows: issuance and presentation.",
+      "createdAt": "2024-02-13T13:44:51Z",
+      "updatedAt": "2024-02-14T14:08:46Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "650bb023e094b022588e6327cdce8c9c213ac441",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "headRefName": "ocsp",
+      "headRefOid": "0fb5eeda01022116670c1ed3645ab0af93c9d78f",
+      "closedAt": "2024-02-14T14:08:46Z",
+      "mergedAt": "2024-02-14T14:08:46Z",
+      "mergedBy": "peppelinux",
+      "mergeCommit": {
+        "oid": "673a8e16ce50cc4ef409721c70279dc87db80446"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s5v83i6",
+          "commit": {
+            "abbreviatedOid": "0fb5eed"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-13T15:14:13Z",
+          "updatedAt": "2024-02-13T15:14:13Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5wEQd3",
+          "commit": {
+            "abbreviatedOid": "0fb5eed"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-14T12:33:13Z",
+          "updatedAt": "2024-02-14T12:33:13Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOK4XJ0s5mwhh1",
+      "title": "Privacy Considerations",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/9",
+      "state": "MERGED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/4",
+      "createdAt": "2024-02-13T14:18:19Z",
+      "updatedAt": "2024-02-14T14:08:31Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "650bb023e094b022588e6327cdce8c9c213ac441",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "headRefName": "priv",
+      "headRefOid": "3eb306fa5082d25560975fd89e8a051911f0b147",
+      "closedAt": "2024-02-14T14:08:31Z",
+      "mergedAt": "2024-02-14T14:08:31Z",
+      "mergedBy": "peppelinux",
+      "mergeCommit": {
+        "oid": "7ee3a052b943bdcc4becb422b2783bbf9987c7ab"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s5v9sJH",
+          "commit": {
+            "abbreviatedOid": "d34fc3d"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T16:32:26Z",
+          "updatedAt": "2024-02-13T16:32:26Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "A hash alone is not proof of possession, imo.\r\n\r\na KBT from a public key in the credential over the hash, and a nonce from the verifier would be POP.",
+              "createdAt": "2024-02-13T16:32:26Z",
+              "updatedAt": "2024-02-13T16:32:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v9t3x",
+          "commit": {
+            "abbreviatedOid": "d34fc3d"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T16:34:06Z",
+          "updatedAt": "2024-02-13T16:34:06Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "I'd like to see us move away from \"revocation/ suspension\" and towards generic attested dynamic state... Lots of use cases for status values that are not booleans, or even enums.",
+              "createdAt": "2024-02-13T16:34:06Z",
+              "updatedAt": "2024-02-13T16:34:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v9u0P",
+          "commit": {
+            "abbreviatedOid": "d34fc3d"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T16:35:16Z",
+          "updatedAt": "2024-02-13T16:35:17Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "I think this implies Status Attestations are \"single use\" ?",
+              "createdAt": "2024-02-13T16:35:17Z",
+              "updatedAt": "2024-02-13T16:35:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v9vlc",
+          "commit": {
+            "abbreviatedOid": "d34fc3d"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T16:36:17Z",
+          "updatedAt": "2024-02-13T16:36:17Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "This is typically called the \"phone home\" problem.",
+              "createdAt": "2024-02-13T16:36:17Z",
+              "updatedAt": "2024-02-13T16:36:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v9v07",
+          "commit": {
+            "abbreviatedOid": "d34fc3d"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T16:36:45Z",
+          "updatedAt": "2024-02-13T16:36:46Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "```suggestion\r\nThe Status Attestations are designed around the data minimization principle. Data minimization ensures that only the necessary information required for the scope of attesting the non revocation status of the digital credential. This minimizes the exposure of potentially sensitive data.\r\n```",
+              "createdAt": "2024-02-13T16:36:45Z",
+              "updatedAt": "2024-02-13T16:36:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v9wRT",
+          "commit": {
+            "abbreviatedOid": "d34fc3d"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-13T16:37:37Z",
+          "updatedAt": "2024-02-13T16:37:37Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v9yP5",
+          "commit": {
+            "abbreviatedOid": "d34fc3d"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T16:41:28Z",
+          "updatedAt": "2024-02-13T16:41:28Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "I wouldn not enter in this and at the same time find legitimate your question.\r\n\r\nThis specification would not prevent a batch issuance of multipel status attestation to be single-use.\r\nAt the same time, in particular for offline interaction, a single attestation would be used for many verifiers",
+              "createdAt": "2024-02-13T16:41:28Z",
+              "updatedAt": "2024-02-13T16:41:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v9-vW",
+          "commit": {
+            "abbreviatedOid": "d34fc3d"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T17:05:06Z",
+          "updatedAt": "2024-02-13T17:05:06Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "done",
+              "createdAt": "2024-02-13T17:05:06Z",
+              "updatedAt": "2024-02-13T17:05:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v9-zF",
+          "commit": {
+            "abbreviatedOid": "d34fc3d"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T17:05:14Z",
+          "updatedAt": "2024-02-13T17:05:14Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "Done",
+              "createdAt": "2024-02-13T17:05:14Z",
+              "updatedAt": "2024-02-13T17:05:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v9-8F",
+          "commit": {
+            "abbreviatedOid": "d34fc3d"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T17:05:32Z",
+          "updatedAt": "2024-02-13T17:05:32Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "I included these considerations, thank you",
+              "createdAt": "2024-02-13T17:05:32Z",
+              "updatedAt": "2024-02-13T17:05:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v9_QS",
+          "commit": {
+            "abbreviatedOid": "d34fc3d"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T17:06:14Z",
+          "updatedAt": "2024-02-13T17:06:15Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "I have expanded the text with these consideration to not limit the status attestation to some specific use cases only",
+              "createdAt": "2024-02-13T17:06:14Z",
+              "updatedAt": "2024-02-13T17:06:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v-AUE",
+          "commit": {
+            "abbreviatedOid": "d34fc3d"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T17:08:38Z",
+          "updatedAt": "2024-02-13T17:08:38Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "I have mentioned this but without mentioning any nonce provided by the Verifier (for obvious reasons). A jti can do the work but it doesn't seem useful, since the credential hash alone can be a sort of jti\r\n\r\ndynamically provisioning of the nonce could be mentioned if the status would not be used for offline flows, I'd suggest to move this to a separate issue and add some consideration about this aspect within the document",
+              "createdAt": "2024-02-13T17:08:38Z",
+              "updatedAt": "2024-02-13T17:08:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v-CWn",
+          "commit": {
+            "abbreviatedOid": "d34fc3d"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-13T17:13:10Z",
+          "updatedAt": "2024-02-13T17:13:10Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "Filed https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/11",
+              "createdAt": "2024-02-13T17:13:10Z",
+              "updatedAt": "2024-02-13T17:13:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5v-CuY",
+          "commit": {
+            "abbreviatedOid": "3eb306f"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-13T17:13:58Z",
+          "updatedAt": "2024-02-13T17:13:58Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5wECPC",
+          "commit": {
+            "abbreviatedOid": "3eb306f"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-14T12:00:41Z",
+          "updatedAt": "2024-02-14T12:00:42Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "```suggestion\r\nStatus Attestations are based on a privacy-by-design approach, reflecting a deliberate effort to balance security and privacy needs in the digital credential ecosystem.\r\n```",
+              "createdAt": "2024-02-14T12:00:41Z",
+              "updatedAt": "2024-02-14T12:00:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5wECVO",
+          "commit": {
+            "abbreviatedOid": "3eb306f"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-14T12:00:55Z",
+          "updatedAt": "2024-02-14T12:00:55Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5wFEj5",
+          "commit": {
+            "abbreviatedOid": "3eb306f"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-14T14:08:24Z",
+          "updatedAt": "2024-02-14T14:08:24Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "moved to issue",
+              "createdAt": "2024-02-14T14:08:24Z",
+              "updatedAt": "2024-02-14T14:08:24Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOK4XJ0s5mw6rg",
+      "title": "feat: error section and added missing todo in the rationale section",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/10",
+      "state": "MERGED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/7\r\n\r\nit also adds in the rationale section a reference to the national privacy constraints that justify the requirement satisfied by this specification",
+      "createdAt": "2024-02-13T15:09:45Z",
+      "updatedAt": "2024-02-14T14:04:10Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "650bb023e094b022588e6327cdce8c9c213ac441",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "headRefName": "err",
+      "headRefOid": "11cf2e347f02683b03de2b494102052684873f7f",
+      "closedAt": "2024-02-14T14:04:10Z",
+      "mergedAt": "2024-02-14T14:04:10Z",
+      "mergedBy": "peppelinux",
+      "mergeCommit": {
+        "oid": "6efbdf64d993c4cb668508baa94f916594aa5674"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s5v9qqE",
+          "commit": {
+            "abbreviatedOid": "11cf2e3"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-13T16:30:37Z",
+          "updatedAt": "2024-02-13T16:30:37Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5wD49G",
+          "commit": {
+            "abbreviatedOid": "11cf2e3"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-14T11:39:14Z",
+          "updatedAt": "2024-02-14T11:39:14Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "For the sake of clarity, I explicitly would provide a list of error codes that are useful in this specification. For example, it is not clear how to handle the case of an error response due to a Credential revocation. I don't see a clear error code in the RFC6749 that is clear for this scenario. We could put this in an issue and postpone this discussion if you want.",
+              "createdAt": "2024-02-14T11:39:14Z",
+              "updatedAt": "2024-02-14T11:39:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5wD6CX",
+          "commit": {
+            "abbreviatedOid": "11cf2e3"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "It's fine with me, we should only better clarify which are the error codes that make sense in this context, but we can solve this in a future issue. ",
+          "createdAt": "2024-02-14T11:41:44Z",
+          "updatedAt": "2024-02-14T11:41:44Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5wE_nt",
+          "commit": {
+            "abbreviatedOid": "11cf2e3"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-14T14:03:13Z",
+          "updatedAt": "2024-02-14T14:03:13Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "in RFC6749 I see invalid_request, invalid_client, unauthorized_client ...",
+              "createdAt": "2024-02-14T14:03:13Z",
+              "updatedAt": "2024-02-14T14:03:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5wFAYr",
+          "commit": {
+            "abbreviatedOid": "11cf2e3"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-14T14:03:51Z",
+          "updatedAt": "2024-02-14T14:03:51Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "moved to an issue",
+              "createdAt": "2024-02-14T14:03:51Z",
+              "updatedAt": "2024-02-14T14:03:51Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "id": "PR_kwDOK4XJ0s5mx0kn",
+      "title": "feat: what is PoP, what it can be",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/12",
+      "state": "MERGED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "this PR closes https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/11",
+      "createdAt": "2024-02-13T17:22:02Z",
+      "updatedAt": "2024-02-28T14:08:08Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "650bb023e094b022588e6327cdce8c9c213ac441",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "headRefName": "pop",
+      "headRefOid": "63ce9087351e36f411194a649a0e1b18776f4f73",
+      "closedAt": "2024-02-28T14:08:08Z",
+      "mergedAt": "2024-02-28T14:08:07Z",
+      "mergedBy": "OR13",
+      "mergeCommit": {
+        "oid": "0962d686df5ffd223a105425b4633f973fe3bd8a"
+      },
+      "comments": [
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "@fmarino-ipzs This pull request addresses a limitation of the current specification. It currently only works with digital credentials that contain holder key binding.\r\n",
+          "createdAt": "2024-02-23T21:39:16Z",
+          "updatedAt": "2024-02-23T21:39:16Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s5wER-Q",
+          "commit": {
+            "abbreviatedOid": "44e2eee"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-14T12:36:58Z",
+          "updatedAt": "2024-02-14T12:36:58Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "```suggestion\r\nThe essence of requiring control over the private key and its demonstration through a cryptographic operation (e.g., signing a challenge or a token) is to ensure that the entity in possession of the credential can execute actions exclusively reserved for the legitimate owner. This dual-layered approach not only reinforces the security and integrity of the status attestation process but also affirms that the entity requesting a status attestation is the same entity to which the credential was issued. \r\n```",
+              "createdAt": "2024-02-14T12:36:58Z",
+              "updatedAt": "2024-02-14T12:36:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5wETeT",
+          "commit": {
+            "abbreviatedOid": "44e2eee"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM.\r\nBtw, we are assuming here that the credential for which a Status Attestation is requested has a cryptographic holder-binding. Is this a right assumption? Should we generalize to cases where we have other holder binding mechanisms or even none?",
+          "createdAt": "2024-02-14T12:40:18Z",
+          "updatedAt": "2024-02-14T12:40:18Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5wFCY7",
+          "commit": {
+            "abbreviatedOid": "44e2eee"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-14T14:05:54Z",
+          "updatedAt": "2024-02-14T14:05:54Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "```suggestion\r\nThe essence of requiring control over the private key and its demonstration through a cryptographic operation (e.g., signing a challenge or a token) is to ensure that the entity in possession of the credential can execute actions exclusively reserved for the legitimate owner. The dual-layered approach of requiring both possession of the credential and control over the corresponding private key indeed reinforces the security and integrity of the status attestation process. It also ensures that the entity requesting a status attestation is indeed the same entity to which the credential was originally issued, affirming the authenticity and rightful ownership of the credential.\r\n```",
+              "createdAt": "2024-02-14T14:05:54Z",
+              "updatedAt": "2024-02-14T14:05:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xn676",
+          "commit": {
+            "abbreviatedOid": "78a2f89"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-28T13:36:42Z",
+          "updatedAt": "2024-02-28T13:36:42Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "```suggestion\r\nThe essence of requiring control over the private key and its demonstration through a cryptographic operation (e.g., signing a challenge or a token) is to ensure that the entity in possession of the credential can execute actions exclusively reserved for the legitimate subject. The dual-layered approach of requiring both possession of the credential and control over the corresponding private key indeed reinforces the security and integrity of the status attestation process. It also ensures that the entity requesting a status attestation is indeed the same entity to which the credential was originally issued, affirming the authenticity and rightful possession of the credential.\r\n```",
+              "createdAt": "2024-02-28T13:36:42Z",
+              "updatedAt": "2024-02-28T13:36:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xn7VX",
+          "commit": {
+            "abbreviatedOid": "78a2f89"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "minor word changes, ideally we don't need to distinguish \"owner\" and \"subject\", and \"ownership\" and \"possession\".",
+          "createdAt": "2024-02-28T13:37:25Z",
+          "updatedAt": "2024-02-28T13:37:25Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xoKXm",
+          "commit": {
+            "abbreviatedOid": "15dbe4a"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-28T14:03:38Z",
+          "updatedAt": "2024-02-28T14:05:10Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\r\nThe concept of Proof of Possession (PoP) of a Credential within the framework of the Status Attestation specification encompasses a broader perspective than merely possessing the digital bytes of the Credential. It involves demonstrating rightful control or ownership over the Credential, which can manifest in various forms depending on the technology employed and the nature of the digital Credential itself. For instance, a Credential could be presented visually (de-visu) with a personal portrait serving as a binding element.\r\n```",
+              "createdAt": "2024-02-28T14:03:38Z",
+              "updatedAt": "2024-02-28T14:05:10Z"
+            },
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\r\nWhile this specification does not prescribe any additional methods for the proof of possession of the Credential, it aims to offer guidance for concrete implementations utilizing common proof of possession mechanisms. This includes, but is not limited to:\r\n```",
+              "createdAt": "2024-02-28T14:04:18Z",
+              "updatedAt": "2024-02-28T14:05:10Z"
+            },
+            {
+              "originalPosition": 11,
+              "body": "```suggestion\r\n2. Controlling a private key that corresponds to a public key associated with the Credential, often indicated within the Credential's cnf (confirmation) claim or through a similar mechanism.\r\n```",
+              "createdAt": "2024-02-28T14:04:31Z",
+              "updatedAt": "2024-02-28T14:05:10Z"
+            },
+            {
+              "originalPosition": 13,
+              "body": "```suggestion\r\nThe essence of requiring control over the private key and its demonstration through a cryptographic operation (e.g., signing a challenge or a token) is to ensure that the entity in possession of the Credential can execute actions exclusively reserved for the legitimate subject. The dual-layered approach of requiring both possession of the Credential and control over the corresponding private key indeed reinforces the security and integrity of the status attestation process. It also ensures that the entity requesting a Status Attestation is indeed the same entity to which the Credential was originally issued, affirming the authenticity and rightful possession of the Credential.\r\n```",
+              "createdAt": "2024-02-28T14:05:04Z",
+              "updatedAt": "2024-02-28T14:05:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xoMy3",
+          "commit": {
+            "abbreviatedOid": "63ce908"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-28T14:07:42Z",
+          "updatedAt": "2024-02-28T14:07:42Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "PR_kwDOK4XJ0s5nv-QK",
+      "title": "Credential hash and VCI metadata paramenter",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/17",
+      "state": "MERGED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "this PR continues https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/6, it also:\r\n\r\n- closes https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/16\r\n- closes https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/3\r\n- closes https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/13",
+      "createdAt": "2024-02-23T12:19:48Z",
+      "updatedAt": "2024-02-23T17:47:37Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "673a8e16ce50cc4ef409721c70279dc87db80446",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "headRefName": "dev",
+      "headRefOid": "ce0d664ca0b4ca1a0d1500335f6be46b415a96fd",
+      "closedAt": "2024-02-23T17:47:36Z",
+      "mergedAt": "2024-02-23T17:47:36Z",
+      "mergedBy": "peppelinux",
+      "mergeCommit": {
+        "oid": "3278cd2382cdf1ffb29d02dccb9cfa3e1dece931"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s5xJmAO",
+          "commit": {
+            "abbreviatedOid": "ce0d664"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-23T15:09:28Z",
+          "updatedAt": "2024-02-23T15:09:28Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xJ-w0",
+          "commit": {
+            "abbreviatedOid": "ce0d664"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-23T15:59:09Z",
+          "updatedAt": "2024-02-23T15:59:09Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "id": "PR_kwDOK4XJ0s5nyv-E",
+      "title": "editorial: intro, less word, same information",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/18",
+      "state": "MERGED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Rereading I realized how much the introductory text had swollen with thoughts, words and considerations.\r\n\r\nI have compressed the same information into a fifth of the previous text.",
+      "createdAt": "2024-02-23T20:54:10Z",
+      "updatedAt": "2024-02-23T22:39:50Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "3278cd2382cdf1ffb29d02dccb9cfa3e1dece931",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "headRefName": "intro",
+      "headRefOid": "d420251e76f6fd3a2677a70f48cd1c3a6ccbfe60",
+      "closedAt": "2024-02-23T22:39:49Z",
+      "mergedAt": "2024-02-23T22:39:49Z",
+      "mergedBy": "peppelinux",
+      "mergeCommit": {
+        "oid": "516968a7b22fee30185ca758370b60c19e1efbb6"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s5xL7jK",
+          "commit": {
+            "abbreviatedOid": "bc5af09"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-23T21:21:18Z",
+          "updatedAt": "2024-02-23T21:21:18Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xMDRG",
+          "commit": {
+            "abbreviatedOid": "bc5af09"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-23T21:40:42Z",
+          "updatedAt": "2024-02-23T21:40:42Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "id": "PR_kwDOK4XJ0s5oLfii",
+      "title": "editorial: privacy considerations",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/21",
+      "state": "MERGED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/15",
+      "createdAt": "2024-02-28T14:27:50Z",
+      "updatedAt": "2024-02-28T20:47:03Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "0962d686df5ffd223a105425b4633f973fe3bd8a",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "headRefName": "pr",
+      "headRefOid": "b064428285bb46c75a09f73d899a2b5a06ee4051",
+      "closedAt": "2024-02-28T20:47:02Z",
+      "mergedAt": "2024-02-28T20:47:02Z",
+      "mergedBy": "peppelinux",
+      "mergeCommit": {
+        "oid": "d06f46d4bb51b6bbbea052915bcaf6a8b57354bd"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s5xojDw",
+          "commit": {
+            "abbreviatedOid": "313c866"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-28T14:42:11Z",
+          "updatedAt": "2024-02-28T14:42:11Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\nStatus Attestations are based on a privacy-by-design approach, reflecting a deliberate effort to balance security and privacy needs in the Digital Credential ecosystem.\r\n```",
+              "createdAt": "2024-02-28T14:42:11Z",
+              "updatedAt": "2024-02-28T14:42:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xojQX",
+          "commit": {
+            "abbreviatedOid": "313c866"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-28T14:42:31Z",
+          "updatedAt": "2024-02-28T14:42:31Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5xsAGF",
+          "commit": {
+            "abbreviatedOid": "b064428"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-28T20:26:02Z",
+          "updatedAt": "2024-02-28T20:26:02Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "id": "PR_kwDOK4XJ0s5oRZfo",
+      "title": "fix: aud normative value",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/24",
+      "state": "MERGED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/23",
+      "createdAt": "2024-02-29T09:46:30Z",
+      "updatedAt": "2024-03-04T15:37:20Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "d06f46d4bb51b6bbbea052915bcaf6a8b57354bd",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "headRefName": "aud",
+      "headRefOid": "3fb3294c9be1661a5af35dc61abcc1796d34b951",
+      "closedAt": "2024-03-04T15:37:19Z",
+      "mergedAt": "2024-03-04T15:37:19Z",
+      "mergedBy": "OR13",
+      "mergeCommit": {
+        "oid": "913797c95163a7129305311922dc68d61881f915"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s5xwCrg",
+          "commit": {
+            "abbreviatedOid": "3fb3294"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-29T09:48:19Z",
+          "updatedAt": "2024-02-29T09:48:19Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5yHxpz",
+          "commit": {
+            "abbreviatedOid": "3fb3294"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-03-04T15:36:27Z",
+          "updatedAt": "2024-03-04T15:36:27Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "id": "PR_kwDOK4XJ0s5okt5e",
+      "title": "normative language in status attestation response and fix response body",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/25",
+      "state": "MERGED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "this PR\r\n\r\n- fixes the response description of the status attestation response, from OK to Created (201)\r\n- adds normative language about the status attestation response",
+      "createdAt": "2024-03-04T10:50:43Z",
+      "updatedAt": "2024-03-04T16:12:02Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "d06f46d4bb51b6bbbea052915bcaf6a8b57354bd",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "headRefName": "201",
+      "headRefOid": "aa65f1951b648a75fea6b7f063b93885ab9d29de",
+      "closedAt": "2024-03-04T16:12:02Z",
+      "mergedAt": "2024-03-04T16:12:02Z",
+      "mergedBy": "peppelinux",
+      "mergeCommit": {
+        "oid": "c2c9784e048f5995149f532ebe550634dd9f309e"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s5yFVag",
+          "commit": {
+            "abbreviatedOid": "5ccd398"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T10:51:14Z",
+          "updatedAt": "2024-03-04T10:51:14Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\r\nIf the Digital Credential is valid, the Credential Issuer MUST return an HTTP status code of 201 (Created), with the content type set to `application/json`. The response MUST include a JSON object with a member named `status_attestation`, which contains the Status Attestation for the Wallet Instance, as illustrated in the following non-normative example:\r\n```",
+              "createdAt": "2024-03-04T10:51:14Z",
+              "updatedAt": "2024-03-04T10:51:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5yHxfV",
+          "commit": {
+            "abbreviatedOid": "aa65f19"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-03-04T15:36:09Z",
+          "updatedAt": "2024-03-04T15:36:09Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5yIEMX",
+          "commit": {
+            "abbreviatedOid": "aa65f19"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-03-04T16:07:55Z",
+          "updatedAt": "2024-03-04T16:07:55Z",
+          "comments": []
+        }
+      ]
+    }
+  ]
+}

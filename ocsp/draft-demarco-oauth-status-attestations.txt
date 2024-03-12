@@ -1,0 +1,858 @@
+
+
+
+
+Network Working Group                                        G. D. Marco
+Internet-Draft               Dipartimento per la trasformazione digitale
+Intended status: Informational                                 O. Steele
+Expires: 16 August 2024                                        Transmute
+                                                               F. Marino
+                                Istituto Poligrafico e Zecca dello Stato
+                                                        13 February 2024
+
+
+                       OAuth Status Attestations
+             draft-demarco-oauth-status-attestations-latest
+
+Abstract
+
+   Status Attestation is a signed object that demonstrates the validity
+   status of a digital credential.  These attestations are ephemeral and
+   periodically provided to holders, who can present these to Verifiers
+   along with the corresponding digital credentials.  The approach
+   outlined in this document makes the verifiers able to check the non-
+   revocation of a digital credential without requiring to query any
+   third-party entities.
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   The latest revision of this draft can be found at
+   https://peppelinux.github.io/draft-demarco-status-attestations/draft-
+   demarco-status-attestations.html.  Status information for this
+   document may be found at https://datatracker.ietf.org/doc/draft-
+   demarco-oauth-status-attestations/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/peppelinux/draft-demarco-status-attestations.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 16 August 2024.
+
+Copyright Notice
+
+   Copyright (c) 2024 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+   2.  Conventions and Definitions
+   3.  Terminology
+   4.  Rationale
+   5.  Requirements
+   6.  Status Attestation Request
+     6.1.  Digital Credential Proof of Possession
+   7.  Status Attestation
+   8.  Status Attestation Response
+   9.  Credential Issuers Supporting Status Attestations
+     9.1.  Credential Issuer Metadata
+     9.2.  Issued Digital Credentials
+   10. Presenting Status Attestations
+   11. Security Considerations
+   12. IANA Considerations
+     12.1.  JSON Web Token Claims Registration
+     12.2.  Media Type Registration
+   13. Normative References
+   Appendix A.  Acknowledgments
+   Appendix B.  Document History
+   Authors' Addresses
+
+1.  Introduction
+
+   Status Attestation plays a crucial role in maintaining the integrity
+   and trustworthiness of digital credentials, since these serve as
+   proof that a particular digital credential, whether in JSON Web
+   Tokens (JWT) or CBOR Web Tokens (CWT) format, has not been revoked
+   and is still valid.
+
+   A digital credential may be presented to a verifier long after it has
+   been issued.  During this interval, the digital credential could
+   potentially be invalidated for various reasons (e.g., due to the
+   device lost or holder fraud).  To ensure the digital credential's
+   validity, the issuer provides a short-lived Status Attestation to the
+   holder.  This attestation is bound to the digital credential and can
+   be provided to a verifier, together with the digital credential, as
+   evidence of the digital credential's non-revocation status.
+
+   Status Attestations introduce a mechanism akin to OCSP Stapling in
+   the context of digital credential verification.  Just as OCSP
+   Stapling allows a server to present a time-stamped OCSP response to
+   prove the validity of its SSL/TLS certificates, thereby reducing the
+   need for clients to contact the Certificate Authority (CA), Status
+   Attestations enable a wallet instance to present a time-stamped
+   attestation issued by the Credential Issuer.  This attestation
+   confirms the non-revocation status of a digital credential without
+   requiring verifiers to query the issuer or any third-party entity
+   directly.  This approach enhances privacy, reduces latency, and
+   allows for offline verification scenarios, mirroring the benefits of
+   OCSP Stapling in the domain of digital credentials.
+
+   Status Attestation are essential in facilitating offline scenarios.
+   In these circumstances, both the wallet and the verifier work without
+   internet connectivity during the presentation phase; nonetheless,
+   Status Attestation provides a method to statically validate the
+   validity of the digital credentials, thus increasing the security of
+   the digital credential system.  By limiting the disclosure of status
+   information, Status Attestation strikes a balance between
+   scalability, security, and privacy.
+
+   +-----------------+                             +-------------------+
+   |                 | Requests Status Attestation |                   |
+   |                 |---------------------------->|                   |
+   | Wallet Instance |                             | Credential Issuer |
+   |                 | Status Attestation          |                   |
+   |                 |<----------------------------|                   |
+   +-----------------+                             +-------------------+
+
+   Figure 1: Status Attestation Issuance Flow
+
+   This figure illustrates the process by which a Wallet Instance
+   requests a Status Attestation from the Credential Issuer and
+   subsequently receives it.
+
+   +-- ----------------+                             +----------+
+   |                   | Presents Digital Credential |          |
+   |  Wallet Instance  | and Status Attestation      | Verifier |
+   |                   |---------------------------->|          |
+   +-------------------+                             +----------+
+
+   Figure 2: Status Attestation Presentation Flow
+
+   The Status Attestation is presented along with its digital
+   credential, to prove the non-revocation status of a digital
+   credential to a Verifier.
+
+2.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+3.  Terminology
+
+   This specification uses the terms "End-User", "Entity" as defined by
+   OpenID Connect Core [@OpenID.Core], the term "JSON Web Token (JWT)"
+   defined by JSON Web Token (JWT) [RFC7519].
+
+   Digital Credential:  A set of one or more claims about a subject made
+      by a Credential Issuer.
+
+   Credential Issuer:  Entity that is responsible for the issuance of
+      the Digital Credentials.  The Issuer is responsible for the
+      lifecycle of their issued Digital Credentials and their validity
+      status.
+
+   Verifier:  Entity that relies on the validity of the Digital
+      Credentials presented to it.  This Entity, also known as a Relying
+      Party, needs to verify the authenticity and validity of the
+      Digital Credentials, including their revocation status, before
+      accepting them.
+
+   Wallet Instance:  The digital Wallet in control of a User, also known
+      as Wallet or Holder.  It securely stores the User's Digital
+      Credentials.  It can present Digital Credentials to Verifiers and
+      request Status Attestations from Issuers under the control of the
+      User.
+
+4.  Rationale
+
+   OAuth Status Lists [@!I-D.looker-oauth-jwt-cwt-status-list] are
+   suitable for specific scenarios, especially when the Verifier needs
+   to verify the status of a Digital Credential at a later time after
+   the User has presented the Digital Credential.
+
+   However, there are cases where the Verifier only needs to check the
+   revocation status of a Digital Credential at the time of
+   presentation, or situations where the Verifier should not be allowed
+   to check the status of a Digital Credential over time due to some
+   privacy constraints, in compliance with national privacy regulations.
+
+   TODO: Add an example of national privacy constraints to give the
+   reader some intuition.
+
+   In scenarios where the Verifier, Credential Issuer, and OAuth Status
+   List Provider are all part of the same domain or operate within a
+   context where a high level of trust exists between them and the End-
+   User, the OAuth Status List is the optimal solution; while there
+   might be other cases where the OAuth Status List facilitates the
+   exposure to the following privacy risks:
+
+   *  An OAuth Status List Provider might know the association between a
+      specific list and a Credential Issuer, especially if the latter
+      issues a single type of Digital Credential.  This could
+      inadvertently reveal the Status List Provider which list
+      corresponds to which Digital Credential.
+
+   *  A Verifier retrieves an OAuth Status List by establishing a TCP/IP
+      connection with an OAuth Status List Provider.  This allows the
+      OAuth Status List Provider to obtain the IP address of the
+      Verifier and potentially link it to a specific Digital Credential
+      type and Credential Issuer associated with that OAuth Status List.
+      A malicious OAuth Status List Provider could use internet
+      diagnostic tools, such as Whois or GeoIP lookup, to gather
+      additional information about the Verifier.  This could
+      inadvertently disclose to the OAuth Status List Provider which
+      Digital Credential the requester is using and from which
+      Credential Issuer, information that should remain confidential.
+
+   Status Attestations differ significantly from OAuth Status Lists in
+   several ways:
+
+   1.  *Privacy*: Status Attestations are designed to be privacy-
+       preserving.  They do not require the Verifier to gather any
+       additional information from third-party entities, thus preventing
+       potential privacy leaks.
+
+   2.  *Static Verification*: Status Attestations are designed to be
+       statically provided to Verifiers by Wallet Instance.  Once a
+       Status Attestation is issued, it can be verified without any
+       further communication with the Credential Issuer or any other
+       party.
+
+   3.  *Digital Credentials Formats*: Status Attestations are agnostic
+       from the Digital Credential format to which they are bound.
+
+   4.  *Trust Model*: Status Attestations operate under a model where
+       the Verifier trusts the Credential Issuer to provide accurate
+       status information, while the OAuth Status Lists operate under a
+       model where the Verifier trusts the Status List Provider to
+       maintain an accurate and up-to-date list of statuses.
+
+   5.  *Offline flow*: OAuth Status List can be accessed by a Verifier
+       when an internet connection is present.  At the same time, OAuth
+       Status List defines how to provide a static Status List Token, to
+       be included within a Digital Credential.  This requires the
+       Wallet Instance to acquire a new Digital Credential for a
+       specific presentation.  Even if similar to the OAuth Status List
+       Token, the Status Attestations enable the User to persistently
+       use their preexistent Digital Credentials, as long as the linked
+       Status Attestation is available and presented to the Verifier,
+       and not expired.
+
+5.  Requirements
+
+   The general requirements for the implementation of Status Attestation
+   are listed in this section.  The Status Attestation:
+
+   *  MUST be presented in conjunction with the Digital Credential.  The
+      Status Attestation MUST be timestamped with its issuance datetime,
+      always referring to a previous period to the presentation time.
+
+   *  MUST contain the expiration datetime after which the Digital
+      Credential MUST NOT be considered valid anymore.  The expiration
+      datetime MUST be superior to the issuance datetime.
+
+   *  enables offline use cases as it MUST be validated using a
+      cryptographic signature and the cryptographic public key of the
+      Credential Issuer.
+
+   Please note: in this specification the examples and the normative
+   properties of Attestations are reported in accordance with the JWT
+   standard, while for the purposes of this specification any Digital
+   Credential or Attestation format may be used, as long as all
+   attributes and requirements defined in this specification are
+   satisfied, even using equivalent names or values.
+
+6.  Status Attestation Request
+
+   The Credential Issuer provides the Wallet Instance with a Status
+   Attestation, which is bound to a Digital Credential.  This allows the
+   Wallet Instance to present it, along with the Digital Credential
+   itself, to a Verifier as proof of the Digital Credential's non-
+   revocation status.
+
+   The following diagram shows the Wallet Instance requesting a Status
+   Attestation to a Credential Issuer, related to a specific Credential
+   issued by the same Credential Issuer.
+
+   +-------------------+                         +--------------------+
+   |                   |                         |                    |
+   |  Wallet Instance  |                         | Credential Issuer  |
+   |                   |                         |                    |
+   +--------+----------+                         +----------+---------+
+            |                                               |
+            | HTTP POST /status                             |
+            |  credential_pop = $CredentialPoPJWT           |
+            +----------------------------------------------->
+            |                                               |
+            |  Response with Status Attestation JWT         |
+            <-----------------------------------------------+
+            |                                               |
+   +--------+----------+                         +----------+---------+
+   |                   |                         |                    |
+   |  Wallet Instance  |                         | Credential Issuer  |
+   |                   |                         |                    |
+   +-------------------+                         +--------------------+
+
+   The Wallet Instance sends the Status Attestation request to the
+   Credential Issuer.  The request MUST contain the Digital Credential,
+   for which the Status Attestation is requested, and enveloped in a
+   signed object as proof of possession.  The proof of possession MUST
+   be signed with the private key corresponding to the public key
+   attested by the Credential Issuer and contained within the Digital
+   Credential.
+
+   POST /status HTTP/1.1
+   Host: issuer.example.org
+   Content-Type: application/x-www-form-urlencoded
+
+   credential_pop=$CredentialPoPJWT
+
+   To validate that the Wallet Instance is entitled to request its
+   Status Attestation, the following requirements MUST be satisfied:
+
+   *  The Credential Issuer MUST verify the signature of the
+      credential_pop object using the public key contained in the
+      Digital Credential;
+
+   *  the Credential Issuer MUST verify that it is the legitimate
+      Issuer.
+
+   The technical and details about the credential_pop object are defined
+   in the next section.
+
+6.1.  Digital Credential Proof of Possession
+
+   The Wallet Instance that holds a Digital Credential, when requests a
+   Status Attestation, MUST demonstrate the proof of possession of the
+   Digital Credential to the Credential Issuer.
+
+   The proof of possession is made by enclosing the Digital Credential
+   in an object (JWT) signed with the private key that its related
+   public key is referenced in the Digital Credential.
+
+   Below is a non-normative example of a Credential proof of possession
+   with the JWT headers and payload are represented without applying
+   signature and encoding, for better readability:
+
+   {
+       "alg": "ES256",
+       "typ": "status-attestation-request+jwt",
+       "kid": $WIA-CNF-JWKID
+
+   }
+   .
+   {
+       "iss": "0b434530-e151-4c40-98b7-74c75a5ef760",
+       "aud": "https://issuer.example.org/status-attestation-endpoint",
+       "iat": 1698744039,
+       "exp": 1698834139,
+       "jti": "6f204f7e-e453-4dfd-814e-9d155319408c",
+       "credential_format": "vc+sd-jwt",
+       "credential": $Issuer-Signed-JWT
+   }
+
+   When the JWT format is used, the JWT MUST contain the parameters
+   defined in the following table.
+
+     +========+==========================================+===========+
+     | JOSE   | Description                              | Reference |
+     | Header |                                          |           |
+     +========+==========================================+===========+
+     | *typ*  | It MUST be set to status-attestation-    | [RFC7516] |
+     |        | request+jwt                              | Section   |
+     |        |                                          | 4.1.1     |
+     +--------+------------------------------------------+-----------+
+     | *alg*  | A digital signature algorithm identifier | [RFC7516] |
+     |        | such as per IANA "JSON Web Signature and | Section   |
+     |        | Encryption Algorithms" registry.  It     | 4.1.1     |
+     |        | MUST NOT be set to none or any symmetric |           |
+     |        | algorithm (MAC) identifier.              |           |
+     +--------+------------------------------------------+-----------+
+     | *kid*  | Unique identifier of the JWK used for    | [RFC7515] |
+     |        | the signature of the Status Attestation  |           |
+     |        | Request, it MUST match the one contained |           |
+     |        | in the Credential cnf.jwk.               |           |
+     +--------+------------------------------------------+-----------+
+
+                                  Table 1
+
+    +=====================+==========================+===============+
+    | JOSE Payload        | Description              | Reference     |
+    +=====================+==========================+===============+
+    | *iss*               | Wallet identifier.       | [RFC9126],    |
+    |                     |                          | [RFC7519]     |
+    +---------------------+--------------------------+---------------+
+    | *aud*               | It MUST be set to the    | [RFC9126],    |
+    |                     | identifier of the        | [RFC7519]     |
+    |                     | Credential Issuer.       |               |
+    +---------------------+--------------------------+---------------+
+    | *exp*               | UNIX Timestamp with the  | [RFC9126],    |
+    |                     | expiration time of the   | [RFC7519]     |
+    |                     | JWT.                     |               |
+    +---------------------+--------------------------+---------------+
+    | *iat*               | UNIX Timestamp with the  | [RFC9126],    |
+    |                     | time of JWT issuance.    | [RFC7519]     |
+    +---------------------+--------------------------+---------------+
+    | *jti*               | Unique identifier for    | [RFC7519]     |
+    |                     | the JWT.                 | Section 4.1.7 |
+    +---------------------+--------------------------+---------------+
+    | *credential_format* | The data format of the   | this          |
+    |                     | Credential.  Eg: vc+sd-  | specification |
+    |                     | jwt for SD-JWT, vc+mdoc  |               |
+    |                     | for ISO/IEC 18013-5 MDOC |               |
+    |                     | CBOR [@ISO.18013-5]      |               |
+    +---------------------+--------------------------+---------------+
+    | *credential*        | It MUST contain the      | this          |
+    |                     | Credential according to  | specification |
+    |                     | the data format given in |               |
+    |                     | the format claim.        |               |
+    +---------------------+--------------------------+---------------+
+
+                                 Table 2
+
+7.  Status Attestation
+
+   When a Status Attestation is requested to a Credential Issuer, the
+   Issuer checks the status of the Digital Credential and creates a
+   Status Attestation bound to it.
+
+   If the Digital Credential is valid, the Credential Issuer creates a
+   new Status Attestation, which a non-normative example is given below.
+
+   {
+       "alg": "ES256",
+       "typ": "status-attestation+jwt",
+       "kid": $ISSUER-JWKID
+   }
+   .
+   {
+       "iss": "https://issuer.example.org",
+       "iat": 1504699136,
+       "exp": 1504700136,
+       "credential_hash": $CREDENTIAL-HASH,
+       "credential_hash_alg": "sha-256",
+       "cnf": {
+           "jwk": {...}
+       }
+   }
+
+   The Status Attestation MUST contain the following claims when the JWT
+   format is used.
+
+   +========+==========================================+===============+
+   | JOSE   | Description                              | Reference     |
+   | Header |                                          |               |
+   +========+==========================================+===============+
+   | *alg*  | A digital signature algorithm            | [RFC7515],    |
+   |        | identifier such as per IANA "JSON        | [RFC7517]     |
+   |        | Web Signature and Encryption             |               |
+   |        | Algorithms" registry.  It MUST NOT       |               |
+   |        | be set to none or to a symmetric         |               |
+   |        | algorithm (MAC) identifier.              |               |
+   +--------+------------------------------------------+---------------+
+   | *typ*  | It MUST be set to status-                | [RFC7515],    |
+   |        | attestation+jwt.                         | [RFC7517] and |
+   |        |                                          | this          |
+   |        |                                          | specification |
+   +--------+------------------------------------------+---------------+
+   | *kid*  | Unique identifier of the Issuer          | [RFC7515]     |
+   |        | JWK.                                     |               |
+   +--------+------------------------------------------+---------------+
+
+                                  Table 3
+
+    +=======================+========================+===============+
+    | JOSE Payload          | Description            | Reference     |
+    +=======================+========================+===============+
+    | *iss*                 | It MUST be set to the  | [RFC9126],    |
+    |                       | identifier of the      | [RFC7519]     |
+    |                       | Issuer.                |               |
+    +-----------------------+------------------------+---------------+
+    | *iat*                 | UNIX Timestamp with    | [RFC9126],    |
+    |                       | the time of the Status | [RFC7519]     |
+    |                       | Attestation issuance.  |               |
+    +-----------------------+------------------------+---------------+
+    | *exp*                 | UNIX Timestamp with    | [RFC9126],    |
+    |                       | the expiry time of the | [RFC7519]     |
+    |                       | Status Attestation.    |               |
+    +-----------------------+------------------------+---------------+
+    | *credential_hash*     | Hash value of the      | this          |
+    |                       | Digital Credential the | specification |
+    |                       | Status Attestation is  |               |
+    |                       | bound to.              |               |
+    +-----------------------+------------------------+---------------+
+    | *credential_hash_alg* | The Algorithm used of  | this          |
+    |                       | hashing the Digital    | specification |
+    |                       | Credential to which    |               |
+    |                       | the Status Attestation |               |
+    |                       | is bound.  The value   |               |
+    |                       | SHOULD be set to S256. |               |
+    +-----------------------+------------------------+---------------+
+    | *cnf*                 | JSON object containing | [RFC7800]     |
+    |                       | the cryptographic key  | Section 3.1   |
+    |                       | binding.  The cnf.jwk  |               |
+    |                       | value MUST match with  |               |
+    |                       | the one provided       |               |
+    |                       | within the related     |               |
+    |                       | Digital Credential.    |               |
+    +-----------------------+------------------------+---------------+
+
+                                 Table 4
+
+8.  Status Attestation Response
+
+   If the Status Attestation is requested for a non-existent, expired,
+   revoked or invalid Digital Credential, the Credential Issuer MUST
+   respond with an HTTP Response with the status code set to 404.
+
+   If the Digital Credential is valid, the Credential Issuer then
+   returns the Status Attestation to the Wallet Instance, as in the
+   following non-normative example.
+
+   HTTP/1.1 201 OK
+   Content-Type: application/json
+
+   {
+       "status_attestation": "eyJhbGciOiJFUzI1Ni ...",
+   }
+
+9.  Credential Issuers Supporting Status Attestations
+
+9.1.  Credential Issuer Metadata
+
+   The Credential Issuers that uses the Status Attestations MUST include
+   in their OpenID4VCI [@!OpenID.VCI] metadata the claim
+   status_attestation_endpoint, which its value MUST be an HTTPs URL
+   indicating the endpoint where the Wallet Instances can request Status
+   Attestations.
+
+9.2.  Issued Digital Credentials
+
+   The Credential Issuers that uses the Status Attestations SHOULD
+   include in the issued Digital Credentials the object status with the
+   JSON member status_attestation set to a JSON Object containing the
+   following member:
+
+   *  credential_hash_alg.  REQUIRED.  The Algorithm used of hashing the
+      Digital Credential to which the Status Attestation is bound.  The
+      value SHOULD be set to S256.
+
+   The non-normative example of an unsecured payload of an SD-JWT VC is
+   shown below.
+
+      TODO: alignments with the OAuth2 Status List schema and IANA
+      registration.
+
+   {
+    "vct": "https://credentials.example.com/identity_credential",
+    "given_name": "John",
+    "family_name": "Doe",
+    "email": "johndoe@example.com",
+    "phone_number": "+1-202-555-0101",
+    "address": {
+      "street_address": "123 Main St",
+      "locality": "Anytown",
+      "region": "Anystate",
+      "country": "US"
+    },
+    "birthdate": "1940-01-01",
+    "is_over_18": true,
+    "is_over_21": true,
+    "is_over_65": true,
+    "status": {
+       "status_attestation": {
+           "credential_hash_alg": "S256",
+       }
+    }
+   }
+
+10.  Presenting Status Attestations
+
+   The Wallet Instance that provides the Status Attestations SHOULD be
+   included in the vp_token JSON array, as defined in [@OpenID4VP], the
+   Status Attestation along with the related Digital Credential.
+
+   The Verifier that receives a Digital Credential supporting the Status
+   Attestation, SHOULD:
+
+   *  Decode and validate the Digital Credential;
+
+   *  check the presence of status.status_attestation in the Digital
+      Credential.  If true, the Verifier SHOULD:
+
+      -  produce the hash of the Digital Credential using the hashing
+         algorithm defined in status.status_attestation;
+
+      -  decode all the Status Attestations provided in the
+         presentation, by matching the JWS Header parameter typ set to
+         status-attestation+jwt and looking for the credential_hash
+         value that matches with the hash produced at the previous
+         point;
+
+      -  evaluate the validity of the Status Attestation.
+
+   Please note: The importance of checking the revocation status of
+   Digital Credentials as a 'SHOULD' rather than a 'MUST' for a Verifier
+   who gets Status Attestation for the Digital Credential stems from the
+   fact that the decision of a Verifier to check the revocation status
+   of Digital Credentials is not absolute and can be influenced by
+   numerous variables.  Consider as an example the case of age-over x;
+   even if it has expired, it may still perform its intended purpose.
+   As a result, the expiration status alone does not render it invalid.
+   The adaptability recognizes that the need to verify revocation status
+   may not always coincide with the actual usability of a Digital
+   Credential, allowing Verifiers to examine and make educated
+   conclusions based on a variety of scenarios.
+
+11.  Security Considerations
+
+   TODO Security
+
+12.  IANA Considerations
+
+12.1.  JSON Web Token Claims Registration
+
+   This specification requests registration of the following Claims in
+   the IANA "JSON Web Token Claims" registry [@IANA.JWT] established by
+   [RFC7519].
+
+   *  Claim Name: credential_format
+
+   *  Claim Description: The Digital Credential format the Status
+      Attestation is bound to.
+
+   *  Change Controller: IETF
+
+   *  Specification Document(s): [[ (#digital-credential-proof-of-
+      possession) of this specification ]]
+
+
+
+   *  Claim Name: credential
+
+   *  Claim Description: The Digital Credential the Status Attestation
+      is bound to.
+
+   *  Change Controller: IETF
+
+   *  Specification Document(s): [[ (#digital-credential-proof-of-
+      possession) of this specification ]]
+
+
+
+   *  Claim Name: credential_hash
+
+   *  Claim Description: Hash value of the Digital Credential the Status
+      Attestation is bound to.
+
+   *  Change Controller: IETF
+
+   *  Specification Document(s): [[ (#status-attestation) of this
+      specification ]]
+
+
+
+   *  Claim Name: credential_hash_alg
+
+   *  Claim Description: The Algorithm used of hashing the Digital
+      Credential to which the Status Attestation is bound.
+
+   *  Change Controller: IETF
+
+   *  Specification Document(s): [[ (#status-attestation) of this
+      specification ]]
+
+12.2.  Media Type Registration
+
+   This section requests registration of the following media types
+   [@RFC2046] in the "Media Types" registry [@IANA.MediaTypes] in the
+   manner described in [@RFC6838].
+
+   To indicate that the content is an JWT-based Status List:
+
+   *  Type name: application
+
+   *  Subtype name: status-attestation-request+jwt
+
+   *  Required parameters: n/a
+
+   *  Optional parameters: n/a
+
+   *  Encoding considerations: binary; A JWT-based Status Attestation
+      Request object is a JWT; JWT values are encoded as a series of
+      base64url-encoded values (some of which may be the empty string)
+      separated by period ('.') characters.
+
+   *  Security considerations: See (#Security) of [[ this specification
+      ]]
+
+   *  Interoperability considerations: n/a
+
+   *  Published specification: [[ this specification ]]
+
+   *  Applications that use this media type: Applications using [[ this
+      specification ]] for updated status information of tokens
+
+   *  Fragment identifier considerations: n/a
+
+   *  Additional information:
+
+      -  File extension(s): n/a
+
+      -  Macintosh file type code(s): n/a
+
+   *  Person & email address to contact for further information:
+      Giuseppe De Marco, gi.demarco@innovazione.gov.it
+
+   *  Intended usage: COMMON
+
+   *  Restrictions on usage: none
+
+   *  Author: Giuseppe De Marco, gi.demarco@innovazione.gov.it
+
+   *  Change controller: IETF
+
+   *  Provisional registration?  No
+
+   To indicate that the content is an CWT-based Status List:
+
+   *  Type name: application
+
+   *  Subtype name: status-attestation+jwt
+
+   *  Required parameters: n/a
+
+   *  Optional parameters: n/a
+
+   *  Encoding considerations: binary
+
+   *  Security considerations: See (#Security) of [[ this specification
+      ]]
+
+   *  Interoperability considerations: n/a
+
+   *  Published specification: [[ this specification ]]
+
+   *  Applications that use this media type: Applications using [[ this
+      specification ]] for status attestation of tokens and Digital
+      Credentials
+
+   *  Fragment identifier considerations: n/a
+
+   *  Additional information:
+
+      -  File extension(s): n/a
+
+      -  Macintosh file type code(s): n/a
+
+   *  Person & email address to contact for further information:
+      Giuseppe De Marco, gi.demarco@innovazione.gov.it
+
+   *  Intended usage: COMMON
+
+   *  Restrictions on usage: none
+
+   *  Author: Giuseppe De Marco, gi.demarco@innovazione.gov.it
+
+   *  Change controller: IETF
+
+   *  Provisional registration?  No
+
+13.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
+              Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
+              2015, <https://www.rfc-editor.org/rfc/rfc7515>.
+
+   [RFC7516]  Jones, M. and J. Hildebrand, "JSON Web Encryption (JWE)",
+              RFC 7516, DOI 10.17487/RFC7516, May 2015,
+              <https://www.rfc-editor.org/rfc/rfc7516>.
+
+   [RFC7517]  Jones, M., "JSON Web Key (JWK)", RFC 7517,
+              DOI 10.17487/RFC7517, May 2015,
+              <https://www.rfc-editor.org/rfc/rfc7517>.
+
+   [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
+              (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
+              <https://www.rfc-editor.org/rfc/rfc7519>.
+
+   [RFC7800]  Jones, M., Bradley, J., and H. Tschofenig, "Proof-of-
+              Possession Key Semantics for JSON Web Tokens (JWTs)",
+              RFC 7800, DOI 10.17487/RFC7800, April 2016,
+              <https://www.rfc-editor.org/rfc/rfc7800>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC9126]  Lodderstedt, T., Campbell, B., Sakimura, N., Tonge, D.,
+              and F. Skokan, "OAuth 2.0 Pushed Authorization Requests",
+              RFC 9126, DOI 10.17487/RFC9126, September 2021,
+              <https://www.rfc-editor.org/rfc/rfc9126>.
+
+Appendix A.  Acknowledgments
+
+   We would like to thank:
+
+   *  Paul Bastien
+
+   *  Riccardo Iaconelli
+
+   *  Victor Näslund
+
+   *  Giada Sciarretta
+
+   *  Amir Sharif
+
+Appendix B.  Document History
+
+   TODO changelog.
+
+Authors' Addresses
+
+   Giuseppe De Marco
+   Dipartimento per la trasformazione digitale
+   Email: gi.demarco@innovazione.gov.it
+
+
+   Orie Steele
+   Transmute
+   Email: orie@transmute.industries
+
+
+   Francesco Marino
+   Istituto Poligrafico e Zecca dello Stato
+   Email: fa.marino@ipzs.it
