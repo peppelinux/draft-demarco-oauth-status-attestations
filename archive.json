@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-03-19T00:45:21.297732+00:00",
+  "timestamp": "2024-03-21T00:47:25.847719+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -384,6 +384,84 @@
       "updatedAt": "2024-03-08T19:41:14Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 27,
+      "id": "I_kwDOK4XJ0s6C0sac",
+      "title": "OID4VCI metadata should not be defined in a standalone draft",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/27",
+      "state": "OPEN",
+      "author": "awoie",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "IMO, OID4VCI metadata should not be defined in a separate document. At least as long there is no IANA registry for that.",
+      "createdAt": "2024-03-19T12:33:37Z",
+      "updatedAt": "2024-03-19T12:33:37Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 28,
+      "id": "I_kwDOK4XJ0s6C0vdZ",
+      "title": "Define use case for this status attestation mechanism",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/28",
+      "state": "OPEN",
+      "author": "awoie",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "It is not clear to me why other status mechanisms cannot be used instead of the proposed one. It would be good to understand under which circumstances the proposed status mechanism has clear benefits. I believe it is mostly saving HTTP requests for RPs, right?\r\n\r\nI don't necessarily agree with the statements made on privacy and trust model that are included in the document. IMO, OAuth Status List is privacy preserving and the trust model could be the same as for the proposed option. In fact, some people are implementing Status List using the existing issuer trust model.",
+      "createdAt": "2024-03-19T12:39:56Z",
+      "updatedAt": "2024-03-19T21:17:36Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "@awoie Does the status list prevent the monitoring of the credential status over time, outside the scope of the authentication?\r\n\r\nCould you please provide which part of the privacy and trust model statements you don't agree?\r\n\r\nthis specification enables an OCSP stapling like approach, nothing prevents to merge this approach within the status list specification (as proposed before the born of this specs)",
+          "createdAt": "2024-03-19T13:27:50Z",
+          "updatedAt": "2024-03-19T13:27:50Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@awoie I think the main benefit is probably presentation size, and verifier complexity.\n\nIt's true a holder could present a reasonably fresh signed CRL instead of use OCSP.\n\nIt's also true that the status attestation refresh window could impose some connectivity limits on the holder.\n\nAs a general rule, many systems are forbidden from calling out to check status, and transmitting an entire CRL only to support a single certificate validation is wasteful from the holder perspective... It also communicates status changes for previously transmitted credentials, or yet to be received credentials... So it leaks information regarding other transactions.",
+          "createdAt": "2024-03-19T21:17:35Z",
+          "updatedAt": "2024-03-19T21:17:35Z"
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "id": "I_kwDOK4XJ0s6C1OoJ",
+      "title": "Missing validation steps for verifiers",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/29",
+      "state": "OPEN",
+      "author": "awoie",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "It is not clear what happens if the verifier encounters a credential with a status attestation method in the `status` field but does not receive a status attestation. \r\n\r\nThree questions:\r\n- Should the verifier reject a credential presentation if the wallet did not provide a status attestation?\r\n- How does the holder know whether the verifier requires a status attestation?\r\n- Why would a holder ever present a credential along with a revoked status attestation?",
+      "createdAt": "2024-03-19T13:33:40Z",
+      "updatedAt": "2024-03-19T13:43:26Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "awoie",
+          "authorAssociation": "NONE",
+          "body": "> * Should the verifier reject a credential presentation if the wallet did not provide a status attestation?\r\n\r\nThis is especially important if the holder is not able to request a valid status attestation anymore and the credential became invalid.",
+          "createdAt": "2024-03-19T13:37:16Z",
+          "updatedAt": "2024-03-19T13:37:16Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "A credential might have more than a single status validation mechanism. The scope of the status attestation method in the status object is the evidence that this credential - and its issuer -  supports the status attestation. This enables the coesistence of status lsit and status attestation in the same credential and the use of status attestation for offline flows\r\n\r\nIf a verifier gets the status.status_attestation within a presented credential without obtaining within the vp_token a status attestation token, according to its policies, decides if the revocation check is required or not and if other revocation check mechanism are available.\r\n\r\n> Should the verifier reject a credential presentation if the wallet did not provide a status attestation?\r\n\r\nIt depends on the RP's policies.\r\n\r\n  - This is especially important if the holder is not able to request a valid status attestation anymore and the credential became invalid.\r\n  \r\n  that would be a proof that the holder unsatisfies the requirement of providing the proof that the credential is still valid. The RP behaviour depends on its policies.\r\n  \r\n\r\n> How does the holder know whether the verifier requires a status attestation?\r\n\r\nIt doesn't. When the credential is issued and contains a status.status_attestation, the holder should provide in the vp_token the status attestation related to each credential supporting this. We can expand this use case as well with community contributions.\r\n\r\n> Why would a holder ever present a credential along with a revoked status attestation?\r\n\r\nit might depend by the use cases. At the current stage the status attestation is intended for unrevoked credentials. We can expand this use case as well with community contributions.",
+          "createdAt": "2024-03-19T13:43:25Z",
+          "updatedAt": "2024-03-19T13:43:25Z"
+        }
+      ]
     }
   ],
   "pulls": [
