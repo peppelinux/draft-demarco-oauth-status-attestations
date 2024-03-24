@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-03-21T00:47:25.847719+00:00",
+  "timestamp": "2024-03-24T00:51:35.158506+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -462,6 +462,24 @@
           "updatedAt": "2024-03-19T13:43:25Z"
         }
       ]
+    },
+    {
+      "number": 30,
+      "id": "I_kwDOK4XJ0s6DWoAb",
+      "title": "Status Attestation in batch",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/30",
+      "state": "OPEN",
+      "author": "fmarino-ipzs",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "enhancement"
+      ],
+      "body": "If the Wallet Instance has several Credentials issued by the same Issuer, we could introduce a mechanism to request all the Status attestations referring to the Credentials. Probably, this could be achieved by allowing the `credential_pop` to be an array.",
+      "createdAt": "2024-03-23T07:21:57Z",
+      "updatedAt": "2024-03-23T07:21:58Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
