@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-04-02T00:49:18.632103+00:00",
+  "timestamp": "2024-04-04T00:47:57.195617+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -478,6 +478,22 @@
       "body": "If the Wallet Instance has several Credentials issued by the same Issuer, we could introduce a mechanism to request all the Status attestations referring to the Credentials. Probably, this could be achieved by allowing the `credential_pop` to be an array.",
       "createdAt": "2024-03-23T07:21:57Z",
       "updatedAt": "2024-03-23T07:21:58Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 31,
+      "id": "I_kwDOK4XJ0s6EWDFN",
+      "title": "eIDAS II Regulation requirements from Art. 5a(16)",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/31",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Art. 5a(16). The technical framework of the European Digital Identity Wallet shall:\r\n\r\n(a) not allow providers of electronic attestations of attributes or any other party, after the issuance of the attestation of attributes, to obtain data that allows transactions or user behaviour to be tracked, linked or correlated, or knowledge of transactions or user behaviour to beotherwise obtained, unless explicitly authorised by the user;\r\n\r\nAt the current stage, the status attestation are completely in line with this.",
+      "createdAt": "2024-04-02T12:18:28Z",
+      "updatedAt": "2024-04-02T12:18:28Z",
       "closedAt": null,
       "comments": []
     }
