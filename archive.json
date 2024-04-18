@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-04-16T00:46:27.887542+00:00",
+  "timestamp": "2024-04-18T00:46:17.667927+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -509,9 +509,17 @@
       "labels": [],
       "body": "PoP of Credential cnf key hould not be used, instead an api-key exchanged between wallet and Issuer.\r\n\r\nAdvantages are:\r\n- enables claim-based bound credentials\r\n- does not require user interaction as the PoP key may be bound to PIN/Biometrics but the api-key does not, as it is provided by the Issuer during issuance",
       "createdAt": "2024-04-11T15:10:52Z",
-      "updatedAt": "2024-04-11T15:10:52Z",
+      "updatedAt": "2024-04-17T12:33:38Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "I see the benefits @paulbastian and I believe that these should be further discussed, here some additional considerations:\r\n\r\n1. how it would enable claim-based bound credentials?\r\n2. this depends by impl. We connsider that the attestations are fetched when the user activate/execute the wallet, therefore asap after the local authentication",
+          "createdAt": "2024-04-17T12:33:38Z",
+          "updatedAt": "2024-04-17T12:33:38Z"
+        }
+      ]
     }
   ],
   "pulls": [
