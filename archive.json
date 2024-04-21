@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-04-18T00:46:17.667927+00:00",
+  "timestamp": "2024-04-21T00:51:34.334034+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -119,7 +119,7 @@
       "labels": [],
       "body": "> it would be good to avoid the term \"attestations\" because it is already used for a different purpose (in the IETF).\r\n\r\nCould it be \"status tokens\" or \"status assertions\"?",
       "createdAt": "2024-02-07T13:14:29Z",
-      "updatedAt": "2024-02-29T09:52:33Z",
+      "updatedAt": "2024-04-19T12:59:04Z",
       "closedAt": null,
       "comments": [
         {
@@ -149,6 +149,13 @@
           "body": "I suddenly realized that \"status $something\" misses the subject, the name would therefore be \"Digital Credential Status Assertions\"\r\n\r\nThis specification excludes its use with traditional OAuth 2.0/OIDC tokens. While the OAuth Status List shares some similarities, the OAuth 2.0 Introspection endpoint is deemed sufficient for such tokens due to several key differences:\r\n\r\n- **Interaction**: Parties interact differently in the context of traditional tokens compared to this specification.\r\n- **Privacy**: Distinct privacy requirements apply to each scenario.\r\n- **Offline usage**: Offline use cases, which necessitate this specification, are not a requirement for legacy infrastructures utilizing traditional tokens.",
           "createdAt": "2024-02-29T09:52:21Z",
           "updatedAt": "2024-02-29T09:52:33Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "@marinaado Interesting reference: https://github.com/ietf-wg-scitt/draft-ietf-scitt-architecture/pull/227/files#diff-585fb424519b79cf000445f3425fa56d328cbaca5d2a622740ddc4e5ca91dbe1R936",
+          "createdAt": "2024-04-19T12:59:03Z",
+          "updatedAt": "2024-04-19T12:59:03Z"
         }
       ]
     },
