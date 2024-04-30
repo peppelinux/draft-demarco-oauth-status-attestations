@@ -1578,7 +1578,7 @@ encoding, for better readability:<a href="#section-7.2-3" class="pilcrow">¶</a>
     "iss": "0b434530-e151-4c40-98b7-74c75a5ef760",
     "aud": "https://issuer.example.org/status-attestation-endpoint",
     "iat": 1698744039,
-    "exp": 1698830439,
+    "exp": 1698834139,
     "jti": "6f204f7e-e453-4dfd-814e-9d155319408c",
     "credential_hash": $Issuer-Signed-JWT-Hash
     "credential_hash_alg": "sha-256",
@@ -1590,7 +1590,7 @@ encoding, for better readability:<a href="#section-7.2-3" class="pilcrow">¶</a>
           <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
 <thead>
             <tr>
-              <th class="text-left" rowspan="1" colspan="1">JOSE Header Parameter</th>
+              <th class="text-left" rowspan="1" colspan="1">JOSE Header</th>
               <th class="text-left" rowspan="1" colspan="1">Description</th>
               <th class="text-left" rowspan="1" colspan="1">Reference</th>
             </tr>
@@ -1600,7 +1600,7 @@ encoding, for better readability:<a href="#section-7.2-3" class="pilcrow">¶</a>
               <td class="text-left" rowspan="1" colspan="1">
                 <strong>typ</strong>
 </td>
-              <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set to <code>status-attestation-request+jwt</code> or <code>status-attestation-request+cwt</code>
+              <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set to <code>status-attestation-request+jwt</code>
 </td>
               <td class="text-left" rowspan="1" colspan="1">
                 <span>[<a href="#RFC7516" class="cite xref">RFC7516</a>]</span> Section 4.1.1</td>
@@ -1656,9 +1656,9 @@ encoding, for better readability:<a href="#section-7.2-3" class="pilcrow">¶</a>
               <td class="text-left" rowspan="1" colspan="1">
                 <strong>exp</strong>
 </td>
-              <td class="text-left" rowspan="1" colspan="1">UNIX Timestamp with the expiration time of the JWT. It <span class="bcp14">MUST</span> be superior to the value set for <code>iat</code>  .</td>
+              <td class="text-left" rowspan="1" colspan="1">UNIX Timestamp with the expiration time of the JWT.</td>
               <td class="text-left" rowspan="1" colspan="1">
-                <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span>, <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>, <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>
+                <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span>, <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>
 </td>
             </tr>
             <tr>
@@ -1750,7 +1750,7 @@ Issuer checks the status of the Digital Credential and creates a Status Attestat
             <td class="text-left" rowspan="1" colspan="1">
               <strong>typ</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set to <code>status-attestation+jwt</code>or <code>status-attestation+cwt</code>.</td>
+            <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set to <code>status-attestation+jwt</code>.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>, <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> and this specification</td>
           </tr>
@@ -1933,8 +1933,7 @@ an SD-JWT VC is shown below.<a href="#section-10.2-3" class="pilcrow">¶</a></p>
 <p id="section-11-1">The Wallet Instance that provides the Status Attestations using [@OpenID4VP], <span class="bcp14">SHOULD</span> include in the
 <code>vp_token</code> JSON array, as defined in [@OpenID4VP], the Status Attestation along with the
 related Digital Credential.<a href="#section-11-1" class="pilcrow">¶</a></p>
-<p id="section-11-2">Since the Wallet may request one or more Status Attestations, issued by the same Credential Issuer, the <code>credential_pop</code> object <span class="bcp14">MUST</span> be an array.
-The Verifier that receives a Digital Credential supporting the Status Attestation,
+<p id="section-11-2">The Verifier that receives a Digital Credential supporting the Status Attestation,
 <span class="bcp14">SHOULD</span>:<a href="#section-11-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-11-3.1">
