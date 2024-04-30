@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-04-28T00:52:14.730662+00:00",
+  "timestamp": "2024-04-30T00:47:34.935093+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -381,16 +381,24 @@
       "id": "I_kwDOK4XJ0s6BvULj",
       "title": "Need privacy considerations for issuer tracking",
       "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/26",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "OR13",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Requiring continuous credential pop from a wallet so a status attestation is available also impacts holder privacy.\r\n\r\nThere should be privacy considerations that compare the trade offs associated this approach when compared to requesting status lists anonymously",
       "createdAt": "2024-03-08T19:41:14Z",
-      "updatedAt": "2024-03-08T19:41:14Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2024-04-29T12:14:24Z",
+      "closedAt": "2024-04-29T12:14:24Z",
+      "comments": [
+        {
+          "author": "SaraConsoliACN",
+          "authorAssociation": "NONE",
+          "body": "\r\n@OR13 Can we consider this issue closed now that we have dedicated a chapter to privacy considerations?",
+          "createdAt": "2024-04-29T10:09:17Z",
+          "updatedAt": "2024-04-29T10:09:17Z"
+        }
+      ]
     },
     {
       "number": 27,
