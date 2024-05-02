@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-04-30T00:47:34.935093+00:00",
+  "timestamp": "2024-05-02T00:47:39.593115+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -115,11 +115,13 @@
       "state": "OPEN",
       "author": "peppelinux",
       "authorAssociation": "OWNER",
-      "assignees": [],
+      "assignees": [
+        "SaraConsoliACN"
+      ],
       "labels": [],
       "body": "> it would be good to avoid the term \"attestations\" because it is already used for a different purpose (in the IETF).\r\n\r\nCould it be \"status tokens\" or \"status assertions\"?",
       "createdAt": "2024-02-07T13:14:29Z",
-      "updatedAt": "2024-04-19T12:59:04Z",
+      "updatedAt": "2024-04-30T09:55:29Z",
       "closedAt": null,
       "comments": [
         {
@@ -156,6 +158,13 @@
           "body": "@marinaado Interesting reference: https://github.com/ietf-wg-scitt/draft-ietf-scitt-architecture/pull/227/files#diff-585fb424519b79cf000445f3425fa56d328cbaca5d2a622740ddc4e5ca91dbe1R936",
           "createdAt": "2024-04-19T12:59:03Z",
           "updatedAt": "2024-04-19T12:59:03Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "Following the Architecture for Trustworthy and Transparent Digital Supply Chains (SCITT), this looks pretty close to the purpose of this specs\r\n\r\n````\r\n{{NIST.SP.800-63-3}} defines \"assertion\" as \"A statement from a verifier to an RP that contains information about a subscriber.\r\nAssertions may also contain verified attributes.\"\r\n````\r\n\r\n@SaraConsoliACN could you please create a PR with the proposal of the specification name change?",
+          "createdAt": "2024-04-30T09:55:20Z",
+          "updatedAt": "2024-04-30T09:55:20Z"
         }
       ]
     },
@@ -393,7 +402,7 @@
       "comments": [
         {
           "author": "SaraConsoliACN",
-          "authorAssociation": "NONE",
+          "authorAssociation": "COLLABORATOR",
           "body": "\r\n@OR13 Can we consider this issue closed now that we have dedicated a chapter to privacy considerations?",
           "createdAt": "2024-04-29T10:09:17Z",
           "updatedAt": "2024-04-29T10:09:17Z"
@@ -524,7 +533,7 @@
       "labels": [],
       "body": "PoP of Credential cnf key hould not be used, instead an api-key exchanged between wallet and Issuer.\r\n\r\nAdvantages are:\r\n- enables claim-based bound credentials\r\n- does not require user interaction as the PoP key may be bound to PIN/Biometrics but the api-key does not, as it is provided by the Issuer during issuance",
       "createdAt": "2024-04-11T15:10:52Z",
-      "updatedAt": "2024-04-17T12:33:38Z",
+      "updatedAt": "2024-04-30T12:31:36Z",
       "closedAt": null,
       "comments": [
         {
@@ -533,6 +542,13 @@
           "body": "I see the benefits @paulbastian and I believe that these should be further discussed, here some additional considerations:\r\n\r\n1. how it would enable claim-based bound credentials?\r\n2. this depends by impl. We connsider that the attestations are fetched when the user activate/execute the wallet, therefore asap after the local authentication",
           "createdAt": "2024-04-17T12:33:38Z",
           "updatedAt": "2024-04-17T12:33:38Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "body": "perhaps we say \"issuer MUST authenticate the wallet\", and MUST support PoP and MAY support other mechanisms, and briefly describe them?",
+          "createdAt": "2024-04-30T12:31:35Z",
+          "updatedAt": "2024-04-30T12:31:35Z"
         }
       ]
     }
@@ -2268,6 +2284,123 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 33,
+      "id": "PR_kwDOK4XJ0s5uHo7t",
+      "title": "Cumulative status attestation updates",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/33",
+      "state": "MERGED",
+      "author": "SaraConsoliACN",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR may resolve issue #30, #20. Additionally, it is noted that the EXP timestamp MUST be superior to IAT timestamp.",
+      "createdAt": "2024-04-30T09:43:35Z",
+      "updatedAt": "2024-04-30T09:54:40Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "c2c9784e048f5995149f532ebe550634dd9f309e",
+      "headRepository": "SaraConsoliACN/draft-demarco-oauth-status-attestations",
+      "headRefName": "statusAttestationUpdates",
+      "headRefOid": "4dc593ecd4d072988490ed11a23bf4d75fe8e1b7",
+      "closedAt": "2024-04-30T09:54:40Z",
+      "mergedAt": "2024-04-30T09:54:40Z",
+      "mergedBy": "SaraConsoliACN",
+      "mergeCommit": {
+        "oid": "a1fd2de245cbd8689be05a844a469d7381e02a60"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s55C6Ho",
+          "commit": {
+            "abbreviatedOid": "9987fe4"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-04-30T09:46:26Z",
+          "updatedAt": "2024-04-30T09:46:27Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "```suggestion\r\n| JOSE Header Parameter | Description | Reference |\r\n```",
+              "createdAt": "2024-04-30T09:46:27Z",
+              "updatedAt": "2024-04-30T09:46:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s55C7T-",
+          "commit": {
+            "abbreviatedOid": "9987fe4"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-04-30T09:48:52Z",
+          "updatedAt": "2024-04-30T09:48:52Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "```suggestion\r\nSince the Wallet may request one or more Status Attestations, issued by the same Credential Issuer, the `credential_pop` object MUST be an array.\r\n```",
+              "createdAt": "2024-04-30T09:48:52Z",
+              "updatedAt": "2024-04-30T09:48:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s55C7yg",
+          "commit": {
+            "abbreviatedOid": "9987fe4"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-04-30T09:49:46Z",
+          "updatedAt": "2024-04-30T09:50:04Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "```suggestion\r\n| **exp** | UNIX Timestamp with the expiration time of the JWT. It MUST be superior to the value set for `iat`  . | {{RFC9126}}, {{RFC7519}}, {{RFC7515}} |\r\n```",
+              "createdAt": "2024-04-30T09:49:46Z",
+              "updatedAt": "2024-04-30T09:50:04Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "id": "PR_kwDOK4XJ0s5uH6Da",
+      "title": "Revert \"Cumulative status attestation updates\"",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/34",
+      "state": "MERGED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Reverts peppelinux/draft-demarco-oauth-status-attestations#33",
+      "createdAt": "2024-04-30T10:20:10Z",
+      "updatedAt": "2024-04-30T10:20:28Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "a1fd2de245cbd8689be05a844a469d7381e02a60",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "headRefName": "revert-33-statusAttestationUpdates",
+      "headRefOid": "2f53b662356b4c5a5b7f78d3822e5138839b9d33",
+      "closedAt": "2024-04-30T10:20:28Z",
+      "mergedAt": "2024-04-30T10:20:28Z",
+      "mergedBy": "peppelinux",
+      "mergeCommit": {
+        "oid": "d182c8792b533f53e86265218000558d43f5a76a"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
