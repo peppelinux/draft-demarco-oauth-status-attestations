@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-02T00:47:39.593115+00:00",
+  "timestamp": "2024-05-05T00:52:00.001829+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -228,11 +228,13 @@
       "state": "OPEN",
       "author": "peppelinux",
       "authorAssociation": "OWNER",
-      "assignees": [],
+      "assignees": [
+        "SaraConsoliACN"
+      ],
       "labels": [],
       "body": "For the sake of clarity, I explicitly would provide a list of error codes that are useful in this specification. For example, it is not clear how to handle the case of an error response due to a Credential revocation. I don't see a clear error code in the RFC6749 that is clear for this scenario. We could put this in an issue and postpone this discussion if you want.\r\n\r\n_Originally posted by @fmarino-ipzs in https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/10#discussion_r1489337287_\r\n            ",
       "createdAt": "2024-02-14T14:03:32Z",
-      "updatedAt": "2024-02-14T14:03:32Z",
+      "updatedAt": "2024-05-03T15:55:03Z",
       "closedAt": null,
       "comments": []
     },
@@ -284,11 +286,13 @@
       "state": "OPEN",
       "author": "fmarino-ipzs",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "SaraConsoliACN"
+      ],
       "labels": [],
       "body": "We should generalize the key identifier by adding:\r\n\r\n- jwk\r\n- x5c\r\n\r\nOnly one of them MUST be used. ",
       "createdAt": "2024-02-23T22:39:25Z",
-      "updatedAt": "2024-02-28T14:23:20Z",
+      "updatedAt": "2024-05-03T15:54:46Z",
       "closedAt": null,
       "comments": [
         {
@@ -309,12 +313,12 @@
       "author": "fmarino-ipzs",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
-        "peppelinux"
+        "SaraConsoliACN"
       ],
       "labels": [],
       "body": "The credential_pop is a JWT. I would consider `typ` as OPTIONAL and value it with `jwt`.\r\nIf omitted by default it is assumed to be `jwt`.",
       "createdAt": "2024-02-24T00:16:16Z",
-      "updatedAt": "2024-03-11T07:59:50Z",
+      "updatedAt": "2024-05-03T15:54:26Z",
       "closedAt": null,
       "comments": [
         {
@@ -2401,6 +2405,228 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 35,
+      "id": "PR_kwDOK4XJ0s5uVxmx",
+      "title": "Cumulative PR - Status attestation updates",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/35",
+      "state": "CLOSED",
+      "author": "SaraConsoliACN",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR addresses various commits made in the last days:\r\n- issue #30\r\nAdditionally, the expiration time (EXP) object in the attestation has been adjusted to 24 hours",
+      "createdAt": "2024-05-02T10:37:22Z",
+      "updatedAt": "2024-05-03T08:21:26Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "saraACN",
+      "baseRefOid": "c2c9784e048f5995149f532ebe550634dd9f309e",
+      "headRepository": "SaraConsoliACN/draft-demarco-oauth-status-attestations",
+      "headRefName": "statusAttestationUpdates",
+      "headRefOid": "324dc971996147a6b98b32e8e19fc3a6250316b5",
+      "closedAt": "2024-05-03T08:21:26Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "no, please close this PR and create single PR each of them aiming to resolve single issues, separately\r\n",
+          "createdAt": "2024-05-03T08:19:27Z",
+          "updatedAt": "2024-05-03T08:19:27Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s55Ujqd",
+          "commit": {
+            "abbreviatedOid": "a8aaa25"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-05-02T10:58:40Z",
+          "updatedAt": "2024-05-02T10:59:49Z",
+          "comments": [
+            {
+              "originalPosition": 44,
+              "body": "missing definition here, please provide the definition of credential_pop, type Array[String] and the description of this parameter, before the validation requirements at line 266",
+              "createdAt": "2024-05-02T10:58:41Z",
+              "updatedAt": "2024-05-02T10:59:49Z"
+            },
+            {
+              "originalPosition": 89,
+              "body": "please provide here the definition of this parameter",
+              "createdAt": "2024-05-02T10:59:11Z",
+              "updatedAt": "2024-05-02T10:59:49Z"
+            },
+            {
+              "originalPosition": 97,
+              "body": "this is a consideration that is not required here, this must be merged within the definition of `credential_pop`",
+              "createdAt": "2024-05-02T10:59:45Z",
+              "updatedAt": "2024-05-02T10:59:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s55Zd0l",
+          "commit": {
+            "abbreviatedOid": "f483097"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-05-02T19:26:26Z",
+          "updatedAt": "2024-05-02T19:29:04Z",
+          "comments": [
+            {
+              "originalPosition": 72,
+              "body": "please, the definition of the request parameter, where the credential_pop must be defined.",
+              "createdAt": "2024-05-02T19:26:27Z",
+              "updatedAt": "2024-05-02T21:03:17Z"
+            },
+            {
+              "originalPosition": 86,
+              "body": "this is not the way to define a parameter neither to define a new section.\r\n\r\nPlease follow my previous suggestion.",
+              "createdAt": "2024-05-02T19:27:07Z",
+              "updatedAt": "2024-05-02T19:29:04Z"
+            },
+            {
+              "originalPosition": 88,
+              "body": "as already mentioned, this must be defined in the text about the definition of the parameter. this is not good in this way.",
+              "createdAt": "2024-05-02T19:28:13Z",
+              "updatedAt": "2024-05-02T19:29:04Z"
+            },
+            {
+              "originalPosition": 90,
+              "body": "as mentioned, the credential_pop is now supposed to be an array, not a json object",
+              "createdAt": "2024-05-02T19:28:50Z",
+              "updatedAt": "2024-05-02T19:29:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s55c-st",
+          "commit": {
+            "abbreviatedOid": "324dc97"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-03T08:20:04Z",
+          "updatedAt": "2024-05-03T08:20:05Z",
+          "comments": [
+            {
+              "originalPosition": 245,
+              "body": "this is wrong, already said. This is wrong",
+              "createdAt": "2024-05-03T08:20:05Z",
+              "updatedAt": "2024-05-03T08:20:05Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "id": "PR_kwDOK4XJ0s5ueL78",
+      "title": "Editorial and fix: issue #30, 'exp' parameter review",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/36",
+      "state": "OPEN",
+      "author": "SaraConsoliACN",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR:\r\n- Addresses issue #30\r\n- Fixes some editorial issues\r\n- Adds a note on the 'exp' parameter, which must be greater than the 'iat' parameter\r\n",
+      "createdAt": "2024-05-03T13:03:03Z",
+      "updatedAt": "2024-05-03T15:53:50Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "d182c8792b533f53e86265218000558d43f5a76a",
+      "headRepository": "SaraConsoliACN/draft-demarco-oauth-status-attestations",
+      "headRefName": "SaraConsoliACN-20240503_1",
+      "headRefOid": "cfda2ed4ecf2226768220d001a35cb605db9bf43",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s55faBo",
+          "commit": {
+            "abbreviatedOid": "1b221a7"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-05-03T14:26:25Z",
+          "updatedAt": "2024-05-03T14:30:19Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "```suggestion\r\nGiven that the Wallet may request one or more Status Attestations from the same Credential Issuer, the `credential_pop` parameter is subject to the following specification:\r\n- credential_pop: REQUIRED. It MUST be implemented as an array of strings, where each string represents a Digital Credential proof of possession.\r\n```",
+              "createdAt": "2024-05-03T14:26:25Z",
+              "updatedAt": "2024-05-03T14:30:19Z"
+            },
+            {
+              "originalPosition": 47,
+              "body": "```suggestion\r\n- The Credential Issuer MUST verify the signature of all elements in the `credential_pop` object using the public key contained within the Digital Credential where the `credential_pop` is referred to;\r\n```",
+              "createdAt": "2024-05-03T14:27:48Z",
+              "updatedAt": "2024-05-03T14:30:19Z"
+            },
+            {
+              "originalPosition": 48,
+              "body": "```suggestion\r\n- the Credential Issuer MUST verify that it is the legitimate Issuer of the Digital Credential to which the `credential_pop` refers.\r\n```",
+              "createdAt": "2024-05-03T14:29:10Z",
+              "updatedAt": "2024-05-03T14:30:19Z"
+            },
+            {
+              "originalPosition": 118,
+              "body": "```suggestion\r\n    \"status_attestations\": [\"eyJhbGciOiJFUzI1Ni ...\", \"...\"],\r\n```\r\n\r\nplease bring it as plural",
+              "createdAt": "2024-05-03T14:30:00Z",
+              "updatedAt": "2024-05-03T14:30:19Z"
+            },
+            {
+              "originalPosition": 118,
+              "body": "here and in all the text",
+              "createdAt": "2024-05-03T14:30:10Z",
+              "updatedAt": "2024-05-03T14:30:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s55gGBO",
+          "commit": {
+            "abbreviatedOid": "cfda2ed"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-03T15:52:50Z",
+          "updatedAt": "2024-05-03T15:53:50Z",
+          "comments": [
+            {
+              "originalPosition": 112,
+              "body": "```suggestion\r\n| **exp** | UNIX Timestamp with the expiration time of the JWT. It MUST be superior to the value set for `iat`. | {{RFC9126}}, {{RFC7519}}, {{RFC7515}} |\r\n```",
+              "createdAt": "2024-05-03T15:52:50Z",
+              "updatedAt": "2024-05-03T15:53:50Z"
+            },
+            {
+              "originalPosition": 121,
+              "body": "```suggestion\r\nIf the Digital Credential is valid, the Credential Issuer MUST return an HTTP status code of 201 (Created), with the content type set to `application/json`. The response MUST include a JSON object with a member named `status_attestations`, which contains a list of Status Attestations, as illustrated in the following non-normative example:\r\n```",
+              "createdAt": "2024-05-03T15:53:27Z",
+              "updatedAt": "2024-05-03T15:53:50Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
