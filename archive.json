@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-05T00:52:00.001829+00:00",
+  "timestamp": "2024-05-07T00:48:48.438010+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -2534,7 +2534,7 @@
     {
       "number": 36,
       "id": "PR_kwDOK4XJ0s5ueL78",
-      "title": "Editorial and fix: issue #30, 'exp' parameter review",
+      "title": "breaking change: credential_pop is an array",
       "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/36",
       "state": "OPEN",
       "author": "SaraConsoliACN",
@@ -2543,7 +2543,7 @@
       "labels": [],
       "body": "This PR:\r\n- Addresses issue #30\r\n- Fixes some editorial issues\r\n- Adds a note on the 'exp' parameter, which must be greater than the 'iat' parameter\r\n",
       "createdAt": "2024-05-03T13:03:03Z",
-      "updatedAt": "2024-05-03T15:53:50Z",
+      "updatedAt": "2024-05-06T13:28:45Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
       "baseRefName": "main",
       "baseRefOid": "d182c8792b533f53e86265218000558d43f5a76a",
@@ -2623,6 +2623,178 @@
               "body": "```suggestion\r\nIf the Digital Credential is valid, the Credential Issuer MUST return an HTTP status code of 201 (Created), with the content type set to `application/json`. The response MUST include a JSON object with a member named `status_attestations`, which contains a list of Status Attestations, as illustrated in the following non-normative example:\r\n```",
               "createdAt": "2024-05-03T15:53:27Z",
               "updatedAt": "2024-05-03T15:53:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s55oGdA",
+          "commit": {
+            "abbreviatedOid": "cfda2ed"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-06T11:14:25Z",
+          "updatedAt": "2024-05-06T11:14:25Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "since the value is an array, wouldn't be better to rename this to `credentials_pop`?\r\n\r\n@marinaado \r\n@fmarino-ipzs \r\n@OR13 ",
+              "createdAt": "2024-05-06T11:14:25Z",
+              "updatedAt": "2024-05-06T11:14:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s55o63h",
+          "commit": {
+            "abbreviatedOid": "cfda2ed"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-06T13:20:26Z",
+          "updatedAt": "2024-05-06T13:20:26Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "I wonder if these are all really \"credentials\"... or are they simply assertions related to a credential that had a confirmation claim?\r\n\r\n- https://datatracker.ietf.org/doc/html/rfc7800#section-3.1\r\n- https://datatracker.ietf.org/doc/html/rfc8747#section-3.1\r\n\r\nNow that its an array, can each of these items demonstrate possession of a different key?\r\n\r\nCan methods be mixed, for example, cred-1 uses COSE Key, cred-2 use JKT ?\r\n\r\n",
+              "createdAt": "2024-05-06T13:20:26Z",
+              "updatedAt": "2024-05-06T13:20:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s55o7ve",
+          "commit": {
+            "abbreviatedOid": "cfda2ed"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "In moving to an array, a lot of new edge cases have been created.\r\n\r\nI think we should add some examples and address them while introducing this change.\r\n\r\nI'm happy to propose text, but first lets have a discussion here:\r\n\r\nhttps://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/36/files#r1591006026",
+          "createdAt": "2024-05-06T13:22:10Z",
+          "updatedAt": "2024-05-06T13:22:10Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s55o9vL",
+          "commit": {
+            "abbreviatedOid": "cfda2ed"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-06T13:26:01Z",
+          "updatedAt": "2024-05-06T13:26:02Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "I wonder if this should be changed to JSON.\r\n\r\nIf it says like this, I think an example showing application/x-www-form-urlencoded of CWT and JWT would help communicate the intention here, I am happy to produce one if there is agreement.",
+              "createdAt": "2024-05-06T13:26:02Z",
+              "updatedAt": "2024-05-06T13:26:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s55o-mk",
+          "commit": {
+            "abbreviatedOid": "cfda2ed"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-06T13:27:45Z",
+          "updatedAt": "2024-05-06T13:27:45Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "Given the updates from version 00 to 01, the term credentials is misleading because the items within that array are not credentials but assertions that prove credential possession. Therefore, we should rename this parameter to better reflect its purpose.",
+              "createdAt": "2024-05-06T13:27:45Z",
+              "updatedAt": "2024-05-06T13:27:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s55o_H7",
+          "commit": {
+            "abbreviatedOid": "cfda2ed"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-06T13:28:45Z",
+          "updatedAt": "2024-05-06T13:28:45Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "I'm also in favor of `application/json` too\r\n\r\n@marinaado @fmarino-ipzs ^",
+              "createdAt": "2024-05-06T13:28:45Z",
+              "updatedAt": "2024-05-06T13:28:45Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "id": "PR_kwDOK4XJ0s5unkTi",
+      "title": "Fix: issue #20",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/37",
+      "state": "OPEN",
+      "author": "SaraConsoliACN",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "this commit may resolve issue #20.",
+      "createdAt": "2024-05-06T10:15:37Z",
+      "updatedAt": "2024-05-06T13:04:47Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "d182c8792b533f53e86265218000558d43f5a76a",
+      "headRepository": "SaraConsoliACN/draft-demarco-oauth-status-attestations",
+      "headRefName": "SaraConsoliACN-20240506_issue20",
+      "headRefOid": "0c39d9b1b5e5bfcc57fe4a961962e362dffd286e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s55oyWp",
+          "commit": {
+            "abbreviatedOid": "0c39d9b"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-05-06T13:02:45Z",
+          "updatedAt": "2024-05-06T13:04:47Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "```suggestion\r\ndefined by JSON Web Token (JWT) {{RFC7519}}, the term \"CBOR Web Token (CWT)\" defined in {{RFC8392}}.\r\n```",
+              "createdAt": "2024-05-06T13:02:45Z",
+              "updatedAt": "2024-05-06T13:04:47Z"
+            },
+            {
+              "originalPosition": 22,
+              "body": "we should say here in which cases, when JWT is must be set to ... when CWT ...",
+              "createdAt": "2024-05-06T13:03:21Z",
+              "updatedAt": "2024-05-06T13:04:47Z"
+            },
+            {
+              "originalPosition": 34,
+              "body": "as mentioned before",
+              "createdAt": "2024-05-06T13:04:07Z",
+              "updatedAt": "2024-05-06T13:04:47Z"
             }
           ]
         }
