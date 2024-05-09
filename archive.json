@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-07T00:48:48.438010+00:00",
+  "timestamp": "2024-05-09T00:49:01.683273+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -2543,13 +2543,13 @@
       "labels": [],
       "body": "This PR:\r\n- Addresses issue #30\r\n- Fixes some editorial issues\r\n- Adds a note on the 'exp' parameter, which must be greater than the 'iat' parameter\r\n",
       "createdAt": "2024-05-03T13:03:03Z",
-      "updatedAt": "2024-05-06T13:28:45Z",
+      "updatedAt": "2024-05-08T16:18:47Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
       "baseRefName": "main",
       "baseRefOid": "d182c8792b533f53e86265218000558d43f5a76a",
       "headRepository": "SaraConsoliACN/draft-demarco-oauth-status-attestations",
       "headRefName": "SaraConsoliACN-20240503_1",
-      "headRefOid": "cfda2ed4ecf2226768220d001a35cb605db9bf43",
+      "headRefOid": "a3d747b040e7f7cc3ea64f4b38305fa56e032d2c",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -2738,13 +2738,59 @@
               "updatedAt": "2024-05-06T13:28:45Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s55vpWt",
+          "commit": {
+            "abbreviatedOid": "cfda2ed"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-07T09:05:55Z",
+          "updatedAt": "2024-05-07T09:05:55Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "another solution @SaraConsoliACN @OR13 to prevent the use of `application/json` would be this\r\n\r\n`credential_pop=\"...\"&credential_pop=\"...\"&...`\r\n\r\ntaking into account that credential_pop is deprecable now and require a name change",
+              "createdAt": "2024-05-07T09:05:55Z",
+              "updatedAt": "2024-05-07T09:05:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s559EqS",
+          "commit": {
+            "abbreviatedOid": "5582bac"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-05-08T15:52:30Z",
+          "updatedAt": "2024-05-08T15:54:25Z",
+          "comments": [
+            {
+              "originalPosition": 134,
+              "body": "```suggestion\r\n\r\n```",
+              "createdAt": "2024-05-08T15:52:30Z",
+              "updatedAt": "2024-05-08T15:54:25Z"
+            },
+            {
+              "originalPosition": 121,
+              "body": "```suggestion\r\nIf the Digital Credential is valid, the Credential Issuer MUST return an HTTP status code of 201 (Created), with the content type set to `application/json`. The response MUST include a JSON object with a member named `status_attestations`, which contains an array of strings. Each string in the array represents a Status Attestation, as illustrated in the following non-normative example:\r\n```",
+              "createdAt": "2024-05-08T15:54:14Z",
+              "updatedAt": "2024-05-08T15:54:25Z"
+            }
+          ]
         }
       ]
     },
     {
       "number": 37,
       "id": "PR_kwDOK4XJ0s5unkTi",
-      "title": "Fix: issue #20",
+      "title": "credential_pop typ with status-attestation-request+cwt",
       "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/37",
       "state": "OPEN",
       "author": "SaraConsoliACN",
@@ -2753,13 +2799,13 @@
       "labels": [],
       "body": "this commit may resolve issue #20.",
       "createdAt": "2024-05-06T10:15:37Z",
-      "updatedAt": "2024-05-06T13:04:47Z",
+      "updatedAt": "2024-05-08T14:28:26Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
       "baseRefName": "main",
       "baseRefOid": "d182c8792b533f53e86265218000558d43f5a76a",
       "headRepository": "SaraConsoliACN/draft-demarco-oauth-status-attestations",
       "headRefName": "SaraConsoliACN-20240506_issue20",
-      "headRefOid": "0c39d9b1b5e5bfcc57fe4a961962e362dffd286e",
+      "headRefOid": "e8f54bbf91acd0825b451630891ac6723a3427fc",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -2797,6 +2843,66 @@
               "updatedAt": "2024-05-06T13:04:47Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s558S4W",
+          "commit": {
+            "abbreviatedOid": "0c39d9b"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-08T14:28:26Z",
+          "updatedAt": "2024-05-08T14:28:26Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "if this is a JOSE header it cannot be CWT\r\n\r\nthis is related to JOSE",
+              "createdAt": "2024-05-08T14:28:26Z",
+              "updatedAt": "2024-05-08T14:28:26Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 38,
+      "id": "PR_kwDOK4XJ0s5u2TkZ",
+      "title": "Draft name changed",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/38",
+      "state": "OPEN",
+      "author": "SaraConsoliACN",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This commit solves the issue #5",
+      "createdAt": "2024-05-08T08:19:45Z",
+      "updatedAt": "2024-05-08T08:56:11Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "d182c8792b533f53e86265218000558d43f5a76a",
+      "headRepository": "SaraConsoliACN/draft-demarco-oauth-status-attestations",
+      "headRefName": "SaraConsoliACN-20240508_1",
+      "headRefOid": "5e03b674938224d7aafc81b252cec11d05577c44",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s555Tl3",
+          "commit": {
+            "abbreviatedOid": "5e03b67"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-08T08:56:11Z",
+          "updatedAt": "2024-05-08T08:56:11Z",
+          "comments": []
         }
       ]
     }
