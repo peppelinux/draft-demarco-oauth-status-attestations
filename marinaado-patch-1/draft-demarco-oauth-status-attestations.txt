@@ -118,9 +118,9 @@ Table of Contents
    validate digital credentials' validity, balancing scalability,
    security, and privacy without internet connectivity.
 
-   Figure 1 illustrates the process by which a Wallet Instance requests
-   a Status Assertion from the Credential Issuer and subsequently
-   receives it. ~~~ ascii-art +-----------------+
+   The figure below illustrates the process by which a Wallet Instance
+   requests a Status Assertion from the Credential Issuer and
+   subsequently receives it. ~~~ ascii-art +-----------------+
    +-------------------+ | | Requests Status
    Assertion | | | |---------------------------->| | | Wallet
    Instance | | Credential Issuer | | | Status
@@ -263,7 +263,7 @@ Table of Contents
    6.  *Real-time validation*: OAuth Status Lists provide the
        possibility to do real-time validation of the Digital Credential
        status.  To support the real-time status validation use cases, a
-       Wallet can implement strategy to request a new Status Assertion
+       Wallet MAY implement strategy to request a new Status Assertion
        before sending it to the Verifier.
 
 5.  Requirements
