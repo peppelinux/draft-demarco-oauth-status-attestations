@@ -119,18 +119,23 @@ Table of Contents
    security, and privacy without internet connectivity.
 
    The figure below illustrates the process by which a Wallet Instance
-   requests a Status Assertion from the Credential Issuer and
-   subsequently receives it. ~~~ ascii-art +-----------------+
-   +-------------------+ | | Requests Status
-   Assertion | | | |---------------------------->| | | Wallet
-   Instance | | Credential Issuer | | | Status
-   Assertion | | | |<----------------------------| | +-----------------+
-   +-------------------+ ~~~ Figure 1: Status Assertion Issuance Flow
+   requests a Status Assertion from the credential issuer and
+   subsequently receives it.
 
-   Figure 2 illustrates the process by which a Wallet Instance presents
-   the Status Assertion along with the corresponding digital credential,
-   to prove the non-revocation status of the digital credential to a
-   Verifier.
+   +-----------------+                             +-------------------+
+   |                 | Requests Status Assertion   |                   |
+   |                 |---------------------------->|                   |
+   | Wallet Instance |                             | Credential Issuer |
+   |                 | Status Assertion            |                   |
+   |                 |<----------------------------|                   |
+   +-----------------+                             +-------------------+
+
+   Figure 1: Status Assertion Issuance Flow
+
+   the figure below illustrates the process by which a Wallet Instance
+   presents the Status Assertion along with the corresponding digital
+   credential, to prove the non-revocation status of the digital
+   credential to a verifier.
 
    +-- ----------------+                             +----------+
    |                   | Presents Digital Credential |          |
@@ -155,7 +160,8 @@ Table of Contents
    defined by JSON Web Token (JWT) [RFC7519].
 
    Digital Credential:  A set of one or more claims about a subject made
-      by a Credential Issuer.
+      by a Credential Issuer.  Alternative names are "Verifiable
+      Credential" or "Credential".
 
    Credential Issuer:  Entity that is responsible for the issuance of
       the Digital Credentials.  The Issuer is responsible for the
@@ -195,11 +201,12 @@ Table of Contents
    to a Status List to check the revocation status of a Digital
    Credential could be deemed as excessive monitoring of the End-User's
    activities.  This could potentially infringe upon the End-User's
-   right to privacy, as outlined in Article 8 of the European Convention
-   on Human Rights and in the the European Union's General Data
-   Protection Regulation (GDPR), by creating a detailed profile of the
-   End-User's interactions and credential usage without explicit consent
-   for such continuous surveillance.
+   right to privacy, as outlined in [Article 8 of the European
+   Convention on Human Rights] (https://www.echr.coe.int/documents/
+   convention_eng.pdf) and in the the European Union's General Data
+   Protection Regulation (GDPR (https://gdpr-info.eu/)), by creating a
+   detailed profile of the End-User's interactions and credential usage
+   without explicit consent for such continuous surveillance.
 
    In scenarios where the Verifier, Credential Issuer, and OAuth Status
    List Provider are all part of the same domain or operate within a
@@ -629,8 +636,8 @@ Table of Contents
    *  credential_hash_alg_supported.  REQUIRED.  The supported Algorithm
       used by the Wallet Instance to hash the Digital Credential for
       which the Status Assertion is requested, using one of the hash
-      algorithms listed in the IANA - Named Information Hash Algorithm
-      Registry (https://www.iana.org/assignments/named-information/
+      algorithms listed in the [IANA - Named Information Hash Algorithm
+      Registry] (https://www.iana.org/assignments/named-information/
       named-information.xhtml#hash-alg).
 
 10.2.  Issued Digital Credentials
@@ -642,8 +649,8 @@ Table of Contents
 
    *  credential_hash_alg.  REQUIRED.  The Algorithm used of hashing the
       Digital Credential to which the Status Assertion is bound, using
-      one of the hash algorithms listed in the IANA - Named Information
-      Hash Algorithm Registry (https://www.iana.org/assignments/named-
+      one of the hash algorithms listed in the [IANA - Named Information
+      Hash Algorithm Registry] (https://www.iana.org/assignments/named-
       information/named-information.xhtml#hash-alg).  Among the hash
       algorithms, sha-256 is recommended and SHOULD be implemented by
       all systems.
@@ -681,7 +688,7 @@ Table of Contents
    status.status_assertion.credential_hash_alg and store this
    information in its database.  This practice enhances efficiency by
    allowing the Credential Issuer to quickly compare the requested
-   `credential_hash with the pre-calculated one, when processing Status
+   credential_hash with the pre-calculated one, when processing Status
    Assertion requests made by Holders.
 
 11.  Presenting Status Assertions
@@ -736,87 +743,87 @@ Table of Contents
 
 13.1.  Privacy Consideration: Status Assertion Request Opacity
 
-   The request for a status assertion does not transmit the digital
-   credential for which the status is being attested.  Instead, it
+   The request for a Status Assertion does not transmit the Digital
+   Credential for which the status is being attested.  Instead, it
    includes a proof of possession (PoP) of the credential that is only
-   interpretable by the credential issuer who issued the digital
-   credential for which the status assertion is requested.  This PoP can
+   interpretable by the Credential Issuer who issued the digital
+   credential for which the Status Assertion is requested.  This PoP can
    be achieved through a cryptographic signature using the public key
-   contained within the digital credential over the request.  This
+   contained within the Digital Credential over the request.  This
    method is essential for preventing the potential for fraudulent
    requests intended to mislead or disclose sensitive information to
-   unintended parties.  By separating the digital credential from the
+   unintended parties.  By separating the Digital Credential from the
    status assertion request, the system ensures that the request does
-   not inadvertently disclose any information about the digital
-   credential or its holder.  This strategy significantly enhances the
+   not inadvertently disclose any information about the Digital
+   Credential or its holder.  This strategy significantly enhances the
    privacy and security of the system by preventing the assertion
-   process from being used to collect information about digital
-   credentials or their holders through deceptive requests.
+   process from being used to collect information about Digital
+   Credentials or their holders through deceptive requests.
 
 13.2.  Privacy Consideration: Opacity of Status Assertion Content
 
-   An important privacy consideration is how the status assertion is
+   An important privacy consideration is how the Status Assertion is
    structured to ensure it does not reveal any information about the
-   user or the holder of the digital credential.  The status assertion
+   User or the Holder of the Digital Credential.  The Status Assertion
    is crafted to prove only the vital information needed to verify the
-   current state of a digital credential, moving beyond simple
+   current state of a Digital Credential, moving beyond simple
    revocation or suspension checks.  This is done by focusing the
-   assertion content on the credential's present condition and the
-   method for its verification, rather than on the identity of the
-   credential's holder.  This approach is key in keeping the user's
-   anonymity intact, making sure that the status assertion can be
+   assertion content on the Digital Credential's present condition and
+   the method for its verification, rather than on the identity of the
+   Digital Credential's Holder.  This approach is key in keeping the
+   User's anonymity intact, making sure that the Status Assertion can be
    applied in various verification situations without risking the
    privacy of the people involved.
 
 13.3.  Unlinkability and Reusability of Status Assertions
 
    Status Assertions are designed to uphold privacy by allowing
-   verifiers to operate independently, without the need for interaction
+   Verifiers to operate independently, without the need for interaction
    or information disclosure to third-party entities or other verifiers.
-   This design is pivotal in ensuring unlinkability between verifiers,
-   where actions taken by one verifier cannot be correlated or linked to
+   This design is pivotal in ensuring unlinkability between Verifiers,
+   where actions taken by one Verifier cannot be correlated or linked to
    actions taken by another.  Verifiers can directly validate the status
-   of a digital credential through the Status Assertion, eliminating the
+   of a Digital Credential through the Status Assertion, eliminating the
    need for external communication.  This mechanism is key in protecting
-   the privacy of individuals whose credentials are being verified, as
-   it significantly reduces the risk of tracking or profiling based on
-   verification activities across various services.
+   the privacy of individuals whose Digital Credentials are being
+   verified, as it significantly reduces the risk of tracking or
+   profiling based on verification activities across various services.
 
    While Status Assertions facilitate unlinkability, they are not
    inherently "single use."  The specification accommodates the batch
-   issuance of multiple status assertions, which can be single-use.
-   However, particularly for offline interactions, a single assertion
-   may be utilized by numerous verifiers.  This flexibility ensures that
+   issuance of multiple Status Assertions, which can be single-use.
+   However, particularly for offline interactions, a Single Assertion
+   may be utilized by numerous Verifiers.  This flexibility ensures that
    Status Assertions can support a wide range of verification scenarios,
    from one-time validations to repeated checks by different entities,
-   without compromising the privacy or security of the credential
-   holder.
+   without compromising the privacy or security of the Digital
+   Credential Holder.
 
 13.4.  Untrackability by Digital Credential Issuers and the "Phone Home"
        Problem
 
    A fundamental aspect of the privacy-preserving attributes of Status
    Assertions is their ability to address the "phone home" problem,
-   which is the prevention of tracking by digital credential issuers.
+   which is the prevention of tracking by Digital Credential Issuers.
    Traditional models often require verifiers to query a central status
    list or contact the issuer directly, a process that can inadvertently
-   allow issuers to track when and where a digital credential is
-   verified.  Status Assertions, however, encapsulate all necessary
+   allow Credential Issuers to track when and where a Digital Credential
+   is verified.  Status Assertions, however, encapsulate all necessary
    verification information within the assertion itself.  This design
-   choice ensures that credential issuers are unable to monitor the
-   verification activities of their issued digital credentials, thereby
-   significantly enhancing the privacy of the credential holder.  By
-   removing the need for real-time communication with the issuer for
-   status checks, Status Assertions effectively prevent the issuer from
-   tracking verification activities, further reinforcing the system's
-   dedication to protecting user privacy.
+   choice ensures that Credential Issuers are unable to monitor the
+   verification activities of their issued Digital Credentials, thereby
+   significantly enhancing the privacy of the Holder.  By removing the
+   need for real-time communication with the issuer for status checks,
+   Status Assertions effectively prevent the issuer from tracking
+   verification activities, further reinforcing the system's dedication
+   to protecting user privacy.
 
 13.5.  Minimization of Data Exposure
 
    The Status Assertions are designed around the data minimization
    principle.  Data minimization ensures that only the necessary
    information required for the scope of attesting the non revocation
-   status of the digital credential.  This minimizes the exposure of
+   status of the Digital Credential.  This minimizes the exposure of
    potentially sensitive data.
 
 13.6.  Resistance to Enumeration Attacks
@@ -825,7 +832,7 @@ Table of Contents
    enumeration attacks, where an adversary attempts to gather
    information by systematically verifying different combinations of
    data.  By implementing robust cryptographic techniques and limiting
-   the information contained in status assertions, the system reduces
+   the information contained in Status Assertions, the system reduces
    the feasibility of such attacks.  This consideration is vital for
    safeguarding the privacy of the credential holders and for ensuring
    the integrity of the verification process.
@@ -1030,6 +1037,8 @@ Appendix A.  Acknowledgments
    *  Emanuele De Cupis
 
    *  Riccardo Iaconelli
+
+   *  Marina Adomeit
 
    *  Victor Näslund
 
