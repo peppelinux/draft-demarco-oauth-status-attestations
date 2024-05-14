@@ -5,10 +5,10 @@
 Network Working Group                                        G. D. Marco
 Internet-Draft               Dipartimento per la trasformazione digitale
 Intended status: Informational                                 O. Steele
-Expires: 14 November 2024                                      Transmute
+Expires: 15 November 2024                                      Transmute
                                                                F. Marino
                                 Istituto Poligrafico e Zecca dello Stato
-                                                             13 May 2024
+                                                             14 May 2024
 
 
                         OAuth Status Assertions
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 November 2024.
+   This Internet-Draft will expire on 15 November 2024.
 
 Copyright Notice
 
@@ -370,7 +370,7 @@ Table of Contents
    hash value of the Digital Credential, for which the Status Assertion
    is requested, and enveloped in a signed object as proof of
    possession. - The proof of possession MUST be signed with the private
-   key corresponding to the public key attested by the Credential Issuer
+   key corresponding to the confirmation claim assigned by the issuer
    and contained within the Digital Credential.
 
    POST /status HTTP/1.1
