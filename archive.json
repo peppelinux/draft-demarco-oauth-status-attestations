@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-12T00:53:28.006507+00:00",
+  "timestamp": "2024-05-14T00:49:56.961293+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -624,6 +624,22 @@
           "updatedAt": "2024-05-09T16:42:38Z"
         }
       ]
+    },
+    {
+      "number": 43,
+      "id": "I_kwDOK4XJ0s6Ip9Tp",
+      "title": "Assertions related to a credential that had a confirmation claim.",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/43",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "@OR13 's\r\nI wonder if these are all really \"credentials\"... or are they simply assertions related to a credential that had a confirmation claim?\r\n\r\n- https://datatracker.ietf.org/doc/html/rfc7800#section-3.1\r\n- https://datatracker.ietf.org/doc/html/rfc8747#section-3.1\r\n\r\nNow that its an array, can each of these items demonstrate possession of a different key?\r\n\r\nCan methods be mixed, for example, cred-1 uses COSE Key, cred-2 use JKT ?\r\n\r\n_Originally posted by @OR13 in https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/36#discussion_r1591006026_\r\n            ",
+      "createdAt": "2024-05-13T12:35:09Z",
+      "updatedAt": "2024-05-13T12:35:28Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -2612,18 +2628,68 @@
       "labels": [],
       "body": "This PR:\r\n- Addresses issue #30\r\n- Fixes some editorial issues\r\n- Adds a note on the 'exp' parameter, which must be greater than the 'iat' parameter\r\n",
       "createdAt": "2024-05-03T13:03:03Z",
-      "updatedAt": "2024-05-10T12:16:23Z",
+      "updatedAt": "2024-05-13T16:33:14Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
       "baseRefName": "main",
-      "baseRefOid": "d182c8792b533f53e86265218000558d43f5a76a",
+      "baseRefOid": "743e7eab2506600adcde53db21ca8cdb732c958e",
       "headRepository": "SaraConsoliACN/draft-demarco-oauth-status-attestations",
       "headRefName": "SaraConsoliACN-20240503_1",
-      "headRefOid": "8914532dcac376a30b5d02fe2c954b8eecf11c2b",
+      "headRefOid": "07023177da2255a1cb572d500bcdc7b221055e5e",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "> It is not yet clear in the text what happens if a Status Assertion Request fails due to a single or subset of clredentials. For example in the text we have the following sentence:\r\n\r\nthis would tend to introduce a json object in the response with an array of statuses",
+          "createdAt": "2024-05-13T13:25:20Z",
+          "updatedAt": "2024-05-13T13:25:20Z"
+        },
+        {
+          "author": "marinaado",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> It is not yet clear in the text what happens if a Status Assertion Request fails due to a single or subset of clredentials. For example in the text we have the following sentence:\r\n> \r\n> > In cases where a Status Assertion request is made for a Digital Credential that does not exist, has expired, been revoked, or is in any way invalid, or if the HTTP Request is compromised by missing or incorrect parameters, the Credential Issuer is required to respond with an HTTP Response. This response should have a status code of `400` and use `application/json` as the content type, including the following parameters:\r\n> \r\n> Does this mean that if the request includes Credential PoP A and Credential PoP B and the Credential B is invalid, the Credential Issuer must give an error? Probably the response should contain only the status assertion for Credential A without giving an error response?\r\n\r\nWe have two error codes in the spec - one for invalid request and the second for invalid credential. How would you differentiate between the two errors ? Can it happen that there is error in request for Credential PoP B while the request for Credential PoP A is correct? If this cannot happen then your proposal is ok. ",
+          "createdAt": "2024-05-13T14:45:02Z",
+          "updatedAt": "2024-05-13T14:45:02Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "> > It is not yet clear in the text what happens if a Status Assertion Request fails due to a single or subset of clredentials. For example in the text we have the following sentence:\r\n> \r\n> this would tend to introduce a json object in the response with an array of statuses\r\n\r\nor, differently\r\n\r\nregarding the response of the status assertions, instead of using a complex json object WDYT about returning an array of JWT/CWT where each JWT/CWT matches the one provided within the request and in the same order\r\n\r\nwhere\r\n\r\nthe header parameter typ would say if it is a statu sassertion or a status assertion error?\r\n\r\nWDYT @fmarino-ipzs @OR13 ?\r\nusing the power of the JWT/CWT objects we would avoid the json object envelope with unsigned (meta)data",
+          "createdAt": "2024-05-13T14:52:58Z",
+          "updatedAt": "2024-05-13T14:52:58Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "> > It is not yet clear in the text what happens if a Status Assertion Request fails due to a single or subset of clredentials. For example in the text we have the following sentence:\r\n> > > In cases where a Status Assertion request is made for a Digital Credential that does not exist, has expired, been revoked, or is in any way invalid, or if the HTTP Request is compromised by missing or incorrect parameters, the Credential Issuer is required to respond with an HTTP Response. This response should have a status code of `400` and use `application/json` as the content type, including the following parameters:\r\n> > \r\n> > \r\n> > Does this mean that if the request includes Credential PoP A and Credential PoP B and the Credential B is invalid, the Credential Issuer must give an error? Probably the response should contain only the status assertion for Credential A without giving an error response?\r\n> \r\n> We have two error codes in the spec - one for invalid request and the second for invalid credential. How would you differentiate between the two errors ? Can it happen that there is error in request for Credential PoP B while the request for Credential PoP A is correct? If this cannot happen then your proposal is ok.\r\n\r\n@marinaado WDYT about this conversation?\r\nhttps://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/36#discussion_r1598713649",
+          "createdAt": "2024-05-13T16:22:10Z",
+          "updatedAt": "2024-05-13T16:22:10Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think the following is a good solution for now\"\r\n\r\n```\r\nHTTP POST /status \r\ncontent-type: application/json\r\n{\r\n  \"status_assertion_requests\" : [\"${base64url(json({typ: (some pop for status-assertion)+jwt, ...}))}.payload.signature\", ... ]\r\n}\r\n... Response :\r\n{\r\n  \"status_assertions\" : [\"${base64url(json({typ: status-assertion+jwt, ...}))}.payload.signature\", ... ]\r\n}\r\n```\r\n\r\n\r\n",
+          "createdAt": "2024-05-13T16:27:41Z",
+          "updatedAt": "2024-05-13T16:27:57Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "Short recap\r\n\r\nin the request:\r\n- `credential_pop` renamed to `status_assertion_requests`\r\n- the position within the array of each `status_assertion_request` object must match the same position in the subsequent response\r\n\r\nin the response:\r\n- `status_assertions` renamed to `status_assertion_responses`\r\n- each element in the array is related to the element contained in the request at the same position\r\n- each element can be an error using `typ` set to `status-assertion-error+{jwt,cwt}` or `status-assertion+{jwt,cwd}`\r\n- the matching entry in the response must be of the same type requested, eg: if the entry in the request is jwt, therefore the entry at  the same position in the response must be jwt",
+          "createdAt": "2024-05-13T16:32:35Z",
+          "updatedAt": "2024-05-13T16:32:35Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "> I think the following is a good solution for now\"\r\n> \r\n> ```\r\n> HTTP POST /status \r\n> content-type: application/json\r\n> {\r\n>   \"status_assertion_requests\" : [\"${base64url(json({typ: (some pop for status-assertion)+jwt, ...}))}.payload.signature\", ... ]\r\n> }\r\n> ... Response :\r\n> {\r\n>   \"status_assertions\" : [\"${base64url(json({typ: status-assertion+jwt, ...}))}.payload.signature\", ... ]\r\n> }\r\n> ```\r\n\r\n@SaraConsoliACN the non normative examples must be updated with the example provided here by Orie",
+          "createdAt": "2024-05-13T16:33:13Z",
+          "updatedAt": "2024-05-13T16:33:13Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOK4XJ0s55faBo",
@@ -2913,6 +2979,245 @@
               "updatedAt": "2024-05-10T12:16:23Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56UuC-",
+          "commit": {
+            "abbreviatedOid": "cfda2ed"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T10:03:09Z",
+          "updatedAt": "2024-05-13T10:03:10Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "we have a section defining the Digital Credential PoP here: https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/36/files#diff-6018989306b8996e79d471eb123fc3b59796d1635384b6faac8cdb36cd5f49ccR297\r\n\r\nI'm not sure about the name presentation\r\n\r\n@SaraConsoliACN please revert the change to credential_pop to allow this PR to be merged and create another issue for discussing the json member name change",
+              "createdAt": "2024-05-13T10:03:09Z",
+              "updatedAt": "2024-05-13T10:03:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56V932",
+          "commit": {
+            "abbreviatedOid": "cfda2ed"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T12:36:31Z",
+          "updatedAt": "2024-05-13T12:36:31Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "@OR13 the discussion is moved to this issue: https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/43\r\n\r\nI'd suggest to unblock this PR and continue the discussion about the nature of the parameters and the good semantic to have outside of this PR if we agree\r\n\r\n@fmarino-ipzs @marinaado ^",
+              "createdAt": "2024-05-13T12:36:31Z",
+              "updatedAt": "2024-05-13T12:36:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56V-rw",
+          "commit": {
+            "abbreviatedOid": "13a3a78"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-13T12:38:12Z",
+          "updatedAt": "2024-05-13T12:38:12Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56WJKH",
+          "commit": {
+            "abbreviatedOid": "fdf7d8c"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T12:57:21Z",
+          "updatedAt": "2024-05-13T12:57:21Z",
+          "comments": [
+            {
+              "originalPosition": 86,
+              "body": "```suggestion\r\n| JOSE Header Parameter | Description | Reference |\r\n```",
+              "createdAt": "2024-05-13T12:57:21Z",
+              "updatedAt": "2024-05-13T12:57:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56WPZe",
+          "commit": {
+            "abbreviatedOid": "fdf7d8c"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "It is not yet clear in the text what happens if a Status Assertion Request fails due to a single or subset of clredentials. \r\nFor example in the text we have the following sentence: \r\n> In cases where a Status Assertion request is made for a Digital Credential that does not exist, has expired, been revoked, or is in any way invalid, or if the HTTP Request is compromised by missing or incorrect parameters, the Credential Issuer is required to respond with an HTTP Response. This response should have a status code of `400` and use `application/json` as the content type, including the following parameters:\r\n\r\nDoes this mean that if the request includes Credential PoP A and Credential PoP B and the Credential B is invalid, the Credential Issuer must give an error? Probably the response should contain only the status assertion for Credential A without giving an error response?",
+          "createdAt": "2024-05-13T13:07:41Z",
+          "updatedAt": "2024-05-13T13:07:41Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56WxMB",
+          "commit": {
+            "abbreviatedOid": "752ef82"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T13:58:12Z",
+          "updatedAt": "2024-05-13T13:58:13Z",
+          "comments": [
+            {
+              "originalPosition": 43,
+              "body": "if these need more params, we might consider this interface to be an array of objects containing encoded credentials.",
+              "createdAt": "2024-05-13T13:58:12Z",
+              "updatedAt": "2024-05-13T13:58:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56WyDh",
+          "commit": {
+            "abbreviatedOid": "752ef82"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T13:59:38Z",
+          "updatedAt": "2024-05-13T13:59:38Z",
+          "comments": [
+            {
+              "originalPosition": 92,
+              "body": "```suggestion\r\n| **exp** | UNIX Timestamp with the expiration time of the JWT. It MUST be greater than the value set for `iat`. | {{RFC9126}}, {{RFC7519}}, {{RFC7515}} |\r\n```",
+              "createdAt": "2024-05-13T13:59:38Z",
+              "updatedAt": "2024-05-13T14:54:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56Wyc-",
+          "commit": {
+            "abbreviatedOid": "752ef82"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T14:00:17Z",
+          "updatedAt": "2024-05-13T14:00:17Z",
+          "comments": [
+            {
+              "originalPosition": 119,
+              "body": "```suggestion\r\n| **exp** | UNIX Timestamp with the expiration time of the JWT. It MUST be greater than the value set for `iat`. | {{RFC9126}}, {{RFC7519}}, {{RFC7515}} |\r\n```",
+              "createdAt": "2024-05-13T14:00:17Z",
+              "updatedAt": "2024-05-13T14:00:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56WykE",
+          "commit": {
+            "abbreviatedOid": "752ef82"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-13T14:00:27Z",
+          "updatedAt": "2024-05-13T14:00:27Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56XXDt",
+          "commit": {
+            "abbreviatedOid": "752ef82"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T14:51:19Z",
+          "updatedAt": "2024-05-13T14:51:19Z",
+          "comments": [
+            {
+              "originalPosition": 43,
+              "body": "What about encoding any required parameter within the JWT/CWT according to the schema type `status-assertion-request+{jwt,cwt}`?\r\n\r\nthis would make each object consistent in its purpose\r\n\r\nwe may say that any additional parameter could be included, while only the required set of attributes, for each status request is defined within the specs",
+              "createdAt": "2024-05-13T14:51:19Z",
+              "updatedAt": "2024-05-13T15:58:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56X_cg",
+          "commit": {
+            "abbreviatedOid": "752ef82"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T16:00:45Z",
+          "updatedAt": "2024-05-13T16:00:45Z",
+          "comments": [
+            {
+              "originalPosition": 43,
+              "body": "therefore we could rename credential_pop to `status_assertion_requests` where each element within the array configures a `typ` value set to `status-assertion-request+{jwt,cwt}`\r\n\r\nthe corresponding response would be a json array containing for each element with a `typ` value set to `status-assertion+{jwt,cwt}` or ar `status-assertion-error+{jwt,cwt}` at the same position of the corresponding one within the request.",
+              "createdAt": "2024-05-13T16:00:45Z",
+              "updatedAt": "2024-05-13T16:00:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56YHy7",
+          "commit": {
+            "abbreviatedOid": "752ef82"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T16:13:50Z",
+          "updatedAt": "2024-05-13T16:13:50Z",
+          "comments": [
+            {
+              "originalPosition": 43,
+              "body": "You would need to verify / decode the protected header to distinguish the types... but it is nice that they are required to advertise their typ consistent with the JWT BCP.",
+              "createdAt": "2024-05-13T16:13:50Z",
+              "updatedAt": "2024-05-13T16:13:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56YMMw",
+          "commit": {
+            "abbreviatedOid": "752ef82"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T16:21:33Z",
+          "updatedAt": "2024-05-13T16:21:34Z",
+          "comments": [
+            {
+              "originalPosition": 43,
+              "body": "yes, I was wondering about \"in object veritas\"",
+              "createdAt": "2024-05-13T16:21:33Z",
+              "updatedAt": "2024-05-13T16:21:34Z"
+            }
+          ]
         }
       ]
     },
@@ -2928,13 +3233,13 @@
       "labels": [],
       "body": "this commit may resolve issue #20.",
       "createdAt": "2024-05-06T10:15:37Z",
-      "updatedAt": "2024-05-10T15:22:47Z",
+      "updatedAt": "2024-05-13T11:00:25Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
       "baseRefName": "main",
       "baseRefOid": "85337bd85e2eba1f68c885748116e328975e1935",
       "headRepository": "SaraConsoliACN/draft-demarco-oauth-status-attestations",
       "headRefName": "SaraConsoliACN-20240506_issue20",
-      "headRefOid": "1dc521c191c4261bbb3b234d688e0271a7dee979",
+      "headRefOid": "511db6b92d79ff00d8e7837ca78dea9d757a7f9d",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -3072,6 +3377,46 @@
               "updatedAt": "2024-05-10T14:28:50Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56VJay",
+          "commit": {
+            "abbreviatedOid": "c0a708c"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T10:58:56Z",
+          "updatedAt": "2024-05-13T10:58:57Z",
+          "comments": [
+            {
+              "originalPosition": 3,
+              "body": "please mention that the prosed non normative example is provided in an unencoded diagnostic representation ...",
+              "createdAt": "2024-05-13T10:58:56Z",
+              "updatedAt": "2024-05-13T10:58:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56VKC9",
+          "commit": {
+            "abbreviatedOid": "80fc807"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T11:00:24Z",
+          "updatedAt": "2024-05-13T11:00:25Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "it is not the cnf itself bu the sub-member contained in it, such as jwk for JWT and Cose Key for CWT, while there may be other parameters like `did` for instance\r\n\r\nthis must be included in this description",
+              "createdAt": "2024-05-13T11:00:24Z",
+              "updatedAt": "2024-05-13T11:00:25Z"
+            }
+          ]
         }
       ]
     },
@@ -3175,13 +3520,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2024-05-10T10:14:17Z",
-      "updatedAt": "2024-05-10T12:20:04Z",
+      "updatedAt": "2024-05-13T16:24:30Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
       "baseRefName": "main",
       "baseRefOid": "85337bd85e2eba1f68c885748116e328975e1935",
       "headRepository": "peppelinux/draft-demarco-oauth-status-attestations",
       "headRefName": "marinaado-patch-1",
-      "headRefOid": "4dea78be5a43862fce13a2d3c89d2d9f23bb4c5d",
+      "headRefOid": "82be3b6d5af95e2146bcb24c5aca642a56e4dfb7",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -3265,6 +3610,179 @@
               "body": "```suggestion\r\n6. **Real-time validation**: OAuth Status Lists provide the possibility to do real-time validation of the Digital Credential status. To support the real-time status validation use cases, a Wallet MAY implement strategy to request a new Status Assertion before sending it to the Verifier.\r\n```",
               "createdAt": "2024-05-10T12:20:03Z",
               "updatedAt": "2024-05-10T12:20:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56V7YG",
+          "commit": {
+            "abbreviatedOid": "4dea78b"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T12:31:56Z",
+          "updatedAt": "2024-05-13T12:31:56Z",
+          "comments": [
+            {
+              "originalPosition": 42,
+              "body": "done",
+              "createdAt": "2024-05-13T12:31:56Z",
+              "updatedAt": "2024-05-13T12:31:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56V_jc",
+          "commit": {
+            "abbreviatedOid": "4dea78b"
+          },
+          "author": "marinaado",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T12:39:56Z",
+          "updatedAt": "2024-05-13T12:39:56Z",
+          "comments": [
+            {
+              "originalPosition": 79,
+              "body": "I was thinking again about this again and perhaps we should add that this is possible in online scenarios only. ",
+              "createdAt": "2024-05-13T12:39:56Z",
+              "updatedAt": "2024-05-13T12:39:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56WAYt",
+          "commit": {
+            "abbreviatedOid": "4dea78b"
+          },
+          "author": "marinaado",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T12:41:37Z",
+          "updatedAt": "2024-05-13T12:41:37Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I usually prefer to enumerate the figures and then to specifically point to them in the text. But i guess since the image is right bellow this works as well. ",
+              "createdAt": "2024-05-13T12:41:37Z",
+              "updatedAt": "2024-05-13T12:41:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56Wqbg",
+          "commit": {
+            "abbreviatedOid": "82be3b6"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T13:47:18Z",
+          "updatedAt": "2024-05-13T13:47:18Z",
+          "comments": [
+            {
+              "originalPosition": 84,
+              "body": "we should move these to informative references ",
+              "createdAt": "2024-05-13T13:47:18Z",
+              "updatedAt": "2024-05-13T13:47:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56WtCB",
+          "commit": {
+            "abbreviatedOid": "82be3b6"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T13:51:18Z",
+          "updatedAt": "2024-05-13T13:51:18Z",
+          "comments": [
+            {
+              "originalPosition": 221,
+              "body": "```suggestion\r\nto the confirmation claim assigned by the issuer and contained within\r\n```",
+              "createdAt": "2024-05-13T13:51:18Z",
+              "updatedAt": "2024-05-13T13:51:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56Wvoe",
+          "commit": {
+            "abbreviatedOid": "82be3b6"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-13T13:55:40Z",
+          "updatedAt": "2024-05-13T13:55:40Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56W55I",
+          "commit": {
+            "abbreviatedOid": "82be3b6"
+          },
+          "author": "SaraConsoliACN",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T14:11:12Z",
+          "updatedAt": "2024-05-13T14:11:13Z",
+          "comments": [
+            {
+              "originalPosition": 84,
+              "body": "It may be resolved by commit https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/42/commits/82be3b6d5af95e2146bcb24c5aca642a56e4dfb7",
+              "createdAt": "2024-05-13T14:11:12Z",
+              "updatedAt": "2024-05-13T14:11:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56YLkl",
+          "commit": {
+            "abbreviatedOid": "82be3b6"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T16:20:08Z",
+          "updatedAt": "2024-05-13T16:20:08Z",
+          "comments": [
+            {
+              "originalPosition": 221,
+              "body": "this text generalize the scope of the cnf claim within the jwt/cwt\r\n\r\nthis makes sense to me",
+              "createdAt": "2024-05-13T16:20:08Z",
+              "updatedAt": "2024-05-13T16:20:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56YNel",
+          "commit": {
+            "abbreviatedOid": "82be3b6"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-13T16:24:29Z",
+          "updatedAt": "2024-05-13T16:24:30Z",
+          "comments": [
+            {
+              "originalPosition": 84,
+              "body": "@SaraConsoliACN Orie is saying that instead using a markdown href it would be better to use the informative reference section if I get it right\r\n\r\n@marinaado WDYT?",
+              "createdAt": "2024-05-13T16:24:29Z",
+              "updatedAt": "2024-05-13T16:24:36Z"
             }
           ]
         }
