@@ -12,10 +12,10 @@
        Status Assertion is a signed object that demonstrates the validity status of a
 digital credential.
 These assertions are periodically provided
-to holders, who can present these to Verifiers along
+to holders, who can present these to verifier along
 with the corresponding digital credentials.
 The approach outlined in this document
-makes the verifiers able to check the non-revocation of a digital credential
+makes the verifier able to check the non-revocation of a digital credential
 without requiring to query any third-party entities. 
     " name="description">
 <meta content="xml2rfc 3.21.0" name="generator">
@@ -1040,7 +1040,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Marco, et al.</td>
-<td class="center">Expires 15 November 2024</td>
+<td class="center">Expires 18 November 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1053,12 +1053,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-demarco-oauth-status-attestations-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-05-14" class="published">14 May 2024</time>
+<time datetime="2024-05-17" class="published">17 May 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-11-15">15 November 2024</time></dd>
+<dd class="expires"><time datetime="2024-11-18">18 November 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1082,10 +1082,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-abstract-1">Status Assertion is a signed object that demonstrates the validity status of a
 digital credential.
 These assertions are periodically provided
-to holders, who can present these to Verifiers along
+to holders, who can present these to verifier along
 with the corresponding digital credentials.
 The approach outlined in this document
-makes the verifiers able to check the non-revocation of a digital credential
+makes the verifier able to check the non-revocation of a digital credential
 without requiring to query any third-party entities.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
@@ -1118,7 +1118,7 @@ without requiring to query any third-party entities.<a href="#section-abstract-1
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 15 November 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 18 November 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1541,24 +1541,24 @@ Status Assertion to a Credential Issuer,
 related to a specific Credential issued by the same Credential Issuer.<a href="#section-7-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-ascii-art art-text artwork" id="section-7-3">
 <pre>
-+-------------------+                         +--------------------+
-|                   |                         |                    |
-|  Wallet Instance  |                         | Credential Issuer  |
-|                   |                         |                    |
-+--------+----------+                         +----------+---------+
-         |                                               |
-         | HTTP POST /status                             |
-         |  credential_pop = $CredentialPoPJWT           |
-         +-----------------------------------------------&gt;
-         |                                               |
-         |  Response with Status Assertion JWT           |
-         &lt;-----------------------------------------------+
-         |                                               |
-+--------+----------+                         +----------+---------+
-|                   |                         |                    |
-|  Wallet Instance  |                         | Credential Issuer  |
-|                   |                         |                    |
-+-------------------+                         +--------------------+
++-------------------+                                  +--------------------+
+|                   |                                  |                    |
+|  Wallet Instance  |                                  | Credential Issuer  |
+|                   |                                  |                    |
++--------+----------+                                  +----------+---------+
+         |                                                        |
+         | HTTP POST /status                                      |
+         |  status_assertion_requests = [$StatusAssertionRequest] |
+         +--------------------------------------------------------&gt;
+         |                                                        |
+         |  Status Assertion Responses [...]                      |
+         &lt;--------------------------------------------------------+
+         |                                                        |
++--------+----------+                                  +----------+---------+
+|                   |                                  |                    |
+|  Wallet Instance  |                                  | Credential Issuer  |
+|                   |                                  |                    |
++-------------------+                                  +--------------------+
 </pre><a href="#section-7-3" class="pilcrow">¶</a>
 </div>
 <p id="section-7-4">The Wallet Instance sends the Status Assertion request to the
@@ -1569,22 +1569,38 @@ object as proof of possession.
 - The proof of possession <span class="bcp14">MUST</span> be signed with the private key corresponding
 to the confirmation claim assigned by the issuer and contained within
 the Digital Credential.<a href="#section-7-4" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-7-5">
+<p id="section-7-5">Below a non-normative example representing a Status Assertion Request array with a
+single JWT in it.<a href="#section-7-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-7-6">
 <pre>
 POST /status HTTP/1.1
 Host: issuer.example.org
-Content-Type: application/x-www-form-urlencoded
+Content-Type: application/json
 
-credential_pop=$CredentialPoPJWT
-</pre><a href="#section-7-5" class="pilcrow">¶</a>
+"status_assertion_requests" : ["${base64url(json({typ: (some pop for status-assertion)+jwt, ...}))}.payload.signature", ... ]
+</pre><a href="#section-7-6" class="pilcrow">¶</a>
 </div>
-<p id="section-7-6">To validate that the Wallet Instance is entitled to request its Status Assertion,
-the Credential Issuer:
-- <span class="bcp14">MUST</span> verify the signature of the <code>credential_pop</code> object using
-the public key contained in the Digital Credential;
-- <span class="bcp14">MUST</span> verify that it is the legitimate Credential Issuer.<a href="#section-7-6" class="pilcrow">¶</a></p>
-<p id="section-7-7">The technical and details about the <code>credential_pop</code> object
-are defined in the next section.<a href="#section-7-7" class="pilcrow">¶</a></p>
+<p id="section-7-7">The Status Assertion HTTP request can be sent to a single Credential Issuer
+regarding multiple Digital Credentials, and <span class="bcp14">MUST</span> contain a JSON object with
+the member <code>status_assertion_requests</code>.<a href="#section-7-7" class="pilcrow">¶</a></p>
+<p id="section-7-8">The <code>status_assertion_requests</code> <span class="bcp14">MUST</span> be set with an array of strings, where
+each string within the array represents a Digital Credential Status Assertion Request.<a href="#section-7-8" class="pilcrow">¶</a></p>
+<p id="section-7-9">The Credential Issuer that receives the Status Assertion Request
+<span class="bcp14">MUST</span> validate that the Wallet Instance making the request is
+authorized to request Status Assertions.
+Therefore the following requirements <span class="bcp14">MUST</span> be satisfied:<a href="#section-7-9" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-7-10.1">
+          <p id="section-7-10.1.1">The Credential Issuer <span class="bcp14">MUST</span> verify the signature of all elements in the <code>status_assertion_requests</code> object
+using the confirmation method contained within the Digital Credential where the Status Assertion Request object is referred to;<a href="#section-7-10.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-7-10.2">
+          <p id="section-7-10.2.1">The Credential Issuer <span class="bcp14">MUST</span> verify that it is the legitimate Issuer of the Digital Credential
+to which each Status Assertion Request object refers.<a href="#section-7-10.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-7-11">The technical and details about the <code>status_assertion_requests</code> object
+are defined in the next section.<a href="#section-7-11" class="pilcrow">¶</a></p>
 <div id="status-assertion-request-errors">
 <section id="section-7.1">
         <h3 id="name-status-assertion-request-er">
@@ -1615,8 +1631,8 @@ more details to clarify the nature of the error encountered
   Content-Type: application/json;charset=UTF-8
 
   {
-    "error":"invalid_request"
-    "error_description": "The signature of credential_pop JWT is not valid"
+    "error": "invalid_request"
+    "error_description": "The signature of the status assertion request is not valid"
   }
 </pre><a href="#section-7.1-4" class="pilcrow">¶</a>
 </div>
@@ -1649,7 +1665,7 @@ encoding, for better readability:<a href="#section-7.2-3" class="pilcrow">¶</a>
     "iss": "0b434530-e151-4c40-98b7-74c75a5ef760",
     "aud": "https://issuer.example.org/status-assertion-endpoint",
     "iat": 1698744039,
-    "exp": 1698834139,
+    "exp": 1698830439,
     "jti": "6f204f7e-e453-4dfd-814e-9d155319408c",
     "credential_hash": $Issuer-Signed-JWT-Hash
     "credential_hash_alg": "sha-256",
@@ -1661,7 +1677,7 @@ encoding, for better readability:<a href="#section-7.2-3" class="pilcrow">¶</a>
           <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
 <thead>
             <tr>
-              <th class="text-left" rowspan="1" colspan="1">Header</th>
+              <th class="text-left" rowspan="1" colspan="1">JOSE Header Parameter</th>
               <th class="text-left" rowspan="1" colspan="1">Description</th>
               <th class="text-left" rowspan="1" colspan="1">Reference</th>
             </tr>
@@ -1718,7 +1734,7 @@ encoding, for better readability:<a href="#section-7.2-3" class="pilcrow">¶</a>
               <td class="text-left" rowspan="1" colspan="1">
                 <strong>aud</strong>
 </td>
-              <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set with the Credential Issuer Status Assertion endpoint URL as value that identify the intended audience</td>
+              <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set with the Credential Issuer Status Assertion endpoint URL as value that identify the intended audience.</td>
               <td class="text-left" rowspan="1" colspan="1">
                 <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span>, <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>
 </td>
@@ -1736,7 +1752,7 @@ encoding, for better readability:<a href="#section-7.2-3" class="pilcrow">¶</a>
               <td class="text-left" rowspan="1" colspan="1">
                 <strong>exp</strong>
 </td>
-              <td class="text-left" rowspan="1" colspan="1">UNIX Timestamp with the expiration time of the JWT.</td>
+              <td class="text-left" rowspan="1" colspan="1">UNIX Timestamp with the expiration time of the JWT. It <span class="bcp14">MUST</span> be greater than the value set for <code>iat</code>.</td>
               <td class="text-left" rowspan="1" colspan="1">
                 <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span>, <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>
 </td>
@@ -1788,7 +1804,7 @@ Issuer checks the status of the Digital Credential and creates a Status Assertio
 {
     "iss": "https://issuer.example.org",
     "iat": 1504699136,
-    "exp": 1504700136,
+    "exp": 1504785536,
     "credential_hash": $CREDENTIAL-HASH,
     "credential_hash_alg": "sha-256",
     "cnf": {
@@ -1802,7 +1818,7 @@ Issuer checks the status of the Digital Credential and creates a Status Assertio
         <caption><a href="#table-3" class="selfRef">Table 3</a></caption>
 <thead>
           <tr>
-            <th class="text-left" rowspan="1" colspan="1">JOSE Header</th>
+            <th class="text-left" rowspan="1" colspan="1">JOSE Header Parameter</th>
             <th class="text-left" rowspan="1" colspan="1">Description</th>
             <th class="text-left" rowspan="1" colspan="1">Reference</th>
           </tr>
@@ -1868,10 +1884,15 @@ Issuer checks the status of the Digital Credential and creates a Status Assertio
             <td class="text-left" rowspan="1" colspan="1">
               <strong>exp</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">UNIX Timestamp with the expiry time of the Status Assertion.</td>
+            <td class="text-left" rowspan="1" colspan="1">UNIX Timestamp with the expiration time of the JWT. It <span class="bcp14">MUST</span> be greater than the value</td>
+            <td class="text-left" rowspan="1" colspan="1"> </td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">set for <code>iat</code>.</td>
             <td class="text-left" rowspan="1" colspan="1">
-              <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span>, <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>
+              <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span>, <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>, <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>
 </td>
+            <td class="text-left" rowspan="1" colspan="1"> </td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">
@@ -1884,16 +1905,26 @@ Issuer checks the status of the Digital Credential and creates a Status Assertio
             <td class="text-left" rowspan="1" colspan="1">
               <strong>credential_hash_alg</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">The Algorithm used of hashing the Digital Credential to which the Status Assertion is bound. The value <span class="bcp14">SHOULD</span> be set to <code>sha-256</code>.</td>
+            <td class="text-left" rowspan="1" colspan="1">The Algorithm used of hashing the Digital Credential to which the Status Assertion is bound.</td>
+            <td class="text-left" rowspan="1" colspan="1"> </td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">The value <span class="bcp14">SHOULD</span> be set to <code>sha-256</code>.</td>
             <td class="text-left" rowspan="1" colspan="1">this specification</td>
+            <td class="text-left" rowspan="1" colspan="1"> </td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>cnf</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">JSON object containing the cryptographic key binding. The <code>cnf.jwk</code> value <span class="bcp14">MUST</span> match with the one provided within the related Digital Credential.</td>
+            <td class="text-left" rowspan="1" colspan="1">JSON object containing the confirmation method. Its value <span class="bcp14">MUST</span> be compliant with one contained in the related Digital Credential. For instance, if <code>cnf.jwk</code> is used within the Digital Credential, the same value <span class="bcp14">MUST</span> set within the Status Assertion Request.</td>
+            <td class="text-left" rowspan="1" colspan="1"> </td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">with the one provided within the related Digital Credential.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC7800" class="cite xref">RFC7800</a>]</span> Section 3.1</td>
+            <td class="text-left" rowspan="1" colspan="1"> </td>
           </tr>
         </tbody>
       </table>
@@ -1911,18 +1942,27 @@ code set to 404.<a href="#section-9-1" class="pilcrow">¶</a></p>
 <p id="section-9-2">If the Digital Credential is valid, the Credential Issuer <span class="bcp14">MUST</span> return
 an HTTP status code of 201 (Created), with the content type set to
 <code>application/json</code>. The response <span class="bcp14">MUST</span> include a JSON object with a member
-named <code>status_assertion</code>, which contains the Status Assertion for the
-Wallet Instance, as illustrated in the following non-normative example:<a href="#section-9-2" class="pilcrow">¶</a></p>
+named <code>status_assertion_responses</code>, which contains the Status Assertions and or the Status Assertion Errors related to the request made by the
+Wallet Instance. In the non-normative example below is represented an HTTP Response with the <code>status_assertion_responses</code> JSON member:<a href="#section-9-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-9-3">
 <pre>
 HTTP/1.1 201 Created
 Content-Type: application/json
 
 {
-    "status_assertion": "eyJhbGciOiJFUzI1Ni ...",
+    "status_assertion_responses": ["${base64url(json({typ: status-assertion+jwt, ...}))}.payload.signature", ... ]
 }
 </pre><a href="#section-9-3" class="pilcrow">¶</a>
 </div>
+<p id="section-9-4">The member <code>status_assertion_responses</code> <span class="bcp14">MUST</span> be an array of strings,
+where each of them represent a Status Assertion Response object or a Status Assertion Error object.
+For each entry in the <code>status_assertion_responses</code> array, the following requirements are met:
+- Each element in the array <span class="bcp14">MUST</span> match the corresponding element in the request array at the same index to which it is related.
+- Each element <span class="bcp14">MUST</span> contain the error or the status of the assertion using the <code>typ</code> member.
+set to "status-assertion-error+{jwt,cwt}" or "status-assertion+{jwt,cwt}", depending by the object type.
+- The corresponding entry in the response <span class="bcp14">MUST</span> be of the same type as requested. For example,
+if the entry in the request is "jwt",
+then the entry at the same position in the response must also be "jwt".<a href="#section-9-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="interoperability-of-credential-issuers-supporting-status-assertions">
