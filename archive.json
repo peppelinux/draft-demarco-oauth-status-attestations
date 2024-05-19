@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-16T00:50:07.281179+00:00",
+  "timestamp": "2024-05-19T00:53:33.501389+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -654,6 +654,42 @@
       "body": "we should move these to informative references\r\n\r\n_Originally posted by @OR13 in https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/42#discussion_r1598509544_\r\n            ",
       "createdAt": "2024-05-14T08:33:21Z",
       "updatedAt": "2024-05-14T08:33:21Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 46,
+      "id": "I_kwDOK4XJ0s6JLOYi",
+      "title": "PR needed for status assertion response errors.",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/46",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "SaraConsoliACN"
+      ],
+      "labels": [],
+      "body": "A separate PR will be needed thought for status assertion response error objects.\r\n\r\n_Originally posted by @marinaado in https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/36#pullrequestreview-2060386287_\r\n            ",
+      "createdAt": "2024-05-16T21:53:04Z",
+      "updatedAt": "2024-05-16T21:53:15Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 47,
+      "id": "I_kwDOK4XJ0s6JQJsl",
+      "title": "better generalization about the configurmation methods",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/47",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "SaraConsoliACN"
+      ],
+      "labels": [],
+      "body": "in the section proof of possession we still have strict requirements about the cryptographic bindinds\r\n\r\n2. Controlling a private key that corresponds to a public key associated\r\nwith the Credential, often indicated within the Credential's cnf\r\n(confirmation) claim or through a similar mechanism.\r\n\r\nThe essence of requiring control over the private key and its\r\ndemonstration through a cryptographic operation\r\n(e.g., signing a challenge or a token) is to ensure that the entity in\r\npossession of the Credential can execute actions exclusively reserved\r\nfor the legitimate subject. The dual-layered approach of requiring both\r\npossession of the Credential and control over the corresponding private\r\nkey indeed reinforces the security and integrity of the status assertion\r\nprocess. It also ensures that the entity requesting a Status Attestation\r\nis indeed the same entity to which the Credential was originally issued,\r\naffirming the authenticity and rightful possession of the Credential.",
+      "createdAt": "2024-05-17T13:08:41Z",
+      "updatedAt": "2024-05-17T13:08:52Z",
       "closedAt": null,
       "comments": []
     }
@@ -2637,24 +2673,26 @@
       "id": "PR_kwDOK4XJ0s5ueL78",
       "title": "breaking change: credential_pop is an array",
       "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/36",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "SaraConsoliACN",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This PR:\r\n- Addresses issue #30\r\n- Fixes some editorial issues\r\n- Adds a note on the 'exp' parameter, which must be greater than the 'iat' parameter\r\n",
       "createdAt": "2024-05-03T13:03:03Z",
-      "updatedAt": "2024-05-15T23:18:38Z",
+      "updatedAt": "2024-05-17T12:42:09Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
       "baseRefName": "main",
       "baseRefOid": "8bfb6d148916a4f2730afb1148e5bd3ccae8515f",
       "headRepository": "SaraConsoliACN/draft-demarco-oauth-status-attestations",
       "headRefName": "SaraConsoliACN-20240503_1",
-      "headRefOid": "12cfb779d0137606ad28477e1b902aace567ec61",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "bfaef662970258de5b3e37d947f1815873a94dd9",
+      "closedAt": "2024-05-17T12:42:09Z",
+      "mergedAt": "2024-05-17T12:42:09Z",
+      "mergedBy": "peppelinux",
+      "mergeCommit": {
+        "oid": "2b2ffe1d49898640612021fa82b0788e3e25b809"
+      },
       "comments": [
         {
           "author": "peppelinux",
@@ -3560,13 +3598,297 @@
               "updatedAt": "2024-05-15T23:18:38Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56x5Iu",
+          "commit": {
+            "abbreviatedOid": "12cfb77"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-16T08:01:27Z",
+          "updatedAt": "2024-05-16T08:01:27Z",
+          "comments": [
+            {
+              "originalPosition": 194,
+              "body": "```suggestion\r\n- Each element in the array MUST match the corresponding element in the request array at the same index\r\n```",
+              "createdAt": "2024-05-16T08:01:27Z",
+              "updatedAt": "2024-05-16T08:01:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56ywIz",
+          "commit": {
+            "abbreviatedOid": "d116850"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-05-16T09:18:57Z",
+          "updatedAt": "2024-05-16T09:41:23Z",
+          "comments": [
+            {
+              "originalPosition": 167,
+              "body": "```suggestion\r\n| **cnf** | JSON object containing the confirmation method. Its value MUST be compliant with one contained in the related Digital Credential. For instance, if `cnf.jwk` is used within the Digital Credential, the same value MUST set within the Status Assertion Request.\r\n```",
+              "createdAt": "2024-05-16T09:18:57Z",
+              "updatedAt": "2024-05-16T09:41:23Z"
+            },
+            {
+              "originalPosition": 192,
+              "body": "```suggestion\r\n- Each element in the array MUST match the corresponding element in the request array at the same index to which it is related.\r\n```",
+              "createdAt": "2024-05-16T09:20:07Z",
+              "updatedAt": "2024-05-16T09:41:23Z"
+            },
+            {
+              "originalPosition": 193,
+              "body": "```suggestion\r\n- Each element MUST contain the error or the status of the assertion using the `typ` member.\r\n```",
+              "createdAt": "2024-05-16T09:20:19Z",
+              "updatedAt": "2024-05-16T09:41:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56zv_v",
+          "commit": {
+            "abbreviatedOid": "cbfcbe1"
+          },
+          "author": "marinaado",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "It looks OK to me. A separate PR will be needed thought for status assertion response errors.",
+          "createdAt": "2024-05-16T10:52:24Z",
+          "updatedAt": "2024-05-16T10:52:24Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s565rD7",
+          "commit": {
+            "abbreviatedOid": "d34cab6"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-16T21:42:52Z",
+          "updatedAt": "2024-05-16T21:42:52Z",
+          "comments": [
+            {
+              "originalPosition": 92,
+              "body": "```suggestion\r\nusing the confirmation method contained within the Digital Credential where the Status Assertion Request object is referred to;\r\n```",
+              "createdAt": "2024-05-16T21:42:52Z",
+              "updatedAt": "2024-05-16T21:42:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s565rSU",
+          "commit": {
+            "abbreviatedOid": "d34cab6"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-16T21:43:37Z",
+          "updatedAt": "2024-05-16T21:43:38Z",
+          "comments": [
+            {
+              "originalPosition": 94,
+              "body": "```suggestion\r\nto which each Status Assertion Request object refers.\r\n```",
+              "createdAt": "2024-05-16T21:43:37Z",
+              "updatedAt": "2024-05-16T21:43:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s565rlX",
+          "commit": {
+            "abbreviatedOid": "d34cab6"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-16T21:44:46Z",
+          "updatedAt": "2024-05-16T21:44:47Z",
+          "comments": [
+            {
+              "originalPosition": 107,
+              "body": "```suggestion\r\n    \"error_description\": \"The signature of the status assertion request is not valid\"\r\n```",
+              "createdAt": "2024-05-16T21:44:46Z",
+              "updatedAt": "2024-05-16T21:44:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s565sAO",
+          "commit": {
+            "abbreviatedOid": "d34cab6"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-16T21:46:18Z",
+          "updatedAt": "2024-05-16T21:46:18Z",
+          "comments": [
+            {
+              "originalPosition": 177,
+              "body": "```suggestion\r\nnamed `status_assertion_responses`, which contains the Status Assertions and or the Status Assertion Errors related to the request made by the\r\n```",
+              "createdAt": "2024-05-16T21:46:18Z",
+              "updatedAt": "2024-05-16T21:46:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s565sWP",
+          "commit": {
+            "abbreviatedOid": "d34cab6"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-16T21:47:20Z",
+          "updatedAt": "2024-05-16T21:47:20Z",
+          "comments": [
+            {
+              "originalPosition": 178,
+              "body": "```suggestion\r\nWallet Instance. In the non-normative example below is represented an HTTP Response with the `status_assertion_responses` JSON member:\r\n```",
+              "createdAt": "2024-05-16T21:47:20Z",
+              "updatedAt": "2024-05-16T21:47:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s565tL7",
+          "commit": {
+            "abbreviatedOid": "d34cab6"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-16T21:48:43Z",
+          "updatedAt": "2024-05-16T21:48:43Z",
+          "comments": [
+            {
+              "originalPosition": 191,
+              "body": "```suggestion\r\nwhere each of them represent a Status Assertion Response object or a Status Assertion Error object.\r\nFor each entry in the `status_assertion_responses` array, the following requirements are met:\r\n```",
+              "createdAt": "2024-05-16T21:48:43Z",
+              "updatedAt": "2024-05-16T21:48:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s565tVK",
+          "commit": {
+            "abbreviatedOid": "d34cab6"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-16T21:48:56Z",
+          "updatedAt": "2024-05-16T21:48:56Z",
+          "comments": [
+            {
+              "originalPosition": 194,
+              "body": "```suggestion\r\nset to \"status-assertion-error+{jwt,cwt}\" or \"status-assertion+{jwt,cwt}\", depending by the object type.\r\n```",
+              "createdAt": "2024-05-16T21:48:56Z",
+              "updatedAt": "2024-05-16T21:48:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s565uKf",
+          "commit": {
+            "abbreviatedOid": "d3d1dd0"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-16T21:49:57Z",
+          "updatedAt": "2024-05-16T21:49:57Z",
+          "comments": [
+            {
+              "originalPosition": 80,
+              "body": "```suggestion\r\nregarding multiple Digital Credentials, and MUST contain a JSON object with\r\n```",
+              "createdAt": "2024-05-16T21:49:57Z",
+              "updatedAt": "2024-05-16T21:49:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s565uvX",
+          "commit": {
+            "abbreviatedOid": "d3d1dd0"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-16T21:50:39Z",
+          "updatedAt": "2024-05-16T21:50:40Z",
+          "comments": [
+            {
+              "originalPosition": 132,
+              "body": "```suggestion\r\n| **aud** | It MUST be set with the Credential Issuer Status Assertion endpoint URL as value that identify the intended audience. | {{RFC9126}}, {{RFC7519}} |\r\n```",
+              "createdAt": "2024-05-16T21:50:40Z",
+              "updatedAt": "2024-05-16T21:50:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s565wC_",
+          "commit": {
+            "abbreviatedOid": "bfaef66"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-16T21:52:20Z",
+          "updatedAt": "2024-05-16T21:52:20Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s565-qV",
+          "commit": {
+            "abbreviatedOid": "bfaef66"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks for all these updates!",
+          "createdAt": "2024-05-16T22:25:56Z",
+          "updatedAt": "2024-05-16T22:25:56Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56-2KK",
+          "commit": {
+            "abbreviatedOid": "bfaef66"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-17T12:36:21Z",
+          "updatedAt": "2024-05-17T12:36:21Z",
+          "comments": []
         }
       ]
     },
     {
       "number": 37,
       "id": "PR_kwDOK4XJ0s5unkTi",
-      "title": "credential_pop typ with status-attestation-request+cwt",
+      "title": "credential_pop typ with status-attestation-request+cwt + huge editorials",
       "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/37",
       "state": "OPEN",
       "author": "SaraConsoliACN",
@@ -3575,18 +3897,26 @@
       "labels": [],
       "body": "this commit may resolve issue #20.",
       "createdAt": "2024-05-06T10:15:37Z",
-      "updatedAt": "2024-05-15T19:38:38Z",
+      "updatedAt": "2024-05-17T20:54:15Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
       "baseRefName": "main",
-      "baseRefOid": "8bfb6d148916a4f2730afb1148e5bd3ccae8515f",
+      "baseRefOid": "2b2ffe1d49898640612021fa82b0788e3e25b809",
       "headRepository": "SaraConsoliACN/draft-demarco-oauth-status-attestations",
       "headRefName": "SaraConsoliACN-20240506_issue20",
-      "headRefOid": "ebd064bad946d0a1315417307c366642a6f625f7",
+      "headRefOid": "b737797082a850604ac69f24cb893ef8f39753f6",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "This PR is ready to be merged, a further PR will be create to address @marinaado 's comment  https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/45#issuecomment-2117623296 and the table related to the errors where the placeholder is here defined: https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/37/files#diff-6018989306b8996e79d471eb123fc3b59796d1635384b6faac8cdb36cd5f49ccR472\r\n\r\nregarding the first comment, since it is required that the status assertion issuer always respond with an application/json containing the status_assertion_errors, I'd try to use a general approach without defining specialized error section for both the requests and the responses",
+          "createdAt": "2024-05-17T20:22:29Z",
+          "updatedAt": "2024-05-17T20:22:36Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOK4XJ0s55oyWp",
@@ -4041,6 +4371,52 @@
               "updatedAt": "2024-05-15T19:39:14Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56_XZn",
+          "commit": {
+            "abbreviatedOid": "ea76259"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-17T13:29:23Z",
+          "updatedAt": "2024-05-17T13:29:23Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s57C_mw",
+          "commit": {
+            "abbreviatedOid": "b737797"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-17T20:54:07Z",
+          "updatedAt": "2024-05-17T20:54:08Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "is there interest in suspension, revocation or other dynamic state? see https://w3c.github.io/vc-bitstring-status-list/#example-example-statuslistcredential-using-more-complex-entries\r\n\r\nSome parties have use cases that include dynamic state that is an enumeration instead of a boolean.",
+              "createdAt": "2024-05-17T20:54:08Z",
+              "updatedAt": "2024-05-17T20:54:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s57C_oz",
+          "commit": {
+            "abbreviatedOid": "b737797"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-17T20:54:15Z",
+          "updatedAt": "2024-05-17T20:54:15Z",
+          "comments": []
         }
       ]
     },
@@ -4474,6 +4850,282 @@
               "body": "This does not provide a proof of possession. It is only a necessary condition but not sufficient ",
               "createdAt": "2024-05-15T06:19:03Z",
               "updatedAt": "2024-05-15T06:29:10Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 45,
+      "id": "PR_kwDOK4XJ0s5vr_bN",
+      "title": "Extended Error Codes PR",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/45",
+      "state": "CLOSED",
+      "author": "SaraConsoliACN",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR aims to resolve issue #14.",
+      "createdAt": "2024-05-16T15:59:10Z",
+      "updatedAt": "2024-05-17T20:52:22Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "2b2ffe1d49898640612021fa82b0788e3e25b809",
+      "headRepository": "SaraConsoliACN/draft-demarco-oauth-status-attestations",
+      "headRefName": "SaraConsoliACN-extendedErrorCodes-issue14",
+      "headRefOid": "851a38f2864a6ca583b2bac6e7d2ba5862233591",
+      "closedAt": "2024-05-17T15:04:49Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "pleaser close this PR and revamp it according the structure proposed here: https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/37/files#diff-6018989306b8996e79d471eb123fc3b59796d1635384b6faac8cdb36cd5f49ccR453",
+          "createdAt": "2024-05-17T13:27:53Z",
+          "updatedAt": "2024-05-17T13:27:53Z"
+        },
+        {
+          "author": "marinaado",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Right know, we have two sections describing errors- one in the Assertion Request chapter and second in the Assertion Response chapter. There are two types of errors also, one for bad request and second for invalid credential. I would suggest to move all the text about the errors to the Assertion Response chapter as we are talking about how to construct response in the case of one of these two errors. Then we can consolidate the text. Perhaps this is a separate PR. I can make it if we agree it is a good idea. ",
+          "createdAt": "2024-05-17T13:34:55Z",
+          "updatedAt": "2024-05-17T13:34:55Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "@marinaado we can find an editorial solution for this, at the current stage the status_assertion_responses is returned with both success or errors, since the request is made for several assertions where all or only part of these may raise errors\r\n\r\n",
+          "createdAt": "2024-05-17T15:40:53Z",
+          "updatedAt": "2024-05-17T15:40:53Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s565xKh",
+          "commit": {
+            "abbreviatedOid": "c8d4d6d"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-16T21:54:28Z",
+          "updatedAt": "2024-05-16T21:54:29Z",
+          "comments": [
+            {
+              "originalPosition": 30,
+              "body": "```suggestion\r\nSince the Status Assertion Request is an array of strings, if one or more Status\r\nAssertion Request object are made for a Digital Credential with errors,\r\n```",
+              "createdAt": "2024-05-16T21:54:28Z",
+              "updatedAt": "2024-05-16T21:54:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s565xpo",
+          "commit": {
+            "abbreviatedOid": "c8d4d6d"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-16T21:55:32Z",
+          "updatedAt": "2024-05-16T21:55:32Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "```suggestion\r\nthe HTTP response status code is set to `200` including the parameters as specified in the OAuth 2.0 RFC\r\n```\r\n\r\nI didn't get the parameters as specified ...",
+              "createdAt": "2024-05-16T21:55:32Z",
+              "updatedAt": "2024-05-16T21:55:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s565ykE",
+          "commit": {
+            "abbreviatedOid": "c8d4d6d"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-16T21:57:44Z",
+          "updatedAt": "2024-05-16T21:57:45Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "no\r\n\r\nRFC6749 works in a different way, we can only say that the status assertion error object data schema is inspired by the errors defined in RFC6749, using error and error_description within the payload",
+              "createdAt": "2024-05-16T21:57:44Z",
+              "updatedAt": "2024-05-16T21:57:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s565y_a",
+          "commit": {
+            "abbreviatedOid": "c8d4d6d"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-16T21:58:55Z",
+          "updatedAt": "2024-05-16T21:58:56Z",
+          "comments": [
+            {
+              "originalPosition": 51,
+              "body": "```suggestion\r\n\"${base64url(json({typ: status-assertion-error+cwt, ...}))}.payload\", ... ]\r\n```\r\n\r\n@OR13 @fmarino-ipzs WDYT if the status assertion errors may be unsigned, therefore using the alg `none`?",
+              "createdAt": "2024-05-16T21:58:55Z",
+              "updatedAt": "2024-05-16T21:58:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s56-pJd",
+          "commit": {
+            "abbreviatedOid": "c8d4d6d"
+          },
+          "author": "SaraConsoliACN",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-17T12:16:23Z",
+          "updatedAt": "2024-05-17T12:16:23Z",
+          "comments": [
+            {
+              "originalPosition": 51,
+              "body": "In my opinion, status assertion errors cannot be unsigned because the description parameter requires the reason for revocation to be specified. Depending on the level of detail in the \"error_description\" field, this could lead to privacy issues.",
+              "createdAt": "2024-05-17T12:16:23Z",
+              "updatedAt": "2024-05-17T12:16:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s57C0ec",
+          "commit": {
+            "abbreviatedOid": "c8d4d6d"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-17T20:24:44Z",
+          "updatedAt": "2024-05-17T20:24:45Z",
+          "comments": [
+            {
+              "originalPosition": 51,
+              "body": "therefore we must say that the error description message MUST not contain any mention to personal data or credential types\r\n\r\nbecause it's in the scope of this specification that the status assertion must not, in any case, disclose any personal data o credential data outside of an opaque value",
+              "createdAt": "2024-05-17T20:24:44Z",
+              "updatedAt": "2024-05-17T20:24:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s57C_Jt",
+          "commit": {
+            "abbreviatedOid": "c8d4d6d"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-17T20:52:22Z",
+          "updatedAt": "2024-05-17T20:52:22Z",
+          "comments": [
+            {
+              "originalPosition": 51,
+              "body": "I generally don't think any specification should be encouraging the use of alg none, in the year 2024.\r\nIf its not forbidden explicitly, it should certainly not be encouraged.",
+              "createdAt": "2024-05-17T20:52:22Z",
+              "updatedAt": "2024-05-17T20:52:22Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 48,
+      "id": "PR_kwDOK4XJ0s5vz8se",
+      "title": "fix: status list in offline flows",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/48",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR aims to fix some discrepancies with the considerations about how status list works in the offline flows",
+      "createdAt": "2024-05-17T16:05:14Z",
+      "updatedAt": "2024-05-17T20:00:28Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "2b2ffe1d49898640612021fa82b0788e3e25b809",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "headRefName": "fix-status-list-offline",
+      "headRefOid": "2f7d38ea812e33645d466bf7520777a3e7f1a981",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s57A8FL",
+          "commit": {
+            "abbreviatedOid": "22afe5b"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-17T16:08:07Z",
+          "updatedAt": "2024-05-17T16:08:07Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\r\nhow to download an entire Status List or a Status List Token.\r\nIn the Status List Token, the `status_list` and `sub` members are mandatory. They provide the URL and the index of the revocation entry for the Digital Credential, enabling a Verifier to check the status of the Digital Credential when a broadband connection becomes available.\r\n```",
+              "createdAt": "2024-05-17T16:08:07Z",
+              "updatedAt": "2024-05-17T19:56:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s57A8Wo",
+          "commit": {
+            "abbreviatedOid": "22afe5b"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-17T16:08:32Z",
+          "updatedAt": "2024-05-17T16:08:33Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "```suggestion\r\npersistently use their preexistent Digital Credentials, without disclosing a status URL or any remote reference to it, as long as\r\n```",
+              "createdAt": "2024-05-17T16:08:32Z",
+              "updatedAt": "2024-05-17T16:08:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s57CsXb",
+          "commit": {
+            "abbreviatedOid": "6e1adcd"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-17T20:00:11Z",
+          "updatedAt": "2024-05-17T20:00:11Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "```suggestion\r\n6. **Real-time validation**: OAuth Status Lists provide the possibility\r\n```",
+              "createdAt": "2024-05-17T20:00:11Z",
+              "updatedAt": "2024-05-17T20:00:11Z"
             }
           ]
         }
