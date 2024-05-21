@@ -5,10 +5,10 @@
 Network Working Group                                        G. D. Marco
 Internet-Draft               Dipartimento per la trasformazione digitale
 Intended status: Informational                                 O. Steele
-Expires: 21 November 2024                                      Transmute
+Expires: 22 November 2024                                      Transmute
                                                                F. Marino
                                 Istituto Poligrafico e Zecca dello Stato
-                                                             20 May 2024
+                                                             21 May 2024
 
 
                         OAuth Status Assertions
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 November 2024.
+   This Internet-Draft will expire on 22 November 2024.
 
 Copyright Notice
 
@@ -86,19 +86,20 @@ Table of Contents
      11.2.  Issued Digital Credentials
        11.2.1.  Credential Issuer Implementation Considerations
    12. Presenting Status Assertions
-   13. Security Considerations
-   14. Privacy Considerations
-     14.1.  Privacy Consideration: Status Assertion Request Opacity
-     14.2.  Privacy Consideration: Opacity of Status Assertion Content
-     14.3.  Unlinkability and Reusability of Status Assertions
-     14.4.  Untrackability by Digital Credential Issuers and the
+   13. Considerations On Revocation Verification
+   14. Security Considerations
+   15. Privacy Considerations
+     15.1.  Privacy Consideration: Status Assertion Request Opacity
+     15.2.  Privacy Consideration: Opacity of Status Assertion Content
+     15.3.  Unlinkability and Reusability of Status Assertions
+     15.4.  Untrackability by Digital Credential Issuers and the
             "Phone Home" Problem
-     14.5.  Minimization of Data Exposure
-     14.6.  Resistance to Enumeration Attacks
-   15. IANA Considerations
-     15.1.  JSON Web Token Claims Registration
-     15.2.  Media Type Registration
-   16. Normative References
+     15.5.  Minimization of Data Exposure
+     15.6.  Resistance to Enumeration Attacks
+   16. IANA Considerations
+     16.1.  JSON Web Token Claims Registration
+     16.2.  Media Type Registration
+   17. Normative References
    Appendix A.  Acknowledgments
    Appendix B.  Document History
    Authors' Addresses
@@ -108,33 +109,34 @@ Table of Contents
    Status Assertions ensure the non-revocation of digital credentials,
    whether in JSON Web Tokens (JWT) or CBOR Web Tokens (CWT) format.
    Status Assertions function similarly to OCSP Stapling, allowing
-   wallet instances to present time-stamped assertions from the
-   Credential Issuer.  The approach outlined in this specification
-   enables the verification of credentials against revocation without
-   direct queries to third-party systems.  This enhances privacy,
-   reduces latency, and facilitates offline verification.
+   clients to present to the relying parties time-stamped assertions
+   provided by the credential issuer.  The approach outlined in this
+   specification enables the verification of credentials against
+   revocation without direct queries to third-party systems, enhancing
+   privacy, reducing latency, and faciliting offline verification.
 
-   The figure below illustrates the process by which a Wallet Instance
-   requests and obtains a Status Assertion from the credential issuer.
+   The figure below illustrates the process by which a client, such as a
+   Wallet Instance, requests and obtains a Status Assertion from the
+   credential issuer.
 
-   +-----------------+                             +-------------------+
-   |                 | Requests Status Assertion   |                   |
-   |                 |---------------------------->|                   |
-   | Wallet Instance |                             | Credential Issuer |
-   |                 | Status Assertion            |                   |
-   |                 |<----------------------------|                   |
-   +-----------------+                             +-------------------+
+  +-----------------+                              +-------------------+
+  |                 | Requests Status Assertions   |                   |
+  |                 |----------------------------->|                   |
+  | Client          |                              | Credential Issuer |
+  |                 | Status Assertions            |                   |
+  |                 |<-----------------------------|                   |
+  +-----------------+                              +-------------------+
 
    *Figure 1*: Status Assertion Issuance Flow.
 
-   The figure below illustrates the process by which a Wallet Instance
-   presents the Status Assertion along with the corresponding digital
-   credential, to prove the non-revocation status of the digital
-   credential to a verifier.
+   The figure below illustrates the process by which a client presents
+   the Status Assertion along with the corresponding digital credential,
+   to prove the non-revocation status of the digital credential to a
+   verifier.
 
    +-- ----------------+                             +----------+
    |                   | Presents Digital Credential |          |
-   |  Wallet Instance  | and Status Assertion        | Verifier |
+   | Client            | and Status Assertion        | Verifier |
    |                   |---------------------------->|          |
    +-------------------+                             +----------+
 
@@ -153,7 +155,7 @@ Table of Contents
    This specification uses the terms "End-User", "Entity" as defined by
    OpenID Connect Core [@OpenID.Core], the term "JSON Web Token (JWT)"
    defined by JSON Web Token (JWT) [RFC7519], the term "CBOR Web Token
-   (CWT)" defined in [RFC8392].
+   (CWT)" defined in [RFC8392], "Client" as defined [RFC6749]
 
    Holder:  An entity that receives Verifiable Credentials and has
       control over them to present them to the Verifiers as Verifiable
@@ -179,112 +181,43 @@ Table of Contents
       them.
 
    Wallet Instance:  The digital Wallet in control of a User, also known
-      as Wallet or Holder.  It securely stores the User's Digital
-      Credentials.  It can present Digital Credentials to Verifiers and
-      request Status Assertions from Issuers under the control of the
-      User.
+      as Wallet.  It securely stores the User's Digital Credentials.  It
+      can present Digital Credentials to Verifiers and request Status
+      Assertions from Issuers under the control of the User.  For the
+      purposes of this specification, the Wallet Instance is considered
+      as a Client.
 
 4.  Rationale
 
-   OAuth Status Lists [@!I-D.looker-oauth-jwt-cwt-status-list] are
-   suitable for specific scenarios, especially when the Verifier needs
-   to verify the status of a Digital Credential at a later time after
-   the User has presented the Digital Credential.
-
    There are cases where the Verifier only needs to check the revocation
-   status of a Digital Credential at the time of presentation, or
-   situations where the Verifier should not be allowed to check the
-   status of a Digital Credential over time due to some privacy
-   constraints, in compliance with national privacy regulations.
+   status of a Digital Credential at the time of presentation, and
+   therefore it should not be allowed to check the status of a Digital
+   Credential over time due to some privacy constraints, in compliance
+   with national privacy regulations.
 
    For instance, consider a scenario where a Verifier's repeated access
-   to a Status List to check the revocation status of a Digital
-   Credential could be deemed as excessive monitoring of the End-User's
-   activities.  This could potentially infringe upon the End-User's
-   right to privacy, as outlined in [Article 8 of the European
-   Convention on Human Rights] (https://www.echr.coe.int/documents/
-   convention_eng.pdf) and in the the European Union's General Data
-   Protection Regulation (GDPR (https://gdpr-info.eu/)), by creating a
-   detailed profile of the End-User's credential status without explicit
-   consent for such continuous surveillance.
+   to a status list, such as the one defined in draft-ietf-oauth-status-
+   list (https://datatracker.ietf.org/doc/draft-ietf-oauth-status-list/)
+   to check the revocation status of a Digital Credential could be
+   deemed as excessive monitoring of the End-User's activities.
 
-   In scenarios where the Verifier, Credential Issuer, and OAuth Status
-   List Provider are all part of the same domain or operate within a
-   context where a high level of trust exists between them and the End-
-   User, the OAuth Status List is the optimal solution; while there
-   might be other cases where the OAuth Status List facilitates the
-   exposure to the following privacy risks:
-
-   *  An OAuth Status List Provider might know the association between a
-      specific status list and a Credential Issuer, especially if the
-      latter issues a single type of Digital Credential.  This could
-      inadvertently reveal the OAusth Status List Provider information
-      about how a Digital Credential corresponds to a status list.
-
-   *  A Verifier retrieves an OAuth Status List by establishing a TCP/IP
-      connection with an OAuth Status List Provider.  This allows the
-      OAuth Status List Provider to obtain the IP address of the
-      Verifier and potentially link it to a specific Digital Credential
-      type and Credential Issuer associated with that OAuth Status List.
-      A malicious OAuth Status List Provider could use internet
-      diagnostic tools, such as Whois or GeoIP lookup, to gather
-      additional information about the Verifier.  This could
-      inadvertently disclose to the OAuth Status List Provider which
-      Digital Credential the requester is using and from which
-      Credential Issuer, information that should remain confidential.
-
-   Status Assertions differ significantly from OAuth Status Lists in
-   several ways:
-
-   1.  *Privacy*: Status Assertions are designed to be privacy-
-       preserving.  Verifier exchanges the Status Assertions directly
-       with the Holder, not requiring the Verifier to gather any
-       additional information from third-party entities.  Once a Status
-       Assertion is issued, it can be verified without any further
-       communication with the Credential Issuer or any other party, thus
-       preventing potential privacy leaks.
-
-   2.  *Static Verification*: Status Assertions are designed to be
-       statically provided to Verifiers by Wallet Instance.
-
-   3.  *Digital Credentials Formats*: Status Assertions are agnostic
-       from the Digital Credential format to which they are bound.
-
-   4.  *Trust Model*: Status Assertions operate under a model where the
-       Verifier trusts the Credential Issuer to provide accurate status
-       information, while the OAuth Status Lists operate under a model
-       where the Verifier trusts the Status List Provider to maintain an
-       accurate and up-to-date list of statuses.
-
-   5.  *Offline flow*: OAuth Status List can be accessed by a Verifier
-       when an internet connection is present.  At the same time, OAuth
-       Status List defines how to download an entire Status List or a
-       Status List Token.  In the Status List Token, the status_list and
-       sub members are mandatory.  They provide the URL and the index of
-       the revocation entry for the Digital Credential, enabling a
-       Verifier to check the status of the Digital Credential when a
-       broadband connection becomes available.  Even if similar to the
-       OAuth Status List Token, the Status Assertions enable the User to
-       persistently use their preexistent Digital Credentials, without
-       disclosing a status URL or any remote reference to it, as long as
-       the linked Status Assertion is available and presented to the
-       Verifier, and not expired.
-
-   6.  *Real-time validation*: OAuth Status Lists provide the
-       possibility to do real-time validation of the Digital Credential
-       status.  To support the real-time status validation use cases, a
-       Wallet MAY implement strategy to request a new Status Assertion
-       before sending it to the Verifier.
+   This could potentially infringe upon the End-User's right to privacy,
+   as outlined in [Article 8 of the European Convention on Human Rights]
+   (https://www.echr.coe.int/documents/convention_eng.pdf) and in the
+   the European Union's General Data Protection Regulation (GDPR
+   (https://gdpr-info.eu/)), by creating a detailed profile of the End-
+   User's Digital Credential status without explicit consent for such
+   continuous surveillance.
 
 5.  Requirements
 
    The general requirements for the implementation of Status Assertion
    are listed in this section.  The Status Assertion:
 
-   *  MUST be presented in conjunction with the Digital Credential.  The
-      Status Assertion MUST be timestamped with its issuance datetime,
-      using a timestamp which is later then the time of presentation
-      issuance;
+   *  SHOULD be presented in conjunction with the Digital Credential.
+      The Status Assertion MUST be timestamped with its issuance
+      datetime, using a timestamp which is later then the time of
+      presentation issuance;
 
    *  MUST contain the expiration datetime after which the Digital
       Credential MUST NOT be considered valid anymore.  The expiration
@@ -294,6 +227,12 @@ Table of Contents
    *  MUST enable the offline use cases by employing validation using a
       cryptographic signature and the cryptographic public key of the
       Credential Issuer.
+
+   *  MUST include information that links it to the referenced Digital
+      Credential;
+
+   *  MUST NOT contain personal information about the User who owns the
+      Digital Credential to which the Status Assertion refers.
 
 6.  Proof of Possession of a Credential
 
@@ -445,7 +384,7 @@ Table of Contents
 
    Below is a non-normative example of a Status Assertion Request with
    the JWT headers and payload are represented without applying
-   signature and encoding, for better readability:
+   signature and encoding:
 
    {
        "alg": "ES256",
@@ -544,21 +483,21 @@ Content-Type: application/json
    For each entry in the status_assertion_responses array, the following
    requirements are met: - Each element in the array MUST match the
    corresponding element in the request array at the same position index
-   to which it is related, eg: "[requestAboutA, requestAboutB]" produces
-   "[responseAboutA, responseErrorAboutB]". - Each element MUST contain
+   to which it is related, eg: _[requestAboutA, requestAboutB]_ produces
+   _[responseAboutA, responseErrorAboutB]_. - Each element MUST contain
    the error or the status of the assertion using the typ member. set to
    "status-assertion+{jwt,cwt}" or "status-assertion-error+{jwt,cwt}",
    depending by the object type. - The corresponding entry in the
    response MUST be of the same data format as requested.  For example,
    if the entry in the request is "jwt", then the entry at the same
-   position in the response must also be "jwt".
+   position in the response MUST also be "jwt".
 
 9.  Status Assertion Error
 
    If the Status Assertion is requested for a non-existent, expired,
    revoked or invalid Digital Credential, the Credential Issuer MUST
    respond with an HTTP Response with the status code set to 200 and the
-   status_assertion_responses array with the related Status Assertioon
+   status_assertion_responses array with the related Status Assertion
    Error object.
 
    The Status Assertion Error object must contain the parameters
@@ -601,10 +540,10 @@ Content-Type: application/json
     |                     |is bound.  The value SHOULD  |             |
     |                     |be set to sha-256.           |             |
     +---------------------+-----------------------------+-------------+
-    |*error*              |The value must be assigned   |[RFC7519]    |
+    |*error*              |The value SHOULD be assigned |[RFC7519]    |
     |                     |one of the error types as    |Section 4.1.7|
-    |                     |specified in the OAuth 2.0   |             |
-    |                     |RFC Section 5.2              |             |
+    |                     |specified in the [RFC6749]   |             |
+    |                     |Section 5.2                  |             |
     |                     |(https://tools.ietf.org/html/|             |
     |                     |rfc6749#section-5.2) or the  |             |
     |                     |others as defined in table   |             |
@@ -689,13 +628,11 @@ Content-Type: application/json
    |                       | time of the Status       | [RFC7519]     |
    |                       | Assertion issuance.      |               |
    +-----------------------+--------------------------+---------------+
-   | *exp*                 | UNIX Timestamp with the  |               |
-   |                       | expiration time of the   |               |
-   |                       | JWT.  It MUST be greater |               |
-   |                       | than the value           |               |
-   +-----------------------+--------------------------+---------------+
-   | set for iat.          | [RFC9126], [RFC7519],    |               |
-   |                       | [RFC7515]                |               |
+   | *exp*                 | UNIX Timestamp with the  | [RFC9126],    |
+   |                       | expiration time of the   | [RFC7519],    |
+   |                       | JWT.  It MUST be greater | [RFC7515]     |
+   |                       | than the value set for   |               |
+   |                       | iat.                     |               |
    +-----------------------+--------------------------+---------------+
    | *credential_hash*     | Hash value of the        | this          |
    |                       | Digital Credential the   | specification |
@@ -828,31 +765,31 @@ Content-Type: application/json
 
       -  evaluate the validity of the Status Assertion.
 
-   Please note: The importance of checking the revocation status of
-   Digital Credentials as a 'SHOULD' rather than a 'MUST' for a Verifier
-   who gets Status Assertion for the Digital Credential stems from the
-   fact that the decision of a Verifier to check the revocation status
-   of Digital Credentials is not absolute and can be influenced by
-   numerous variables.  Consider as an example the case of age-over x;
-   even if it has expired, it may still perform its intended purpose.
-   As a result, the expiration status alone does not render it invalid.
-   The adaptability recognizes that the need to verify revocation status
-   may not always coincide with the actual usability of a Digital
-   Credential, allowing Verifiers to examine and make educated
-   conclusions based on a variety of scenarios.
+13.  Considerations On Revocation Verification
 
-13.  Security Considerations
+   The recommendation for Verifiers to check the revocation status of
+   Digital Credentials as a 'SHOULD' instead of a 'MUST' acknowledges
+   that the decision to verify revocation is not absolute and may be
+   influenced by various factors.  Consider as an example the case of
+   age-over x; even if it has expired, it may still perform its intended
+   purpose.  As a result, the expiration status alone does not render it
+   invalid.  The adaptability recognizes that the need to verify
+   revocation status may not always coincide with the actual usability
+   of a Digital Credential, allowing Verifiers to examine and make
+   educated conclusions based on a variety of scenarios.
+
+14.  Security Considerations
 
    TODO Security
 
-14.  Privacy Considerations
+15.  Privacy Considerations
 
    In the design and implementation of Status Assertions, particular
    attention has been paid to privacy considerations to ensure that the
    system is respectful of user privacy and compliant with relevant
    regulations.
 
-14.1.  Privacy Consideration: Status Assertion Request Opacity
+15.1.  Privacy Consideration: Status Assertion Request Opacity
 
    The request for a Status Assertion does not transmit the Digital
    Credential for which the status is being attested.  Instead, it
@@ -871,7 +808,7 @@ Content-Type: application/json
    process from being used to collect information about Digital
    Credentials or their holders through deceptive requests.
 
-14.2.  Privacy Consideration: Opacity of Status Assertion Content
+15.2.  Privacy Consideration: Opacity of Status Assertion Content
 
    An important privacy consideration is how the Status Assertion is
    structured to ensure it does not reveal any information about the
@@ -886,7 +823,7 @@ Content-Type: application/json
    applied in various verification situations without risking the
    privacy of the people involved.
 
-14.3.  Unlinkability and Reusability of Status Assertions
+15.3.  Unlinkability and Reusability of Status Assertions
 
    Status Assertions are designed to uphold privacy by allowing
    Verifiers to operate independently, without the need for interaction
@@ -910,7 +847,7 @@ Content-Type: application/json
    without compromising the privacy or security of the Digital
    Credential Holder.
 
-14.4.  Untrackability by Digital Credential Issuers and the "Phone Home"
+15.4.  Untrackability by Digital Credential Issuers and the "Phone Home"
        Problem
 
    A fundamental aspect of the privacy-preserving attributes of Status
@@ -929,7 +866,7 @@ Content-Type: application/json
    verification activities, further reinforcing the system's dedication
    to protecting user privacy.
 
-14.5.  Minimization of Data Exposure
+15.5.  Minimization of Data Exposure
 
    The Status Assertions are designed around the data minimization
    principle.  Data minimization ensures that only the necessary
@@ -937,7 +874,7 @@ Content-Type: application/json
    status of the Digital Credential.  This minimizes the exposure of
    potentially sensitive data.
 
-14.6.  Resistance to Enumeration Attacks
+15.6.  Resistance to Enumeration Attacks
 
    The design of Status Assertions incorporates measures to resist
    enumeration attacks, where an adversary attempts to gather
@@ -952,9 +889,9 @@ Content-Type: application/json
    reflecting a deliberate effort to balance security and privacy needs
    in the Digital Credential ecosystem.
 
-15.  IANA Considerations
+16.  IANA Considerations
 
-15.1.  JSON Web Token Claims Registration
+16.1.  JSON Web Token Claims Registration
 
    This specification requests registration of the following Claims in
    the IANA "JSON Web Token Claims" registry [@IANA.JWT] established by
@@ -1006,13 +943,13 @@ Content-Type: application/json
    *  Specification Document(s): [[ (#status-assertion) of this
       specification ]]
 
-15.2.  Media Type Registration
+16.2.  Media Type Registration
 
    This section requests registration of the following media types
    [@RFC2046] in the "Media Types" registry [@IANA.MediaTypes] in the
    manner described in [@RFC6838].
 
-   To indicate that the content is an JWT-based Status List:
+   To indicate that the content is a JWT-based Status Assertion:
 
    *  Type name: application
 
@@ -1058,11 +995,11 @@ Content-Type: application/json
 
    *  Provisional registration?  No
 
-   To indicate that the content is an CWT-based Status List:
+   To indicate that the content is a CWT-based Status Assertion:
 
    *  Type name: application
 
-   *  Subtype name: status-assertion+jwt
+   *  Subtype name: status-assertion+cwt
 
    *  Required parameters: n/a
 
@@ -1102,12 +1039,16 @@ Content-Type: application/json
 
    *  Provisional registration?  No
 
-16.  Normative References
+17.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
+              RFC 6749, DOI 10.17487/RFC6749, October 2012,
+              <https://www.rfc-editor.org/rfc/rfc6749>.
 
    [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
               Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
@@ -1174,10 +1115,23 @@ Appendix A.  Acknowledgments
 
 Appendix B.  Document History
 
+   -03
+
+   *  Removed any comparison with OAuth Status List
+
+   *  Status Assertion Request and Response is now a json array with
+      multiple entries.
+
+   *  Better generalization about the confirmation methods.
+
+   *  Removed any informative comparison with OAuth Status List.
+
+   *  JWT and CWT typ.
+
    -02
 
    *  Name of the draft changed from OAuth Status Attestations to OAuth
-      Status Assertions
+      Status Assertions.
 
 Authors' Addresses
 
