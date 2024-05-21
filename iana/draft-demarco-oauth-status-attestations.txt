@@ -1288,8 +1288,6 @@ Appendix B.  Document History
 
    -03
 
-   *  IANA media type registry
-
    *  Removed any comparison with OAuth Status List
 
    *  Status Assertion Request and Response is now a json array with
