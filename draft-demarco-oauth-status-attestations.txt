@@ -202,7 +202,7 @@ Table of Contents
    deemed as excessive monitoring of the End-User's activities.
 
    This could potentially infringe upon the End-User's right to privacy,
-   as outlined in [Article 8 of the European Convention on Human Rights]
+   as outlined in Article 8 of the European Convention on Human Rights
    (https://www.echr.coe.int/documents/convention_eng.pdf) and in the
    the European Union's General Data Protection Regulation (GDPR
    (https://gdpr-info.eu/)), by creating a detailed profile of the End-
@@ -316,10 +316,10 @@ Table of Contents
      +========+==========================================+===========+
      | Header | Description                              | Reference |
      +========+==========================================+===========+
-     | *typ*  | It MUST be set to status-attestation+jwt | [RFC7516] |
+     | *typ*  | It MUST be set to status-assertion+jwt   | [RFC7516] |
      |        | when JWT format is used.  It MUST be set | Section   |
-     |        | to status-attestation+cwt when CWT       | 4.1.1     |
-     |        | format is used.                          |           |
+     |        | to status-assertion+cwt when CWT format  | 4.1.1     |
+     |        | is used.                                 |           |
      +--------+------------------------------------------+-----------+
      | *alg*  | A digital signature algorithm identifier | [RFC7516] |
      |        | such as per IANA "JSON Web Signature and | Section   |
@@ -329,8 +329,8 @@ Table of Contents
      +--------+------------------------------------------+-----------+
      | *kid*  | Unique identifier of the JWK or Cose_Key | [RFC7515] |
      |        | used for the signature of the Status     |           |
-     |        | Attestation Request, it MUST match the   |           |
-     |        | one contained in the Credential.         |           |
+     |        | Assertion Request, it MUST match the one |           |
+     |        | contained in the Credential.             |           |
      +--------+------------------------------------------+-----------+
 
                                   Table 1
@@ -350,7 +350,7 @@ Table of Contents
    +-----------------------+--------------------------+---------------+
    | *aud*                 | It MUST be set with the  | [RFC9126],    |
    |                       | Credential Issuer Status | [RFC7519]     |
-   |                       | Attestation endpoint URL |               |
+   |                       | Assertion endpoint URL   |               |
    |                       | as value that identify   |               |
    |                       | the intended audience.   |               |
    +-----------------------+--------------------------+---------------+
@@ -369,13 +369,13 @@ Table of Contents
    +-----------------------+--------------------------+---------------+
    | *credential_hash*     | Hash value of the        | this          |
    |                       | Digital Credential the   | specification |
-   |                       | Status Attestation is    |               |
+   |                       | Status Assertion is      |               |
    |                       | bound to.                |               |
    +-----------------------+--------------------------+---------------+
    | *credential_hash_alg* | The Algorithm used of    | this          |
    |                       | hashing the Digital      | specification |
    |                       | Credential to which the  |               |
-   |                       | Status Attestation is    |               |
+   |                       | Status Assertion is      |               |
    |                       | bound.  The value SHOULD |               |
    |                       | be set to sha-256.       |               |
    +-----------------------+--------------------------+---------------+
@@ -410,14 +410,14 @@ Table of Contents
    [
        / protected / << {
        / alg / 1: -7 / ES256 /
-       / typ / 16: -7 / status-attestation-request+cwt /
+       / typ / 16: -7 / status-assertion-request+cwt /
        / kid / 4: h'3132' / $CREDENTIAL-CNF-CWKID /
      } >>,
      / unprotected / {
      },
      / payload / << {
        / iss    / 1: 0b434530-e151-4c40-98b7-74c75a5ef760 /,
-       / aud    / 3: https://issuer.example.org/status-attestation-endpoint /,
+       / aud    / 3: https://issuer.example.org/status-assertion-endpoint /,
        / iat    / 6: 1698744039 /,
        / exp    / 4: 1698830439 /,
        / cti    / 7: 6f204f7e-e453-4dfd-814e-9d155319408c /,
@@ -508,8 +508,8 @@ Content-Type: application/json
      +========+==========================================+===========+
      | *typ*  | Depending on the related Status          | [RFC7516] |
      |        | Assertion Request object format, it MUST | Section   |
-     |        | be set to status-attestation-error+jwt   | 4.1.1     |
-     |        | or status-attestation-error+cwt.         |           |
+     |        | be set to status-assertion-error+jwt or  | 4.1.1     |
+     |        | status-assertion-error+cwt.              |           |
      +--------+------------------------------------------+-----------+
      | *alg*  | It MUST set to none.                     | [RFC7516] |
      |        |                                          | Section   |
@@ -529,16 +529,16 @@ Content-Type: application/json
     +---------------------+-----------------------------+-------------+
     |*credential_hash*    |Hash value of the Digital    |this         |
     |                     |Credential the Status        |specification|
-    |                     |Attestation is bound to,     |             |
+    |                     |Assertion is bound to,       |             |
     |                     |according to the related     |             |
     |                     |Status Assertion Request     |             |
     |                     |object.                      |             |
     +---------------------+-----------------------------+-------------+
     |*credential_hash_alg*|The Algorithm used of hashing|this         |
     |                     |the Digital Credential to    |specification|
-    |                     |which the Status Attestation |             |
-    |                     |is bound.  The value SHOULD  |             |
-    |                     |be set to sha-256.           |             |
+    |                     |which the Status Assertion is|             |
+    |                     |bound.  The value SHOULD be  |             |
+    |                     |set to sha-256.              |             |
     +---------------------+-----------------------------+-------------+
     |*error*              |The value SHOULD be assigned |[RFC7519]    |
     |                     |one of the error types as    |Section 4.1.7|
@@ -605,9 +605,9 @@ Content-Type: application/json
     |           | algorithm (MAC) identifier.        |               |
     +-----------+------------------------------------+---------------+
     | *typ*     | It MUST be set to status-          | [RFC7515],    |
-    |           | attestation+jwt when JWT format is | [RFC7517] and |
+    |           | assertion+jwt when JWT format is   | [RFC7517] and |
     |           | used.  It MUST be set to status-   | this          |
-    |           | attestation+cwt when CWT format is | specification |
+    |           | assertion+cwt when CWT format is   | specification |
     |           | used.                              |               |
     +-----------+------------------------------------+---------------+
     | *kid*     | Unique identifier of the           | [RFC7515]     |

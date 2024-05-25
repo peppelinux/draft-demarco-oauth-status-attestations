@@ -1383,8 +1383,8 @@ status list, such as the one defined in
 to check the revocation status of a Digital Credential could
 be deemed as excessive monitoring of the End-User's activities.<a href="#section-4-2" class="pilcrow">¶</a></p>
 <p id="section-4-3">This could potentially infringe upon the End-User's right to privacy,
-as outlined in [Article 8 of the European Convention on Human Rights]
-(https://www.echr.coe.int/documents/convention_eng.pdf) and
+as outlined in
+<a href="https://www.echr.coe.int/documents/convention_eng.pdf">Article 8 of the European Convention on Human Rights</a> and
 in the the European Union's General Data Protection Regulation
 (<a href="https://gdpr-info.eu/">GDPR</a>),
 by creating a detailed profile of the End-User's
@@ -1457,12 +1457,13 @@ possession mechanisms. This includes, but is not limited to:<a href="#section-6-
 </li>
       </ol>
 <p id="section-6-4">The essence of requiring proof of possession over the Credential
-through the confirmation method, such has proving the control of the cryptographic material related to a Credential, is
+through the confirmation method, such has proving the control of the
+cryptographic material related to a Credential, is
 to ensure that the entity in possession of the Credential can execute
 actions exclusively reserved to the legitimate Holder.
 The dual-layered approach of requiring both possession of the
-Credential and control over it, reinforces the security and integrity of the Status
-Assertion process.
+Credential and control over it, reinforces the security and integrity
+of the Status Assertion process.
 This ensures that the Holder requesting a Status Assertion is indeed
 the same Holder to which the Credential was originally issued,
 affirming the authenticity and rightful possession of the Credential.<a href="#section-6-4" class="pilcrow">¶</a></p>
@@ -1526,7 +1527,7 @@ the Digital Credential.<a href="#section-7-4" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>typ</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set to <code>status-attestation+jwt</code> when JWT format is used. It <span class="bcp14">MUST</span> be set to <code>status-attestation+cwt</code> when CWT format is used.</td>
+            <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set to <code>status-assertion+jwt</code> when JWT format is used. It <span class="bcp14">MUST</span> be set to <code>status-assertion+cwt</code> when CWT format is used.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC7516" class="cite xref">RFC7516</a>]</span> Section 4.1.1</td>
           </tr>
@@ -1542,7 +1543,7 @@ the Digital Credential.<a href="#section-7-4" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>kid</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">Unique identifier of the <code>JWK or</code> <code>Cose_Key</code> used for the signature of the Status Attestation Request, it <span class="bcp14">MUST</span> match the one contained in the Credential.</td>
+            <td class="text-left" rowspan="1" colspan="1">Unique identifier of the <code>JWK or</code> <code>Cose_Key</code> used for the signature of the Status Assertion Request, it <span class="bcp14">MUST</span> match the one contained in the Credential.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>
 </td>
@@ -1572,7 +1573,7 @@ the Digital Credential.<a href="#section-7-4" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>aud</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set with the Credential Issuer Status Attestation endpoint URL as value that identify the intended audience.</td>
+            <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set with the Credential Issuer Status Assertion endpoint URL as value that identify the intended audience.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span>, <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>
 </td>
@@ -1607,14 +1608,14 @@ the Digital Credential.<a href="#section-7-4" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>credential_hash</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">Hash value of the Digital Credential the Status Attestation is bound to.</td>
+            <td class="text-left" rowspan="1" colspan="1">Hash value of the Digital Credential the Status Assertion is bound to.</td>
             <td class="text-left" rowspan="1" colspan="1">this specification</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>credential_hash_alg</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">The Algorithm used of hashing the Digital Credential to which the Status Attestation is bound. The value <span class="bcp14">SHOULD</span> be set to <code>sha-256</code>.</td>
+            <td class="text-left" rowspan="1" colspan="1">The Algorithm used of hashing the Digital Credential to which the Status Assertion is bound. The value <span class="bcp14">SHOULD</span> be set to <code>sha-256</code>.</td>
             <td class="text-left" rowspan="1" colspan="1">this specification</td>
           </tr>
         </tbody>
@@ -1649,14 +1650,14 @@ and payload are presented without applying signature and encoding for better rea
    [
        / protected / &lt;&lt; {
        / alg / 1: -7 / ES256 /
-       / typ / 16: -7 / status-attestation-request+cwt /
+       / typ / 16: -7 / status-assertion-request+cwt /
        / kid / 4: h'3132' / $CREDENTIAL-CNF-CWKID /
      } &gt;&gt;,
      / unprotected / {
      },
      / payload / &lt;&lt; {
        / iss    / 1: 0b434530-e151-4c40-98b7-74c75a5ef760 /,
-       / aud    / 3: https://issuer.example.org/status-attestation-endpoint /,
+       / aud    / 3: https://issuer.example.org/status-assertion-endpoint /,
        / iat    / 6: 1698744039 /,
        / exp    / 4: 1698830439 /,
        / cti    / 7: 6f204f7e-e453-4dfd-814e-9d155319408c /,
@@ -1764,7 +1765,7 @@ table below:<a href="#section-9-2" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>typ</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">Depending on the related Status Assertion Request object format, it <span class="bcp14">MUST</span> be set to <code>status-attestation-error+jwt</code> or <code>status-attestation-error+cwt</code>.</td>
+            <td class="text-left" rowspan="1" colspan="1">Depending on the related Status Assertion Request object format, it <span class="bcp14">MUST</span> be set to <code>status-assertion-error+jwt</code> or <code>status-assertion-error+cwt</code>.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC7516" class="cite xref">RFC7516</a>]</span> Section 4.1.1</td>
           </tr>
@@ -1809,14 +1810,14 @@ table below:<a href="#section-9-2" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>credential_hash</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">Hash value of the Digital Credential the Status Attestation is bound to, according to the related Status Assertion Request object.</td>
+            <td class="text-left" rowspan="1" colspan="1">Hash value of the Digital Credential the Status Assertion is bound to, according to the related Status Assertion Request object.</td>
             <td class="text-left" rowspan="1" colspan="1">this specification</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>credential_hash_alg</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">The Algorithm used of hashing the Digital Credential to which the Status Attestation is bound. The value <span class="bcp14">SHOULD</span> be set to <code>sha-256</code>.</td>
+            <td class="text-left" rowspan="1" colspan="1">The Algorithm used of hashing the Digital Credential to which the Status Assertion is bound. The value <span class="bcp14">SHOULD</span> be set to <code>sha-256</code>.</td>
             <td class="text-left" rowspan="1" colspan="1">this specification</td>
           </tr>
           <tr>
@@ -1896,7 +1897,7 @@ where the format is JWT.<a href="#section-10-2" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>typ</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set to <code>status-attestation+jwt</code> when JWT format is used. It <span class="bcp14">MUST</span> be set to <code>status-attestation+cwt</code> when CWT format is used.</td>
+            <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set to <code>status-assertion+jwt</code> when JWT format is used. It <span class="bcp14">MUST</span> be set to <code>status-assertion+cwt</code> when CWT format is used.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>, <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> and this specification</td>
           </tr>
