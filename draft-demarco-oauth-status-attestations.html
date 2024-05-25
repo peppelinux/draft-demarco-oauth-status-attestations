@@ -1401,28 +1401,32 @@ such continuous surveillance.<a href="#section-4-3" class="pilcrow">¶</a></p>
 listed in this section. The Status Assertion:<a href="#section-5-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5-2.1">
-          <p id="section-5-2.1.1"><span class="bcp14">SHOULD</span> be presented in conjunction with the Digital Credential.
-The Status Assertion <span class="bcp14">MUST</span> be timestamped with its issuance datetime,
-using a timestamp which is later then the time of presentation issuance;<a href="#section-5-2.1.1" class="pilcrow">¶</a></p>
+          <p id="section-5-2.1.1"><span class="bcp14">SHOULD</span> be presented in conjunction with the Digital Credential.<a href="#section-5-2.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-5-2.2">
-          <p id="section-5-2.2.1"><span class="bcp14">MUST</span> contain the expiration datetime after which the Digital Credential
-<span class="bcp14">MUST NOT</span> be considered valid anymore. The expiration datetime <span class="bcp14">MUST</span> be
-superior to the Status Assertion issuance datetime and it <span class="bcp14">MUST</span> end before
-the expiration of the Credential;<a href="#section-5-2.2.1" class="pilcrow">¶</a></p>
+          <p id="section-5-2.2.1"><span class="bcp14">MUST</span> include information that links it to the
+referenced Digital Credential;<a href="#section-5-2.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-5-2.3">
-          <p id="section-5-2.3.1"><span class="bcp14">MUST</span> enable the offline use cases by employing validation using
-a cryptographic signature and the cryptographic public key of the
-Credential Issuer.<a href="#section-5-2.3.1" class="pilcrow">¶</a></p>
+          <p id="section-5-2.3.1"><span class="bcp14">MUST</span> be timestamped with its issuance datetime,
+using a timestamp which is at or after the time of
+Digital Credential issuance which it refers;<a href="#section-5-2.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-5-2.4">
-          <p id="section-5-2.4.1"><span class="bcp14">MUST</span> include information that links it to the
-referenced Digital Credential;<a href="#section-5-2.4.1" class="pilcrow">¶</a></p>
+          <p id="section-5-2.4.1"><span class="bcp14">MUST</span> contain the expiration datetime after which both
+the Status Assertion and the Digital Credential it refers
+<span class="bcp14">MUST NOT</span> be considered valid anymore. The expiration datetime <span class="bcp14">MUST</span> be
+superior to the Status Assertion issuance datetime and it <span class="bcp14">MUST</span> end before
+the expiration datetime of the Digital Credential;<a href="#section-5-2.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-5-2.5">
-          <p id="section-5-2.5.1"><span class="bcp14">MUST NOT</span> contain personal information about the User who owns
-the Digital Credential to which the Status Assertion refers.<a href="#section-5-2.5.1" class="pilcrow">¶</a></p>
+          <p id="section-5-2.5.1"><span class="bcp14">MUST</span> enable the offline use cases by employing validation using
+a cryptographic signature and the cryptographic public key of the
+Credential Issuer.<a href="#section-5-2.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-5-2.6">
+          <p id="section-5-2.6.1"><span class="bcp14">MUST NOT</span> contain personal information about the User who owns
+the Digital Credential to which the Status Assertion refers.<a href="#section-5-2.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
