@@ -5,10 +5,10 @@
 Network Working Group                                        G. D. Marco
 Internet-Draft               Dipartimento per la trasformazione digitale
 Intended status: Informational                                 O. Steele
-Expires: 25 November 2024                                      Transmute
+Expires: 26 November 2024                                      Transmute
                                                                F. Marino
                                 Istituto Poligrafico e Zecca dello Stato
-                                                             24 May 2024
+                                                             25 May 2024
 
 
                         OAuth Status Assertions
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 November 2024.
+   This Internet-Draft will expire on 26 November 2024.
 
 Copyright Notice
 
@@ -220,8 +220,8 @@ Table of Contents
       Credential;
 
    *  MUST be timestamped with its issuance datetime, using a timestamp
-      which is at or after the time of Digital Credential which it
-      refers;
+      which is at or after the time of Digital Credential issuance which
+      it refers;
 
    *  MUST contain the expiration datetime after which both the Status
       Assertion and the Digital Credential it refers MUST NOT be
