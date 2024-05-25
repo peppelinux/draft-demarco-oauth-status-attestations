@@ -1040,7 +1040,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Marco, et al.</td>
-<td class="center">Expires 25 November 2024</td>
+<td class="center">Expires 26 November 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1053,12 +1053,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-demarco-oauth-status-attestations-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-05-24" class="published">24 May 2024</time>
+<time datetime="2024-05-25" class="published">25 May 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-11-25">25 November 2024</time></dd>
+<dd class="expires"><time datetime="2024-11-26">26 November 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1118,7 +1118,7 @@ without requiring to query any third-party entities.<a href="#section-abstract-1
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 25 November 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 26 November 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1404,23 +1404,25 @@ listed in this section. The Status Assertion:<a href="#section-5-1" class="pilcr
           <p id="section-5-2.1.1"><span class="bcp14">SHOULD</span> be presented in conjunction with the Digital Credential.<a href="#section-5-2.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-5-2.2">
-          <p id="section-5-2.2.1"><span class="bcp14">MUST</span> be timestamped with its issuance datetime,
-using a timestamp which is later then the time of presentation issuance;<a href="#section-5-2.2.1" class="pilcrow">¶</a></p>
+          <p id="section-5-2.2.1"><span class="bcp14">MUST</span> include information that links it to the
+referenced Digital Credential;<a href="#section-5-2.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-5-2.3">
-          <p id="section-5-2.3.1"><span class="bcp14">MUST</span> contain the expiration datetime after which the Digital Credential
-must not be considered valid anymore. The expiration datetime <span class="bcp14">MUST</span> be
-superior to the Status Assertion issuance datetime and it <span class="bcp14">MUST</span> end before
-the expiration of the Credential;<a href="#section-5-2.3.1" class="pilcrow">¶</a></p>
+          <p id="section-5-2.3.1"><span class="bcp14">MUST</span> be timestamped with its issuance datetime,
+using a timestamp which is at or after the time of
+Digital Credential issuance which it refers;<a href="#section-5-2.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-5-2.4">
-          <p id="section-5-2.4.1"><span class="bcp14">MUST</span> enable the offline use cases by employing validation using
-a cryptographic signature and the cryptographic public key of the
-Credential Issuer.<a href="#section-5-2.4.1" class="pilcrow">¶</a></p>
+          <p id="section-5-2.4.1"><span class="bcp14">MUST</span> contain the expiration datetime after which both
+the Status Assertion and the Digital Credential it refers
+<span class="bcp14">MUST NOT</span> be considered valid anymore. The expiration datetime <span class="bcp14">MUST</span> be
+superior to the Status Assertion issuance datetime and it <span class="bcp14">MUST</span> end before
+the expiration datetime of the Digital Credential;<a href="#section-5-2.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-5-2.5">
-          <p id="section-5-2.5.1"><span class="bcp14">MUST</span> include information that links it to the
-referenced Digital Credential;<a href="#section-5-2.5.1" class="pilcrow">¶</a></p>
+          <p id="section-5-2.5.1"><span class="bcp14">MUST</span> enable the offline use cases by employing validation using
+a cryptographic signature and the cryptographic public key of the
+Credential Issuer.<a href="#section-5-2.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-5-2.6">
           <p id="section-5-2.6.1"><span class="bcp14">MUST NOT</span> contain personal information about the User who owns
@@ -1451,20 +1453,19 @@ possession mechanisms. This includes, but is not limited to:<a href="#section-6-
           <p id="section-6-3.1.1">Having the digital representation of the Digital Credential (the bytes).<a href="#section-6-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-6-3.2">
-          <p id="section-6-3.2.1">Controlling a private key that corresponds to a public key associated
-with the Credential, often indicated within the Credential's cnf
-(confirmation) claim or through a similar mechanism.<a href="#section-6-3.2.1" class="pilcrow">¶</a></p>
+          <p id="section-6-3.2.1">Controlling the confirmation method of the Credential, using the Credential's <code>cnf</code> parameter.<a href="#section-6-3.2.1" class="pilcrow">¶</a></p>
 </li>
       </ol>
-<p id="section-6-4">The essence of requiring control over the private key and its
-demonstration through a cryptographic operation
-(e.g., signing a challenge or a token) is to ensure that the entity in
-possession of the Credential can execute actions exclusively reserved
-for the legitimate subject. The dual-layered approach of requiring both
-possession of the Credential and control over the corresponding private
-key indeed reinforces the security and integrity of the Status Assertion
-process. It also ensures that the entity requesting a Status Assertion
-is indeed the same entity to which the Credential was originally issued,
+<p id="section-6-4">The essence of requiring proof of possession over the Credential
+through the confirmation method, such has proving the control of the
+cryptographic material related to a Credential, is
+to ensure that the entity in possession of the Credential can execute
+actions exclusively reserved to the legitimate Holder.
+The dual-layered approach of requiring both possession of the
+Credential and control over it, reinforces the security and integrity
+of the Status Assertion process.
+This ensures that the Holder requesting a Status Assertion is indeed
+the same Holder to which the Credential was originally issued,
 affirming the authenticity and rightful possession of the Credential.<a href="#section-6-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2366,7 +2367,7 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
             <p id="section-16.2-3.8.1">Published specification: [[ this specification ]]<a href="#section-16.2-3.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-3.9">
-            <p id="section-16.2-3.9.1">Applications that use this media type: Applications using [[ this specification ]] for updated status information of tokens<a href="#section-16.2-3.9.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-3.9.1">Applications that use this media type: Applications using [[ this specification ]] for requesting Status Assertions.<a href="#section-16.2-3.9.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-3.10">
             <p id="section-16.2-3.10.1">Fragment identifier considerations: n/a<a href="#section-16.2-3.10.1" class="pilcrow">¶</a></p>
@@ -2401,13 +2402,13 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
             <p id="section-16.2-3.17.1">Provisional registration? No<a href="#section-16.2-3.17.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-16.2-4">To indicate that the content is a CWT-based Status Assertion:<a href="#section-16.2-4" class="pilcrow">¶</a></p>
+<p id="section-16.2-4">To indicate that the content is a CWT-based Status Assertion Request:<a href="#section-16.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-16.2-5.1">
             <p id="section-16.2-5.1.1">Type name: application<a href="#section-16.2-5.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-5.2">
-            <p id="section-16.2-5.2.1">Subtype name: status-assertion+cwt<a href="#section-16.2-5.2.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-5.2.1">Subtype name: status-assertion-request+cwt<a href="#section-16.2-5.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-5.3">
             <p id="section-16.2-5.3.1">Required parameters: n/a<a href="#section-16.2-5.3.1" class="pilcrow">¶</a></p>
@@ -2428,7 +2429,7 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
             <p id="section-16.2-5.8.1">Published specification: [[ this specification ]]<a href="#section-16.2-5.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-5.9">
-            <p id="section-16.2-5.9.1">Applications that use this media type: Applications using [[ this specification ]] for status assertion of tokens and Digital Credentials<a href="#section-16.2-5.9.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-5.9.1">Applications that use this media type: Applications using [[ this specification ]] for requesting Status Assertions.<a href="#section-16.2-5.9.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-5.10">
             <p id="section-16.2-5.10.1">Fragment identifier considerations: n/a<a href="#section-16.2-5.10.1" class="pilcrow">¶</a></p>
@@ -2461,6 +2462,254 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-5.17">
             <p id="section-16.2-5.17.1">Provisional registration? No<a href="#section-16.2-5.17.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-16.2-6">To indicate that the content is a JWT-based Status Assertion:<a href="#section-16.2-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-16.2-7.1">
+            <p id="section-16.2-7.1.1">Type name: application<a href="#section-16.2-7.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-7.2">
+            <p id="section-16.2-7.2.1">Subtype name: status-assertion+jwt<a href="#section-16.2-7.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-7.3">
+            <p id="section-16.2-7.3.1">Required parameters: n/a<a href="#section-16.2-7.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-7.4">
+            <p id="section-16.2-7.4.1">Optional parameters: n/a<a href="#section-16.2-7.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-7.5">
+            <p id="section-16.2-7.5.1">Encoding considerations: binary<a href="#section-16.2-7.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-7.6">
+            <p id="section-16.2-7.6.1">Security considerations: See (#Security) of [[ this specification ]]<a href="#section-16.2-7.6.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-7.7">
+            <p id="section-16.2-7.7.1">Interoperability considerations: n/a<a href="#section-16.2-7.7.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-7.8">
+            <p id="section-16.2-7.8.1">Published specification: [[ this specification ]]<a href="#section-16.2-7.8.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-7.9">
+            <p id="section-16.2-7.9.1">Applications that use this media type: Applications using [[ this specification ]] for issuing or presenting Status Assertions.<a href="#section-16.2-7.9.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-7.10">
+            <p id="section-16.2-7.10.1">Fragment identifier considerations: n/a<a href="#section-16.2-7.10.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-7.11">
+            <p id="section-16.2-7.11.1">Additional information:<a href="#section-16.2-7.11.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-16.2-7.11.2.1">
+                <p id="section-16.2-7.11.2.1.1">File extension(s): n/a<a href="#section-16.2-7.11.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-16.2-7.11.2.2">
+                <p id="section-16.2-7.11.2.2.1">Macintosh file type code(s): n/a<a href="#section-16.2-7.11.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-16.2-7.12">
+            <p id="section-16.2-7.12.1">Person &amp; email address to contact for further information: Giuseppe De Marco, gi.demarco@innovazione.gov.it<a href="#section-16.2-7.12.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-7.13">
+            <p id="section-16.2-7.13.1">Intended usage: COMMON<a href="#section-16.2-7.13.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-7.14">
+            <p id="section-16.2-7.14.1">Restrictions on usage: none<a href="#section-16.2-7.14.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-7.15">
+            <p id="section-16.2-7.15.1">Author: Giuseppe De Marco, gi.demarco@innovazione.gov.it<a href="#section-16.2-7.15.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-7.16">
+            <p id="section-16.2-7.16.1">Change controller: IETF<a href="#section-16.2-7.16.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-7.17">
+            <p id="section-16.2-7.17.1">Provisional registration? No<a href="#section-16.2-7.17.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-16.2-8">To indicate that the content is a CWT-based Status Assertion:<a href="#section-16.2-8" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-16.2-9.1">
+            <p id="section-16.2-9.1.1">Type name: application<a href="#section-16.2-9.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-9.2">
+            <p id="section-16.2-9.2.1">Subtype name: status-assertion+cwt<a href="#section-16.2-9.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-9.3">
+            <p id="section-16.2-9.3.1">Required parameters: n/a<a href="#section-16.2-9.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-9.4">
+            <p id="section-16.2-9.4.1">Optional parameters: n/a<a href="#section-16.2-9.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-9.5">
+            <p id="section-16.2-9.5.1">Encoding considerations: binary<a href="#section-16.2-9.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-9.6">
+            <p id="section-16.2-9.6.1">Security considerations: See (#Security) of [[ this specification ]]<a href="#section-16.2-9.6.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-9.7">
+            <p id="section-16.2-9.7.1">Interoperability considerations: n/a<a href="#section-16.2-9.7.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-9.8">
+            <p id="section-16.2-9.8.1">Published specification: [[ this specification ]]<a href="#section-16.2-9.8.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-9.9">
+            <p id="section-16.2-9.9.1">Applications that use this media type: Applications using [[ this specification ]] for issuing or presenting Status Assertions.<a href="#section-16.2-9.9.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-9.10">
+            <p id="section-16.2-9.10.1">Fragment identifier considerations: n/a<a href="#section-16.2-9.10.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-9.11">
+            <p id="section-16.2-9.11.1">Additional information:<a href="#section-16.2-9.11.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-16.2-9.11.2.1">
+                <p id="section-16.2-9.11.2.1.1">File extension(s): n/a<a href="#section-16.2-9.11.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-16.2-9.11.2.2">
+                <p id="section-16.2-9.11.2.2.1">Macintosh file type code(s): n/a<a href="#section-16.2-9.11.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-16.2-9.12">
+            <p id="section-16.2-9.12.1">Person &amp; email address to contact for further information: Giuseppe De Marco, gi.demarco@innovazione.gov.it<a href="#section-16.2-9.12.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-9.13">
+            <p id="section-16.2-9.13.1">Intended usage: COMMON<a href="#section-16.2-9.13.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-9.14">
+            <p id="section-16.2-9.14.1">Restrictions on usage: none<a href="#section-16.2-9.14.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-9.15">
+            <p id="section-16.2-9.15.1">Author: Giuseppe De Marco, gi.demarco@innovazione.gov.it<a href="#section-16.2-9.15.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-9.16">
+            <p id="section-16.2-9.16.1">Change controller: IETF<a href="#section-16.2-9.16.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-9.17">
+            <p id="section-16.2-9.17.1">Provisional registration? No<a href="#section-16.2-9.17.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-16.2-10">To indicate that the content is a JWT-based Status Assertion Error:<a href="#section-16.2-10" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-16.2-11.1">
+            <p id="section-16.2-11.1.1">Type name: application<a href="#section-16.2-11.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-11.2">
+            <p id="section-16.2-11.2.1">Subtype name: status-assertion-error+jwt<a href="#section-16.2-11.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-11.3">
+            <p id="section-16.2-11.3.1">Required parameters: n/a<a href="#section-16.2-11.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-11.4">
+            <p id="section-16.2-11.4.1">Optional parameters: n/a<a href="#section-16.2-11.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-11.5">
+            <p id="section-16.2-11.5.1">Encoding considerations: binary<a href="#section-16.2-11.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-11.6">
+            <p id="section-16.2-11.6.1">Security considerations: See (#Security) of [[ this specification ]]<a href="#section-16.2-11.6.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-11.7">
+            <p id="section-16.2-11.7.1">Interoperability considerations: n/a<a href="#section-16.2-11.7.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-11.8">
+            <p id="section-16.2-11.8.1">Published specification: [[ this specification ]]<a href="#section-16.2-11.8.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-11.9">
+            <p id="section-16.2-11.9.1">Applications that use this media type: Applications using [[ this specification ]] for issuing Status Assertions Request Errors.<a href="#section-16.2-11.9.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-11.10">
+            <p id="section-16.2-11.10.1">Fragment identifier considerations: n/a<a href="#section-16.2-11.10.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-11.11">
+            <p id="section-16.2-11.11.1">Additional information:<a href="#section-16.2-11.11.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-16.2-11.11.2.1">
+                <p id="section-16.2-11.11.2.1.1">File extension(s): n/a<a href="#section-16.2-11.11.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-16.2-11.11.2.2">
+                <p id="section-16.2-11.11.2.2.1">Macintosh file type code(s): n/a<a href="#section-16.2-11.11.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-16.2-11.12">
+            <p id="section-16.2-11.12.1">Person &amp; email address to contact for further information: Giuseppe De Marco, gi.demarco@innovazione.gov.it<a href="#section-16.2-11.12.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-11.13">
+            <p id="section-16.2-11.13.1">Intended usage: COMMON<a href="#section-16.2-11.13.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-11.14">
+            <p id="section-16.2-11.14.1">Restrictions on usage: none<a href="#section-16.2-11.14.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-11.15">
+            <p id="section-16.2-11.15.1">Author: Giuseppe De Marco, gi.demarco@innovazione.gov.it<a href="#section-16.2-11.15.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-11.16">
+            <p id="section-16.2-11.16.1">Change controller: IETF<a href="#section-16.2-11.16.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-11.17">
+            <p id="section-16.2-11.17.1">Provisional registration? No<a href="#section-16.2-11.17.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-16.2-12">To indicate that the content is a CWT-based Status Assertion Error:<a href="#section-16.2-12" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-16.2-13.1">
+            <p id="section-16.2-13.1.1">Type name: application<a href="#section-16.2-13.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-13.2">
+            <p id="section-16.2-13.2.1">Subtype name: status-assertion-error+cwt<a href="#section-16.2-13.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-13.3">
+            <p id="section-16.2-13.3.1">Required parameters: n/a<a href="#section-16.2-13.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-13.4">
+            <p id="section-16.2-13.4.1">Optional parameters: n/a<a href="#section-16.2-13.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-13.5">
+            <p id="section-16.2-13.5.1">Encoding considerations: binary<a href="#section-16.2-13.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-13.6">
+            <p id="section-16.2-13.6.1">Security considerations: See (#Security) of [[ this specification ]]<a href="#section-16.2-13.6.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-13.7">
+            <p id="section-16.2-13.7.1">Interoperability considerations: n/a<a href="#section-16.2-13.7.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-13.8">
+            <p id="section-16.2-13.8.1">Published specification: [[ this specification ]]<a href="#section-16.2-13.8.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-13.9">
+            <p id="section-16.2-13.9.1">Applications that use this media type: Applications using [[ this specification ]] for issuing Status Assertions Request Errors.<a href="#section-16.2-13.9.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-13.10">
+            <p id="section-16.2-13.10.1">Fragment identifier considerations: n/a<a href="#section-16.2-13.10.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-13.11">
+            <p id="section-16.2-13.11.1">Additional information:<a href="#section-16.2-13.11.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-16.2-13.11.2.1">
+                <p id="section-16.2-13.11.2.1.1">File extension(s): n/a<a href="#section-16.2-13.11.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-16.2-13.11.2.2">
+                <p id="section-16.2-13.11.2.2.1">Macintosh file type code(s): n/a<a href="#section-16.2-13.11.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-16.2-13.12">
+            <p id="section-16.2-13.12.1">Person &amp; email address to contact for further information: Giuseppe De Marco, gi.demarco@innovazione.gov.it<a href="#section-16.2-13.12.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-13.13">
+            <p id="section-16.2-13.13.1">Intended usage: COMMON<a href="#section-16.2-13.13.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-13.14">
+            <p id="section-16.2-13.14.1">Restrictions on usage: none<a href="#section-16.2-13.14.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-13.15">
+            <p id="section-16.2-13.15.1">Author: Giuseppe De Marco, gi.demarco@innovazione.gov.it<a href="#section-16.2-13.15.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-13.16">
+            <p id="section-16.2-13.16.1">Change controller: IETF<a href="#section-16.2-13.16.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-16.2-13.17">
+            <p id="section-16.2-13.17.1">Provisional registration? No<a href="#section-16.2-13.17.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
