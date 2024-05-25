@@ -1532,7 +1532,7 @@ the Digital Credential.<a href="#section-7-4" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>typ</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set to <code>status-assertion+jwt</code> when JWT format is used. It <span class="bcp14">MUST</span> be set to <code>status-assertion+cwt</code> when CWT format is used.</td>
+            <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set to <code>status-assertion-request+jwt</code> when JWT format is used. It <span class="bcp14">MUST</span> be set to <code>status-assertion-request+cwt</code> when CWT format is used.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC7516" class="cite xref">RFC7516</a>]</span> Section 4.1.1</td>
           </tr>
@@ -1548,7 +1548,7 @@ the Digital Credential.<a href="#section-7-4" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>kid</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">Unique identifier of the <code>JWK or</code> <code>Cose_Key</code> used for the signature of the Status Assertion Request, it <span class="bcp14">MUST</span> match the one contained in the Credential.</td>
+            <td class="text-left" rowspan="1" colspan="1">It is the Unique identifier of the <code>JWK</code> or <code>Cose_Key</code> owned by the Holder and used for validating the signature of the Status Assertion Request. When the Credential confirmation method uses a cryptographic material, it <span class="bcp14">MUST</span> match the one contained in the Credential. The header parameter <code>kid</code> is required when other cryptographic public key identification methods are not used, such as <code>x5c</code>.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>
 </td>
@@ -2001,7 +2001,16 @@ where the format is JWT.<a href="#section-10-2" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>kid</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">Unique identifier of the Credential Issuer JWK</td>
+            <td class="text-left" rowspan="1" colspan="1">Unique identifier of the Credential Issuer JWK. It is required when <code>x5c</code> or other cryptographic public key resolution identifiers are not used.</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>
+</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">
+              <strong>x5c</strong>
+</td>
+            <td class="text-left" rowspan="1" colspan="1">X.509 certificate chain about the Credential Issuer. It is required when <code>kid</code> or other parameter are not used.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>
 </td>

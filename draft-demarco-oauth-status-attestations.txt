@@ -314,27 +314,33 @@ Table of Contents
    When the JWT or CWT format are used, the JWT/CWT MUST contain the
    parameters defined in the following table.
 
-     +========+==========================================+===========+
-     | Header | Description                              | Reference |
-     +========+==========================================+===========+
-     | *typ*  | It MUST be set to status-assertion+jwt   | [RFC7516] |
-     |        | when JWT format is used.  It MUST be set | Section   |
-     |        | to status-assertion+cwt when CWT format  | 4.1.1     |
-     |        | is used.                                 |           |
-     +--------+------------------------------------------+-----------+
-     | *alg*  | A digital signature algorithm identifier | [RFC7516] |
-     |        | such as per IANA "JSON Web Signature and | Section   |
-     |        | Encryption Algorithms" registry.  It     | 4.1.1     |
-     |        | MUST NOT be set to none or any symmetric |           |
-     |        | algorithm (MAC) identifier.              |           |
-     +--------+------------------------------------------+-----------+
-     | *kid*  | Unique identifier of the JWK or Cose_Key | [RFC7515] |
-     |        | used for the signature of the Status     |           |
-     |        | Assertion Request, it MUST match the one |           |
-     |        | contained in the Credential.             |           |
-     +--------+------------------------------------------+-----------+
+    +========+===========================================+===========+
+    | Header | Description                               | Reference |
+    +========+===========================================+===========+
+    | *typ*  | It MUST be set to status-assertion-       | [RFC7516] |
+    |        | request+jwt when JWT format is used.  It  | Section   |
+    |        | MUST be set to status-assertion-          | 4.1.1     |
+    |        | request+cwt when CWT format is used.      |           |
+    +--------+-------------------------------------------+-----------+
+    | *alg*  | A digital signature algorithm identifier  | [RFC7516] |
+    |        | such as per IANA "JSON Web Signature and  | Section   |
+    |        | Encryption Algorithms" registry.  It MUST | 4.1.1     |
+    |        | NOT be set to none or any symmetric       |           |
+    |        | algorithm (MAC) identifier.               |           |
+    +--------+-------------------------------------------+-----------+
+    | *kid*  | It is the Unique identifier of the JWK or | [RFC7515] |
+    |        | Cose_Key owned by the Holder and used for |           |
+    |        | validating the signature of the Status    |           |
+    |        | Assertion Request.  When the Credential   |           |
+    |        | confirmation method uses a cryptographic  |           |
+    |        | material, it MUST match the one contained |           |
+    |        | in the Credential.  The header parameter  |           |
+    |        | kid is required when other cryptographic  |           |
+    |        | public key identification methods are not |           |
+    |        | used, such as x5c.                        |           |
+    +--------+-------------------------------------------+-----------+
 
-                                  Table 1
+                                 Table 1
 
    +=======================+==========================+===============+
    | Payload               | Description              | Reference     |
@@ -715,7 +721,16 @@ Content-Type: application/json
     |           | used.                              |               |
     +-----------+------------------------------------+---------------+
     | *kid*     | Unique identifier of the           | [RFC7515]     |
-    |           | Credential Issuer JWK              |               |
+    |           | Credential Issuer JWK.  It is      |               |
+    |           | required when x5c or other         |               |
+    |           | cryptographic public key           |               |
+    |           | resolution identifiers are not     |               |
+    |           | used.                              |               |
+    +-----------+------------------------------------+---------------+
+    | *x5c*     | X.509 certificate chain about the  | [RFC7515]     |
+    |           | Credential Issuer.  It is required |               |
+    |           | when kid or other parameter are    |               |
+    |           | not used.                          |               |
     +-----------+------------------------------------+---------------+
 
                                  Table 6
