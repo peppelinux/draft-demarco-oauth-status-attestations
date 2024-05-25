@@ -1173,6 +1173,11 @@ without requiring to query any third-party entities.<a href="#section-abstract-1
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
             <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-status-assertion-error" class="internal xref">Status Assertion Error</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-rationale-about-the-unsigne" class="internal xref">Rationale About The Unsigned Status Assertion Errors</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
             <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-status-assertion" class="internal xref">Status Assertion</a></p>
@@ -1749,8 +1754,28 @@ or invalid Digital Credential, the
 Credential Issuer <span class="bcp14">MUST</span> respond with an HTTP Response with the status
 code set to 200 and the <code>status_assertion_responses</code> array with the related
 Status Assertion Error object.<a href="#section-9-1" class="pilcrow">¶</a></p>
-<p id="section-9-2">The Status Assertion Error object must contain the parameters described in the
-table below:<a href="#section-9-2" class="pilcrow">¶</a></p>
+<p id="section-9-2">Below a non-normative example of a Status Assertion Error object in JWT format, with the headers and payload represented in JSON and without applying the signature.<a href="#section-9-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-9-3">
+<pre>
+{
+    "alg": "ES256",
+    "typ": "status-assertion-error+jwt",
+    "kid": "Issuer-JWK-KID"
+}
+.
+{
+    "iss": "https://issuer.example.org",
+    "jti": "6f204f7e-e453-4dfd-814e-9d155319408c"
+    "credential_hash": $CREDENTIAL-HASH,
+    "credential_hash_alg": "sha-256",
+    "error": "credential_revoked",
+    "error_description": "Credential is revoked."
+    }
+}
+</pre><a href="#section-9-3" class="pilcrow">¶</a>
+</div>
+<p id="section-9-4">The Status Assertion Error object must contain the parameters described in the
+table below:<a href="#section-9-4" class="pilcrow">¶</a></p>
 <table class="center" id="table-3">
         <caption><a href="#table-3" class="selfRef">Table 3</a></caption>
 <thead>
@@ -1765,7 +1790,8 @@ table below:<a href="#section-9-2" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>typ</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">Depending on the related Status Assertion Request object format, it <span class="bcp14">MUST</span> be set to <code>status-assertion-error+jwt</code> or <code>status-assertion-error+cwt</code>.</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <span class="bcp14">REQUIRED</span>. Depending on the related Status Assertion Request object format, it <span class="bcp14">MUST</span> be set to <code>status-assertion-error+jwt</code> or <code>status-assertion-error+cwt</code>.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC7516" class="cite xref">RFC7516</a>]</span> Section 4.1.1</td>
           </tr>
@@ -1773,7 +1799,8 @@ table below:<a href="#section-9-2" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>alg</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> set to <code>none</code>.</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <span class="bcp14">REQUIRED</span>. Algorithm used to verify the cryptographic signature of the Status Assertion Error. Status Assertion Error that do not need to be signed <span class="bcp14">SHOULD</span> set the <code>alg</code> value to <code>none</code>. For further clarification about the requirement of signing the Status Assertion Errors, see Section <span><a href="#rationale-about-the-unsigned-status-assertion-errors" class="internal xref">Rationale About The Unsigned Status Assertion Errors</a> (<a href="#rationale-about-the-unsigned-status-assertion-errors" class="auto internal xref">Section 9.1</a>)</span>.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC7516" class="cite xref">RFC7516</a>]</span> Section 4.1.1</td>
           </tr>
@@ -1793,7 +1820,8 @@ table below:<a href="#section-9-2" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>iss</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set to the identifier of the Issuer.</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <span class="bcp14">REQUIRED</span>. It <span class="bcp14">MUST</span> be set to the identifier of the Issuer.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span>, <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>
 </td>
@@ -1802,7 +1830,8 @@ table below:<a href="#section-9-2" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>jti</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">Unique identifier for the JWT.</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <span class="bcp14">REQUIRED</span>. Unique identifier for the JWT.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> Section 4.1.7</td>
           </tr>
@@ -1810,21 +1839,24 @@ table below:<a href="#section-9-2" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>credential_hash</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">Hash value of the Digital Credential the Status Assertion is bound to, according to the related Status Assertion Request object.</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <span class="bcp14">REQUIRED</span>. The hash value <span class="bcp14">MUST</span> match the one contained in the Status Assertion Request to which the Status Assertion Error is related.</td>
             <td class="text-left" rowspan="1" colspan="1">this specification</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>credential_hash_alg</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">The Algorithm used of hashing the Digital Credential to which the Status Assertion is bound. The value <span class="bcp14">SHOULD</span> be set to <code>sha-256</code>.</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <span class="bcp14">REQUIRED</span>. The hash algorithm <span class="bcp14">MUST</span> match the one contained in the Status Assertion Request to which the Status Assertion Error is related.</td>
             <td class="text-left" rowspan="1" colspan="1">this specification</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>error</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">The value <span class="bcp14">SHOULD</span> be assigned one of the error types as specified in the <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> <a href="https://tools.ietf.org/html/rfc6749#section-5.2">Section 5.2</a> or the others as defined in table below</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <span class="bcp14">REQUIRED</span>. The value <span class="bcp14">SHOULD</span> be assigned with one of the error types defined in <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span><a href="https://tools.ietf.org/html/rfc6749#section-5.2">Section 5.2</a> or defined in the Section <a href="status-assertion-error-values">Status Assertion Error Values</a>.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> Section 4.1.7</td>
           </tr>
@@ -1832,13 +1864,77 @@ table below:<a href="#section-9-2" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>error_description</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">Text in human-readable form that offers more details to clarify the nature of the error encountered (for instance, changes in some attributes, reasons for revocation, other).</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <span class="bcp14">OPTIONAL</span>. Text that clarifies the nature of the error, such as attribute changes, revocation reasons, in relation to the <code>error</code> value.</td>
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> Section 4.1.7</td>
           </tr>
         </tbody>
       </table>
-<p id="section-9-5">TODO: Table enumerating the additional error identifiers, specifically related to the status assertions.<a href="#section-9-5" class="pilcrow">¶</a></p>
+<div id="rationale-about-the-unsigned-status-assertion-errors">
+<section id="section-9.1">
+        <h3 id="name-rationale-about-the-unsigne">
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-rationale-about-the-unsigne" class="section-name selfRef">Rationale About The Unsigned Status Assertion Errors</a>
+        </h3>
+<p id="section-9.1-1">To mitigate potential resource exhaustion attacks where an adversary could issue hundreds of fake Status Assertion Requests to force an Issuer to sign numerous Status Assertion Errors, it is advisable to set the header parameter<code>alg</code> value to <code>none</code> for Status Assertion Errors that do not require signatures. This approach conserves computational resources and prevents abuse, especially in scenarios where the Issuer's implementation could be vulnerable to resource exhaustion attacks. However, even if it is out of the scopes of this specification determine in which the Status Error Assertion signatures are necessary, when the Issuer signs the Status Assertion Errors the Client that received them <span class="bcp14">MUST</span> validate the signature.
+## Status Assertion Error Values<a href="#section-9.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.1-2">The <code>error</code> parameter for the Status Assertion Error object <span class="bcp14">MUST</span> be set with one of the values defined in the table below, in addition to the values specified in <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>:<a href="#section-9.1-2" class="pilcrow">¶</a></p>
+<table class="center" id="table-5">
+          <caption><a href="#table-5" class="selfRef">Table 5</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Error Parameter Value</th>
+              <th class="text-left" rowspan="1" colspan="1">Description</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <strong>credential_revoked</strong>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">The Digital Credential results as already revoked. The reason of revocation <span class="bcp14">MAY</span> be provided in the <code>error_description</code> field.</td>
+              <td class="text-left" rowspan="1" colspan="1">this specification</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <strong>credential_updated</strong>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">One or more information contained in the Digital Credential are changed. The <code>error_description</code> field <span class="bcp14">SHOULD</span> contain a human-readable text describing the general parameters updated without specifying each one.</td>
+              <td class="text-left" rowspan="1" colspan="1">this specification</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <strong>credential_invalid</strong>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">The Digital Credential is invalid. The <code>error_description</code> field <span class="bcp14">SHOULD</span> contain the reason of invalidation.</td>
+              <td class="text-left" rowspan="1" colspan="1">this specification</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <strong>invalid_request_signature</strong>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">The Status Assertion Request signature validation has failed. This error type is used when the proof of possession of the Digital Credential is found not valid within the Status Assertion Request.</td>
+              <td class="text-left" rowspan="1" colspan="1">this specification</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <strong>credential_not_found</strong>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">The <code>credential_hash</code> value provided in the Status Assertion Request doesn't match with any active Digital Credential.</td>
+              <td class="text-left" rowspan="1" colspan="1">this specification</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <strong>unsupported_hash_alg</strong>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">The hash algorithm set in <code>credential_hash_alg</code> is not supported.</td>
+              <td class="text-left" rowspan="1" colspan="1">this specification</td>
+            </tr>
+          </tbody>
+        </table>
+</section>
+</div>
 </section>
 </div>
 <div id="status-assertion">
@@ -1874,8 +1970,8 @@ where the format is JWT.<a href="#section-10-2" class="pilcrow">¶</a></p>
 </pre><a href="#section-10-3" class="pilcrow">¶</a>
 </div>
 <p id="section-10-4">The Status Assertion <span class="bcp14">MUST</span> contain the parameters defined below.<a href="#section-10-4" class="pilcrow">¶</a></p>
-<table class="center" id="table-5">
-        <caption><a href="#table-5" class="selfRef">Table 5</a></caption>
+<table class="center" id="table-6">
+        <caption><a href="#table-6" class="selfRef">Table 6</a></caption>
 <thead>
           <tr>
             <th class="text-left" rowspan="1" colspan="1">Header Parameter Name</th>
@@ -1912,8 +2008,8 @@ where the format is JWT.<a href="#section-10-2" class="pilcrow">¶</a></p>
           </tr>
         </tbody>
       </table>
-<table class="center" id="table-6">
-        <caption><a href="#table-6" class="selfRef">Table 6</a></caption>
+<table class="center" id="table-7">
+        <caption><a href="#table-7" class="selfRef">Table 7</a></caption>
 <thead>
           <tr>
             <th class="text-left" rowspan="1" colspan="1">Payload Parameter Name</th>
@@ -2834,6 +2930,9 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-4.1">
           <p id="appendix-B-4.1.1">Name of the draft changed from <code>OAuth Status Attestations</code> to <code>OAuth Status Assertions</code>.<a href="#appendix-B-4.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-4.2">
+          <p id="appendix-B-4.2.1">Extended Status Assertion errors table added in <span><a href="#status-assertion-error" class="internal xref">the section Status Error</a> (<a href="#status-assertion-error" class="auto internal xref">Section 9</a>)</span>.<a href="#appendix-B-4.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>

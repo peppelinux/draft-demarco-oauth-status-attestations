@@ -79,6 +79,7 @@ Table of Contents
    7.  Status Assertion Request
    8.  Status Assertion Response
    9.  Status Assertion Error
+     9.1.  Rationale About The Unsigned Status Assertion Errors
    10. Status Assertion
    11. Interoperability of Credential Issuers Supporting Status
            Assertions
@@ -500,68 +501,171 @@ Content-Type: application/json
    status_assertion_responses array with the related Status Assertion
    Error object.
 
+   Below a non-normative example of a Status Assertion Error object in
+   JWT format, with the headers and payload represented in JSON and
+   without applying the signature.
+
+   {
+       "alg": "ES256",
+       "typ": "status-assertion-error+jwt",
+       "kid": "Issuer-JWK-KID"
+   }
+   .
+   {
+       "iss": "https://issuer.example.org",
+       "jti": "6f204f7e-e453-4dfd-814e-9d155319408c"
+       "credential_hash": $CREDENTIAL-HASH,
+       "credential_hash_alg": "sha-256",
+       "error": "credential_revoked",
+       "error_description": "Credential is revoked."
+       }
+   }
+
    The Status Assertion Error object must contain the parameters
    described in the table below:
 
      +========+==========================================+===========+
      | Header | Description                              | Reference |
      +========+==========================================+===========+
-     | *typ*  | Depending on the related Status          | [RFC7516] |
-     |        | Assertion Request object format, it MUST | Section   |
-     |        | be set to status-assertion-error+jwt or  | 4.1.1     |
-     |        | status-assertion-error+cwt.              |           |
+     | *typ*  | REQUIRED.  Depending on the related      | [RFC7516] |
+     |        | Status Assertion Request object format,  | Section   |
+     |        | it MUST be set to status-assertion-      | 4.1.1     |
+     |        | error+jwt or status-assertion-error+cwt. |           |
      +--------+------------------------------------------+-----------+
-     | *alg*  | It MUST set to none.                     | [RFC7516] |
-     |        |                                          | Section   |
-     |        |                                          | 4.1.1     |
+     | *alg*  | REQUIRED.  Algorithm used to verify the  | [RFC7516] |
+     |        | cryptographic signature of the Status    | Section   |
+     |        | Assertion Error.  Status Assertion Error | 4.1.1     |
+     |        | that do not need to be signed SHOULD set |           |
+     |        | the alg value to none.  For further      |           |
+     |        | clarification about the requirement of   |           |
+     |        | signing the Status Assertion Errors, see |           |
+     |        | Section Rationale About The Unsigned     |           |
+     |        | Status Assertion Errors (Section 9.1).   |           |
      +--------+------------------------------------------+-----------+
 
                                   Table 3
 
-    +=====================+=============================+=============+
-    |Payload              |Description                  |Reference    |
-    +=====================+=============================+=============+
-    |*iss*                |It MUST be set to the        |[RFC9126],   |
-    |                     |identifier of the Issuer.    |[RFC7519]    |
-    +---------------------+-----------------------------+-------------+
-    |*jti*                |Unique identifier for the    |[RFC7519]    |
-    |                     |JWT.                         |Section 4.1.7|
-    +---------------------+-----------------------------+-------------+
-    |*credential_hash*    |Hash value of the Digital    |this         |
-    |                     |Credential the Status        |specification|
-    |                     |Assertion is bound to,       |             |
-    |                     |according to the related     |             |
-    |                     |Status Assertion Request     |             |
-    |                     |object.                      |             |
-    +---------------------+-----------------------------+-------------+
-    |*credential_hash_alg*|The Algorithm used of hashing|this         |
-    |                     |the Digital Credential to    |specification|
-    |                     |which the Status Assertion is|             |
-    |                     |bound.  The value SHOULD be  |             |
-    |                     |set to sha-256.              |             |
-    +---------------------+-----------------------------+-------------+
-    |*error*              |The value SHOULD be assigned |[RFC7519]    |
-    |                     |one of the error types as    |Section 4.1.7|
-    |                     |specified in the [RFC6749]   |             |
-    |                     |Section 5.2                  |             |
-    |                     |(https://tools.ietf.org/html/|             |
-    |                     |rfc6749#section-5.2) or the  |             |
-    |                     |others as defined in table   |             |
-    |                     |below                        |             |
-    +---------------------+-----------------------------+-------------+
-    |*error_description*  |Text in human-readable form  |[RFC7519]    |
-    |                     |that offers more details to  |Section 4.1.7|
-    |                     |clarify the nature of the    |             |
-    |                     |error encountered (for       |             |
-    |                     |instance, changes in some    |             |
-    |                     |attributes, reasons for      |             |
-    |                     |revocation, other).          |             |
-    +---------------------+-----------------------------+-------------+
+   +=====================+===============================+=============+
+   |Payload              | Description                   |Reference    |
+   +=====================+===============================+=============+
+   |*iss*                | REQUIRED.  It MUST be set to  |[RFC9126],   |
+   |                     | the identifier of the Issuer. |[RFC7519]    |
+   +---------------------+-------------------------------+-------------+
+   |*jti*                | REQUIRED.  Unique identifier  |[RFC7519]    |
+   |                     | for the JWT.                  |Section 4.1.7|
+   +---------------------+-------------------------------+-------------+
+   |*credential_hash*    | REQUIRED.  The hash value     |this         |
+   |                     | MUST match the one contained  |specification|
+   |                     | in the Status Assertion       |             |
+   |                     | Request to which the Status   |             |
+   |                     | Assertion Error is related.   |             |
+   +---------------------+-------------------------------+-------------+
+   |*credential_hash_alg*| REQUIRED.  The hash algorithm |this         |
+   |                     | MUST match the one contained  |specification|
+   |                     | in the Status Assertion       |             |
+   |                     | Request to which the Status   |             |
+   |                     | Assertion Error is related.   |             |
+   +---------------------+-------------------------------+-------------+
+   |*error*              | REQUIRED.  The value SHOULD   |[RFC7519]    |
+   |                     | be assigned with one of the   |Section 4.1.7|
+   |                     | error types defined in        |             |
+   |                     | [RFC6749]Section 5.2          |             |
+   |                     | (https://tools.ietf.org/html/ |             |
+   |                     | rfc6749#section-5.2) or       |             |
+   |                     | defined in the Section Status |             |
+   |                     | Assertion Error Values        |             |
+   |                     | (status-assertion-error-      |             |
+   |                     | values).                      |             |
+   +---------------------+-------------------------------+-------------+
+   |*error_description*  | OPTIONAL.  Text that          |[RFC7519]    |
+   |                     | clarifies the nature of the   |Section 4.1.7|
+   |                     | error, such as attribute      |             |
+   |                     | changes, revocation reasons,  |             |
+   |                     | in relation to the error      |             |
+   |                     | value.                        |             |
+   +---------------------+-------------------------------+-------------+
 
                                   Table 4
 
-   TODO: Table enumerating the additional error identifiers,
-   specifically related to the status assertions.
+9.1.  Rationale About The Unsigned Status Assertion Errors
+
+   To mitigate potential resource exhaustion attacks where an adversary
+   could issue hundreds of fake Status Assertion Requests to force an
+   Issuer to sign numerous Status Assertion Errors, it is advisable to
+   set the header parameteralg value to none for Status Assertion Errors
+   that do not require signatures.  This approach conserves
+   computational resources and prevents abuse, especially in scenarios
+   where the Issuer's implementation could be vulnerable to resource
+   exhaustion attacks.  However, even if it is out of the scopes of this
+   specification determine in which the Status Error Assertion
+   signatures are necessary, when the Issuer signs the Status Assertion
+   Errors the Client that received them MUST validate the signature. ##
+   Status Assertion Error Values
+
+   The error parameter for the Status Assertion Error object MUST be set
+   with one of the values defined in the table below, in addition to the
+   values specified in [RFC6749]:
+
+   +=============================+======================+=============+
+   | Error Parameter Value       | Description          |Reference    |
+   +=============================+======================+=============+
+   | *credential_revoked*        | The Digital          |this         |
+   |                             | Credential results   |specification|
+   |                             | as already revoked.  |             |
+   |                             | The reason of        |             |
+   |                             | revocation MAY be    |             |
+   |                             | provided in the      |             |
+   |                             | error_description    |             |
+   |                             | field.               |             |
+   +-----------------------------+----------------------+-------------+
+   | *credential_updated*        | One or more          |this         |
+   |                             | information          |specification|
+   |                             | contained in the     |             |
+   |                             | Digital Credential   |             |
+   |                             | are changed.  The    |             |
+   |                             | error_description    |             |
+   |                             | field SHOULD contain |             |
+   |                             | a human-readable     |             |
+   |                             | text describing the  |             |
+   |                             | general parameters   |             |
+   |                             | updated without      |             |
+   |                             | specifying each one. |             |
+   +-----------------------------+----------------------+-------------+
+   | *credential_invalid*        | The Digital          |this         |
+   |                             | Credential is        |specification|
+   |                             | invalid.  The        |             |
+   |                             | error_description    |             |
+   |                             | field SHOULD contain |             |
+   |                             | the reason of        |             |
+   |                             | invalidation.        |             |
+   +-----------------------------+----------------------+-------------+
+   | *invalid_request_signature* | The Status Assertion |this         |
+   |                             | Request signature    |specification|
+   |                             | validation has       |             |
+   |                             | failed.  This error  |             |
+   |                             | type is used when    |             |
+   |                             | the proof of         |             |
+   |                             | possession of the    |             |
+   |                             | Digital Credential   |             |
+   |                             | is found not valid   |             |
+   |                             | within the Status    |             |
+   |                             | Assertion Request.   |             |
+   +-----------------------------+----------------------+-------------+
+   | *credential_not_found*      | The credential_hash  |this         |
+   |                             | value provided in    |specification|
+   |                             | the Status Assertion |             |
+   |                             | Request doesn't      |             |
+   |                             | match with any       |             |
+   |                             | active Digital       |             |
+   |                             | Credential.          |             |
+   +-----------------------------+----------------------+-------------+
+   | *unsupported_hash_alg*      | The hash algorithm   |this         |
+   |                             | set in               |specification|
+   |                             | credential_hash_alg  |             |
+   |                             | is not supported.    |             |
+   +-----------------------------+----------------------+-------------+
+
+                                 Table 5
 
 10.  Status Assertion
 
@@ -614,7 +718,7 @@ Content-Type: application/json
     |           | Credential Issuer JWK              |               |
     +-----------+------------------------------------+---------------+
 
-                                 Table 5
+                                 Table 6
 
    +=======================+==========================+===============+
    | Payload Parameter     | Description              | Reference     |
@@ -664,7 +768,7 @@ Content-Type: application/json
    |                       | the relevant standards.  |               |
    +-----------------------+--------------------------+---------------+
 
-                                 Table 6
+                                 Table 7
 
 11.  Interoperability of Credential Issuers Supporting Status Assertions
 
@@ -1303,6 +1407,9 @@ Appendix B.  Document History
 
    *  Name of the draft changed from OAuth Status Attestations to OAuth
       Status Assertions.
+
+   *  Extended Status Assertion errors table added in the section Status
+      Error (Section 9).
 
 Authors' Addresses
 
