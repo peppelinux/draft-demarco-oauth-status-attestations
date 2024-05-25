@@ -1040,7 +1040,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Marco, et al.</td>
-<td class="center">Expires 25 November 2024</td>
+<td class="center">Expires 26 November 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1053,12 +1053,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-demarco-oauth-status-attestations-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-05-24" class="published">24 May 2024</time>
+<time datetime="2024-05-25" class="published">25 May 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-11-25">25 November 2024</time></dd>
+<dd class="expires"><time datetime="2024-11-26">26 November 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1118,7 +1118,7 @@ without requiring to query any third-party entities.<a href="#section-abstract-1
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 25 November 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 26 November 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1449,20 +1449,18 @@ possession mechanisms. This includes, but is not limited to:<a href="#section-6-
           <p id="section-6-3.1.1">Having the digital representation of the Digital Credential (the bytes).<a href="#section-6-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-6-3.2">
-          <p id="section-6-3.2.1">Controlling a private key that corresponds to a public key associated
-with the Credential, often indicated within the Credential's cnf
-(confirmation) claim or through a similar mechanism.<a href="#section-6-3.2.1" class="pilcrow">¶</a></p>
+          <p id="section-6-3.2.1">Controlling the confirmation method of the Credential, using the Credential's <code>cnf</code> parameter.<a href="#section-6-3.2.1" class="pilcrow">¶</a></p>
 </li>
       </ol>
-<p id="section-6-4">The essence of requiring control over the private key and its
-demonstration through a cryptographic operation
-(e.g., signing a challenge or a token) is to ensure that the entity in
-possession of the Credential can execute actions exclusively reserved
-for the legitimate subject. The dual-layered approach of requiring both
-possession of the Credential and control over the corresponding private
-key indeed reinforces the security and integrity of the status assertion
-process. It also ensures that the entity requesting a Status Attestation
-is indeed the same entity to which the Credential was originally issued,
+<p id="section-6-4">The essence of requiring proof of possession over the Credential
+through the confirmation method, such has proving the control of the cryptographic material related to a Credential, is
+to ensure that the entity in possession of the Credential can execute
+actions exclusively reserved to the legitimate Holder.
+The dual-layered approach of requiring both possession of the
+Credential and control over it, reinforces the security and integrity of the Status
+Assertion process.
+This ensures that the Holder requesting a Status Assertion is indeed
+the same Holder to which the Credential was originally issued,
 affirming the authenticity and rightful possession of the Credential.<a href="#section-6-4" class="pilcrow">¶</a></p>
 </section>
 </div>
