@@ -1200,7 +1200,7 @@ without requiring to query any third-party entities.<a href="#section-abstract-1
             <p id="section-toc.1-1.13.1"><a href="#section-13" class="auto internal xref">13</a>. <a href="#name-considerations-on-revocatio" class="internal xref">Considerations On Revocation Verification</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
-            <p id="section-toc.1-1.14.1"><a href="#section-14" class="auto internal xref">14</a>. <a href="#name-assertions-of-invalidity" class="internal xref">Assertions of Invalidity</a></p>
+            <p id="section-toc.1-1.14.1"><a href="#section-14" class="auto internal xref">14</a>. <a href="#name-complex-status-assertions" class="internal xref">Complex Status Assertions</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
             <p id="section-toc.1-1.15.1"><a href="#section-15" class="auto internal xref">15</a>. <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
@@ -2127,13 +2127,53 @@ allowing Verifiers to examine and make educated conclusions based on a
 variety of scenarios.<a href="#section-13-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="assertions-of-invalidity">
+<div id="complex-status-assertions">
 <section id="section-14">
-      <h2 id="name-assertions-of-invalidity">
-<a href="#section-14" class="section-number selfRef">14. </a><a href="#name-assertions-of-invalidity" class="section-name selfRef">Assertions of Invalidity</a>
+      <h2 id="name-complex-status-assertions">
+<a href="#section-14" class="section-number selfRef">14. </a><a href="#name-complex-status-assertions" class="section-name selfRef">Complex Status Assertions</a>
       </h2>
 <p id="section-14-1">Issuer's <span class="bcp14">MAY</span> provide an assertion of invalidity, in contrast to an assertion of validity or an error for digital credentials which have been revoked.
-This enables verifier policies to be conditioned on the presence of signed positive or negative state from the issuer, instead of the absence of information.<a href="#section-14-1" class="pilcrow">¶</a></p>
+This enables verifier policies to be conditioned on the presence of secured information, instead of the absence of information.
+Assertions can reflect dynamic information that is not limited to boolean values.<a href="#section-14-1" class="pilcrow">¶</a></p>
+<p id="section-14-2">An example of a boolean status is:<a href="#section-14-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-14-3">
+<pre>
+{
+  "suspended": true,
+}
+</pre><a href="#section-14-3" class="pilcrow">¶</a>
+</div>
+<p id="section-14-4">An example of an enumeration status is:<a href="#section-14-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-14-5">
+<pre>
+{
+  "state": "suspended", // or "revoked", or "valid".
+}
+</pre><a href="#section-14-5" class="pilcrow">¶</a>
+</div>
+<p id="section-14-6">An example of dynamic status using a small matrix:<a href="#section-14-6" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-14-7">
+<pre>
+{
+  "preferences": [[1, 0.25, 0.76 ...] ...]
+}
+</pre><a href="#section-14-7" class="pilcrow">¶</a>
+</div>
+<p id="section-14-8">An example of multiple assertions:<a href="#section-14-8" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-14-9">
+<pre>
+HTTP/1.1 200 Created
+Content-Type: application/json
+
+{
+    "status_assertion_responses": [
+      $JWT_1, // Not revoked, boolean assertion
+      $JWT_2, // alg = none, suspended indicator
+      $JWT_3, // Preferences matrix assertion
+    ]
+}
+</pre><a href="#section-14-9" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 <div id="security-considerations">
