@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-26T00:54:12.634439+00:00",
+  "timestamp": "2024-05-28T00:50:40.713297+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -6557,7 +6557,7 @@
       "labels": [],
       "body": "This commit aims to resolve issue #47.",
       "createdAt": "2024-05-21T08:53:31Z",
-      "updatedAt": "2024-05-25T10:53:16Z",
+      "updatedAt": "2024-05-27T08:41:14Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
       "baseRefName": "main",
       "baseRefOid": "410ebfa08caade168f1674698f0c22b30bab3149",
@@ -6669,6 +6669,19 @@
           "body": "",
           "createdAt": "2024-05-25T06:12:15Z",
           "updatedAt": "2024-05-25T06:12:15Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s57__RT",
+          "commit": {
+            "abbreviatedOid": "c53c1e1"
+          },
+          "author": "marinaado",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "Looks good to me",
+          "createdAt": "2024-05-27T08:41:14Z",
+          "updatedAt": "2024-05-27T08:41:14Z",
           "comments": []
         }
       ]
@@ -6894,7 +6907,7 @@
       "labels": [],
       "body": "this PR fixes a mistake that probably was brought with some editorial review and left behind.\r\n\r\nthe issuance time of a status assertion cannot be superior of the issuance of a verifiable presentation, because the status assertion is provided during the presentation phase",
       "createdAt": "2024-05-24T10:04:02Z",
-      "updatedAt": "2024-05-25T10:59:53Z",
+      "updatedAt": "2024-05-27T08:57:59Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
       "baseRefName": "main",
       "baseRefOid": "410ebfa08caade168f1674698f0c22b30bab3149",
@@ -6981,6 +6994,19 @@
               "updatedAt": "2024-05-25T10:59:06Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s58AHrb",
+          "commit": {
+            "abbreviatedOid": "45ce504"
+          },
+          "author": "marinaado",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "Makes sense to me",
+          "createdAt": "2024-05-27T08:57:59Z",
+          "updatedAt": "2024-05-27T08:57:59Z",
+          "comments": []
         }
       ]
     },
@@ -6996,7 +7022,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2024-05-24T10:17:41Z",
-      "updatedAt": "2024-05-25T11:06:46Z",
+      "updatedAt": "2024-05-27T09:06:26Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
       "baseRefName": "main",
       "baseRefOid": "cda96ebb99b5b17d474c1b35f40027ef9107bf95",
@@ -7056,6 +7082,19 @@
           "createdAt": "2024-05-25T07:01:30Z",
           "updatedAt": "2024-05-25T07:01:30Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s58AMJ7",
+          "commit": {
+            "abbreviatedOid": "813922b"
+          },
+          "author": "marinaado",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "ok",
+          "createdAt": "2024-05-27T09:06:26Z",
+          "updatedAt": "2024-05-27T09:06:26Z",
+          "comments": []
         }
       ]
     },
@@ -7073,7 +7112,7 @@
       ],
       "body": "Addressing:\r\n\r\nhttps://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/53#discussion_r1614083883\r\n\r\nThe purpose of this pull request is to define the signed information which can be conveyed to a verifier, to clarify the constraints on verifier policies.\r\n\r\nWith other status list approaches, there is an ability to communicate a single boolean, multiple boolean, or enumerations.\r\n\r\nWith our approach here, we are not limited by the bitstring data structure, so dynamic state is less constrained.\r\n\r\nThis PR also highlights the current design decision to use alg = none, to signal revocation, without providing an assertion that can be consumed by a verifier.\r\n\r\nThere may be very legitimate reasons to prefer to return unsigned information for boolean status, but for complex status, unsigned information is more dangerous to consume.\r\n\r\nI believe the specification should leave some of these decisions up to profiles.",
       "createdAt": "2024-05-25T13:19:46Z",
-      "updatedAt": "2024-05-25T14:49:15Z",
+      "updatedAt": "2024-05-27T14:51:13Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
       "baseRefName": "main",
       "baseRefOid": "175dff1c3f73114c781342a63664b0ad692068ea",
@@ -7098,6 +7137,13 @@
           "body": "this PR aims to resolve the issue #60 ",
           "createdAt": "2024-05-25T14:39:57Z",
           "updatedAt": "2024-05-25T14:39:57Z"
+        },
+        {
+          "author": "marinaado",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I do not understand the use cases that we are trying to support here. IMHO it would be very useful to give a use case that cannot be solved by boolean or enumerated list approach, and then give an example of how complex state solves it. ",
+          "createdAt": "2024-05-27T14:51:12Z",
+          "updatedAt": "2024-05-27T14:51:12Z"
         }
       ],
       "reviews": [
