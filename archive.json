@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-30T00:50:59.120033+00:00",
+  "timestamp": "2024-06-02T00:54:35.021526+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -7112,7 +7112,7 @@
       ],
       "body": "Addressing:\r\n\r\nhttps://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/53#discussion_r1614083883\r\n\r\nThe purpose of this pull request is to define the signed information which can be conveyed to a verifier, to clarify the constraints on verifier policies.\r\n\r\nWith other status list approaches, there is an ability to communicate a single boolean, multiple boolean, or enumerations.\r\n\r\nWith our approach here, we are not limited by the bitstring data structure, so dynamic state is less constrained.\r\n\r\nThis PR also highlights the current design decision to use alg = none, to signal revocation, without providing an assertion that can be consumed by a verifier.\r\n\r\nThere may be very legitimate reasons to prefer to return unsigned information for boolean status, but for complex status, unsigned information is more dangerous to consume.\r\n\r\nI believe the specification should leave some of these decisions up to profiles.",
       "createdAt": "2024-05-25T13:19:46Z",
-      "updatedAt": "2024-05-27T14:51:13Z",
+      "updatedAt": "2024-05-31T12:41:46Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
       "baseRefName": "main",
       "baseRefOid": "175dff1c3f73114c781342a63664b0ad692068ea",
@@ -7144,6 +7144,27 @@
           "body": "I do not understand the use cases that we are trying to support here. IMHO it would be very useful to give a use case that cannot be solved by boolean or enumerated list approach, and then give an example of how complex state solves it. ",
           "createdAt": "2024-05-27T14:51:12Z",
           "updatedAt": "2024-05-27T14:51:12Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The purpose of a status assertion is to communicate an updated state, without reissuing the full credential.\n\nImagine a fast pass border clearance credential, where you can move quickly through a checkpoint when the following are true:\n\n1. All ingredients in your product have not been recalled.\n2. All ingredients suppliers, are not on a sanctioned entities list.\n3. Your legal entity is recognized to be in good standing with countries A,B,C,D\n\nImagine that each of these status details are synchronized at different time intervals, and under different policies.\n\nThe credential is simply an identifier and a public key.\n\nYou don't need to reissue this credential, unless the hsm holding the private key breaks.\n\nYou do need a fresh status assertion, to cross the border, but it can be up to a day old.\n\nSome verifiers may care about certain real-time status indicators more than others.\n\nThe issuer doesn't know the verifiers policy, so the issuer cannot pre compute a boolean or enumeration, the issuer can only supply the latest state associated to the public key bound to the credential.\n",
+          "createdAt": "2024-05-31T02:34:15Z",
+          "updatedAt": "2024-05-31T02:36:31Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "To enhance the specification's flexibility and extendibility, it is proposed to introduce a mandatory parameter credential_status, set to True when the credential is fully operational and active. Verifiers should be required to check this parameter along with the typ value and the assertion's signature.\r\n\r\nAdditionally, an optional parameter, credential_status_description, could be introduced, allowing issuers to provide human-readable information about the credential_status.\r\n\r\nThis modification would allow the specification to accommodate future drafts or extensions aiming to elaborate on the data schema of the assertion. It would establish a consistent baseline to prevent misinterpretation and potential security issues related to complex credential statuses.\r\n\r\nthese future draft and any other possibility connected and allowed by this change could be further described in an dedicated annex, if @OR13 wants to bring some example and use cases that matters from his perspective",
+          "createdAt": "2024-05-31T09:54:28Z",
+          "updatedAt": "2024-05-31T09:54:28Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think it is helpful for the issuer to indicate if they think the latest status information should be treated as breaking validity (like expiration or a tampered signature would), or if the new information is just an additional claim ( could be an updated counter for example).\n\nIt's always the verifiers choice to accept issuer claims, and dynamic state / status is just an issue claims that can change during the validity period of a credential.\n\nI'm fine to add language recommending against complex state, because it is true that the more complex a credential the harder it is to write verifier policies and the more likely that policy errors could lead to processing errors.\n\nAnother alternative to complex state is refreshing the credential or requesting independent credentials and presenting multiple credentials in a predefined workflow.",
+          "createdAt": "2024-05-31T12:40:19Z",
+          "updatedAt": "2024-05-31T12:41:46Z"
         }
       ],
       "reviews": [
