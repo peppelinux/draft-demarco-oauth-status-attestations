@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-02T00:54:35.021526+00:00",
+  "timestamp": "2024-06-04T00:51:49.662368+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -7112,7 +7112,7 @@
       ],
       "body": "Addressing:\r\n\r\nhttps://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/53#discussion_r1614083883\r\n\r\nThe purpose of this pull request is to define the signed information which can be conveyed to a verifier, to clarify the constraints on verifier policies.\r\n\r\nWith other status list approaches, there is an ability to communicate a single boolean, multiple boolean, or enumerations.\r\n\r\nWith our approach here, we are not limited by the bitstring data structure, so dynamic state is less constrained.\r\n\r\nThis PR also highlights the current design decision to use alg = none, to signal revocation, without providing an assertion that can be consumed by a verifier.\r\n\r\nThere may be very legitimate reasons to prefer to return unsigned information for boolean status, but for complex status, unsigned information is more dangerous to consume.\r\n\r\nI believe the specification should leave some of these decisions up to profiles.",
       "createdAt": "2024-05-25T13:19:46Z",
-      "updatedAt": "2024-05-31T12:41:46Z",
+      "updatedAt": "2024-06-03T13:46:17Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
       "baseRefName": "main",
       "baseRefOid": "175dff1c3f73114c781342a63664b0ad692068ea",
@@ -7165,6 +7165,13 @@
           "body": "I think it is helpful for the issuer to indicate if they think the latest status information should be treated as breaking validity (like expiration or a tampered signature would), or if the new information is just an additional claim ( could be an updated counter for example).\n\nIt's always the verifiers choice to accept issuer claims, and dynamic state / status is just an issue claims that can change during the validity period of a credential.\n\nI'm fine to add language recommending against complex state, because it is true that the more complex a credential the harder it is to write verifier policies and the more likely that policy errors could lead to processing errors.\n\nAnother alternative to complex state is refreshing the credential or requesting independent credentials and presenting multiple credentials in a predefined workflow.",
           "createdAt": "2024-05-31T12:40:19Z",
           "updatedAt": "2024-05-31T12:41:46Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I've marked this ready for review.\r\n\r\nThe general intention is to enable an issuer to convey status information that is not limited to boolean or enumerations.\r\n\r\nEnumeration status are common in workflows, where items can proceed through several states, such as \"submitted\", \"in-review\", \"accepted\", \"rejected\".\r\n\r\ncomplex state that is not boolean or enumeration is common in status updates that represent aggregations of signals, another example of where these show up is - https://blog.cloudflare.com/deep-dive-privacy-preserving-measurement",
+          "createdAt": "2024-06-03T13:46:15Z",
+          "updatedAt": "2024-06-03T13:46:15Z"
         }
       ],
       "reviews": [
