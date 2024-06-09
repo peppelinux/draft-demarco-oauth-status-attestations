@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-06T00:51:14.970151+00:00",
+  "timestamp": "2024-06-09T00:56:27.982966+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-attestations",
   "labels": [
     {
@@ -7252,6 +7252,106 @@
               "body": "```suggestion\r\nFor example, in a healthcare setting, a patient should not have medical reasons for a suspended credential disclosed in assertions of suspension.\r\n```",
               "createdAt": "2024-05-25T14:49:10Z",
               "updatedAt": "2024-05-25T14:49:10Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 63,
+      "id": "PR_kwDOK4XJ0s5xy7L2",
+      "title": "Added additional requirement againts the audience of the Status Assertions and their Errors",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/63",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR aims to resolve https://github.com/peppelinux/draft-demarco-oauth-status-attestations/issues/62",
+      "createdAt": "2024-06-07T13:00:56Z",
+      "updatedAt": "2024-06-08T16:47:17Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "baseRefName": "main",
+      "baseRefOid": "e2edac4a89ebf28bc959156153c73d7f9508e239",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-attestations",
+      "headRefName": "ass-aud",
+      "headRefOid": "d76e4e728c80682554e4542d86a08a87e78f126f",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s59dgYy",
+          "commit": {
+            "abbreviatedOid": "d76e4e7"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-07T15:41:58Z",
+          "updatedAt": "2024-06-07T15:41:58Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s59g9IL",
+          "commit": {
+            "abbreviatedOid": "d76e4e7"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-08T07:19:37Z",
+          "updatedAt": "2024-06-08T07:20:44Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "@peppelinux please help me to understand this logical implication (Therefore,...). I agree that the response MUST NOT to be presented to a Verifier, but saying that it MUST NOT contain the aud parameter seems to me strong. The logical implication is that\n- the aud MAY be used\n- if it is used MUST be only the client \n- the client MUST check that the aud parameter only contains the client.\n\nIn this way we force the response to be not presented to third party and the aud parameter could also be used as security check. WDYT?",
+              "createdAt": "2024-06-08T07:19:37Z",
+              "updatedAt": "2024-06-08T07:20:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s59hTsd",
+          "commit": {
+            "abbreviatedOid": "d76e4e7"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-08T16:46:22Z",
+          "updatedAt": "2024-06-08T16:46:22Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "we were moved from a json error message to a jwt. Therefore I didn't see the value of adding so much requirements for the data schema of the errors.\r\n\r\nI tend to reduce the options (may) aiming to give clear paths to the implementers. However, this requirement to keep out aud from the dataset is not critical to me. I would therefore remove the MUST NOT and not include at the same time the `aud` parameter definition in the assertion error data set",
+              "createdAt": "2024-06-08T16:46:22Z",
+              "updatedAt": "2024-06-08T16:46:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s59hTuU",
+          "commit": {
+            "abbreviatedOid": "d76e4e7"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-08T16:47:17Z",
+          "updatedAt": "2024-06-08T16:47:17Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "@fmarino-ipzs do you agree? Do I have to remove that MUST NOT to get this PR merged?",
+              "createdAt": "2024-06-08T16:47:17Z",
+              "updatedAt": "2024-06-08T16:47:17Z"
             }
           ]
         }
