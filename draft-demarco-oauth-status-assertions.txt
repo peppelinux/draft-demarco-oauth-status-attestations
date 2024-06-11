@@ -5,14 +5,14 @@
 Network Working Group                                        G. D. Marco
 Internet-Draft               Dipartimento per la trasformazione digitale
 Intended status: Informational                                 O. Steele
-Expires: 26 November 2024                                      Transmute
+Expires: 13 December 2024                                      Transmute
                                                                F. Marino
                                 Istituto Poligrafico e Zecca dello Stato
-                                                             25 May 2024
+                                                            11 June 2024
 
 
                         OAuth Status Assertions
-             draft-demarco-oauth-status-attestations-latest
+              draft-demarco-oauth-status-assertions-latest
 
 Abstract
 
@@ -30,9 +30,9 @@ About This Document
 
    The latest revision of this draft can be found at
    https://peppelinux.github.io/draft-demarco-status-attestations/draft-
-   demarco-status-attestations.html.  Status information for this
+   demarco-oauth-status-assertions.html.  Status information for this
    document may be found at https://datatracker.ietf.org/doc/draft-
-   demarco-oauth-status-attestations/.
+   demarco-oauth-status-assertions/.
 
    Source for this draft and an issue tracker can be found at
    https://github.com/peppelinux/draft-demarco-status-attestations.
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 November 2024.
+   This Internet-Draft will expire on 13 December 2024.
 
 Copyright Notice
 
@@ -100,7 +100,9 @@ Table of Contents
    16. IANA Considerations
      16.1.  JSON Web Token Claims Registration
      16.2.  Media Type Registration
-   17. Normative References
+   17. References
+     17.1.  Normative References
+     17.2.  Informative References
    Appendix A.  Acknowledgments
    Appendix B.  Document History
    Authors' Addresses
@@ -154,7 +156,7 @@ Table of Contents
 3.  Terminology
 
    This specification uses the terms "End-User", "Entity" as defined by
-   OpenID Connect Core [@OpenID.Core], the term "JSON Web Token (JWT)"
+   OpenID Connect Core [OpenID.Core], the term "JSON Web Token (JWT)"
    defined by JSON Web Token (JWT) [RFC7519], the term "CBOR Web Token
    (CWT)" defined in [RFC8392], "Client" as defined [RFC6749]
 
@@ -197,18 +199,16 @@ Table of Contents
    with national privacy regulations.
 
    For instance, consider a scenario where a Verifier's repeated access
-   to a status list, such as the one defined in draft-ietf-oauth-status-
-   list (https://datatracker.ietf.org/doc/draft-ietf-oauth-status-list/)
-   to check the revocation status of a Digital Credential could be
-   deemed as excessive monitoring of the End-User's activities.
+   to a status list, such as the one defined in
+   [draft-ietf-oauth-status-list] to check the revocation status of a
+   Digital Credential could be deemed as excessive monitoring of the
+   End-User's activities.
 
    This could potentially infringe upon the End-User's right to privacy,
-   as outlined in Article 8 of the European Convention on Human Rights
-   (https://www.echr.coe.int/documents/convention_eng.pdf) and in the
-   the European Union's General Data Protection Regulation (GDPR
-   (https://gdpr-info.eu/)), by creating a detailed profile of the End-
-   User's Digital Credential status without explicit consent for such
-   continuous surveillance.
+   as outlined in [ECHR-ART8] and in the the European Union's General
+   Data Protection Regulation ([GDPR]), by creating a detailed profile
+   of the End-User's Digital Credential status without explicit consent
+   for such continuous surveillance.
 
 5.  Requirements
 
@@ -497,7 +497,10 @@ Content-Type: application/json
    depending by the object type. - The corresponding entry in the
    response MUST be of the same data format as requested.  For example,
    if the entry in the request is "jwt", then the entry at the same
-   position in the response MUST also be "jwt".
+   position in the response MUST also be "jwt". - The corresponding
+   entry in the response MUST NOT contain any information regarding the
+   Verifier to whom it may be presented, such as the Verifier identifier
+   as the intended audience.
 
 9.  Status Assertion Error
 
@@ -506,6 +509,12 @@ Content-Type: application/json
    respond with an HTTP Response with the status code set to 200 and the
    status_assertion_responses array with the related Status Assertion
    Error object.
+
+   The Status Assertion Error MUST NOT be presented or provided to a
+   Verifier, the only audience of the Status Assertion Error is the
+   Holder of the Credential that has requested the Status Assertion.
+   Therefore, it is not necessary that the Status Assertion Error
+   contains the parameter aud within its payload.
 
    Below a non-normative example of a Status Assertion Error object in
    JWT format, with the headers and payload represented in JSON and
@@ -527,7 +536,7 @@ Content-Type: application/json
        }
    }
 
-   The Status Assertion Error object must contain the parameters
+   The Status Assertion Error object MUST contain the parameters
    described in the table below:
 
      +========+==========================================+===========+
@@ -794,7 +803,7 @@ Content-Type: application/json
 11.1.  Credential Issuer Metadata
 
    The Credential Issuers that uses the Status Assertions MUST include
-   in their OpenID4VCI [@!OpenID.VCI] metadata the claims:
+   in their OpenID4VCI [OpenID4VCI] metadata the claims:
 
    *  status_assertion_endpoint.  REQUIRED.  It MUST be an HTTPs URL
       indicating the endpoint where the Wallet Instances can request
@@ -803,9 +812,7 @@ Content-Type: application/json
    *  credential_hash_alg_supported.  REQUIRED.  The supported Algorithm
       used by the Wallet Instance to hash the Digital Credential for
       which the Status Assertion is requested, using one of the hash
-      algorithms listed in the [IANA - Named Information Hash Algorithm
-      Registry] (https://www.iana.org/assignments/named-information/
-      named-information.xhtml#hash-alg).
+      algorithms listed in the [IANA-HASH-REG].
 
 11.2.  Issued Digital Credentials
 
@@ -816,14 +823,12 @@ Content-Type: application/json
 
    *  credential_hash_alg.  REQUIRED.  The Algorithm used of hashing the
       Digital Credential to which the Status Assertion is bound, using
-      one of the hash algorithms listed in the [IANA - Named Information
-      Hash Algorithm Registry] (https://www.iana.org/assignments/named-
-      information/named-information.xhtml#hash-alg).  Among the hash
-      algorithms, sha-256 is recommended and SHOULD be implemented by
-      all systems.
+      one of the hash algorithms listed in the [IANA-HASH-REG].  Among
+      the hash algorithms, sha-256 is recommended and SHOULD be
+      implemented by all systems.
 
-   The non-normative example of an unsecured payload of an SD-JWT VC is
-   shown below.
+   The non-normative example of an unsecured payload of an [SD-JWT.VC]
+   is shown below.
 
    {
     "vct": "https://credentials.example.com/identity_credential",
@@ -861,8 +866,8 @@ Content-Type: application/json
 12.  Presenting Status Assertions
 
    The Wallet Instance that provides the Status Assertions using
-   [@OpenID4VP], SHOULD include in the vp_token JSON array, as defined
-   in [@OpenID4VP], the Status Assertion along with the related Digital
+   [OpenID4VP], SHOULD include in the vp_token JSON array, as defined in
+   [OpenID4VP], the Status Assertion along with the related Digital
    Credential.
 
    The Verifier that receives a Digital Credential supporting the Status
@@ -1013,7 +1018,7 @@ Content-Type: application/json
 16.1.  JSON Web Token Claims Registration
 
    This specification requests registration of the following Claims in
-   the IANA "JSON Web Token Claims" registry [@IANA.JWT] established by
+   the IANA "JSON Web Token Claims" registry [IANA.JWT] established by
    [RFC7519].
 
    *  Claim Name: credential_format
@@ -1065,7 +1070,7 @@ Content-Type: application/json
 16.2.  Media Type Registration
 
    This section requests registration of the following media types
-   [@RFC2046] in the "Media Types" registry [@IANA.MediaTypes] in the
+   [@RFC2046] in the "Media Types" registry [IANA.MediaTypes] in the
    manner described in [@RFC6838].
 
    To indicate that the content is a JWT-based Status Assertion:
@@ -1329,7 +1334,45 @@ Content-Type: application/json
 
    *  Provisional registration?  No
 
-17.  Normative References
+17.  References
+
+17.1.  Normative References
+
+   [CWT.typ]  Jones, M. B. and O. Steele, "COSE "typ" (type) Header
+              Parameter", Work in Progress, Internet-Draft, draft-ietf-
+              cose-typ-header-parameter-05, 3 April 2024,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
+              typ-header-parameter-05>.
+
+   [IANA-HASH-REG]
+              "IANA - Named Information Hash Algorithm Registry", n.d.,
+              <https://www.iana.org/assignments/named-information/named-
+              information.xhtml#hash-alg>.
+
+   [IANA.CWT] IANA, "CBOR Web Token (CWT) Claims", n.d.,
+              <https://www.iana.org/assignments/cwt/cwt.xhtml>.
+
+   [IANA.JOSE]
+              IANA, "JSON Object Signing and Encryption (JOSE)", n.d.,
+              <https://www.iana.org/assignments/jose/jose.xhtml>.
+
+   [IANA.JWT] IANA, "JSON Web Token Claims", n.d.,
+              <https://www.iana.org/assignments/jwt/jwt.xhtml>.
+
+   [IANA.MediaTypes]
+              IANA, "Media Types", n.d.,
+              <https://www.iana.org/assignments/media-types/media-
+              types.xhtml>.
+
+   [OpenID.Core]
+              IANA, "Media Types", n.d.,
+              <https://www.iana.org/assignments/media-types/media-
+              types.xhtml>.
+
+   [OpenID4VCI]
+              OpenID Foundation, "OpenID for Verifiable Credential
+              Issuance", n.d., <https://openid.net/specs/openid-4-
+              verifiable-credential-issuance-1_0.html>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1383,6 +1426,35 @@ Content-Type: application/json
               RFC 9126, DOI 10.17487/RFC9126, September 2021,
               <https://www.rfc-editor.org/rfc/rfc9126>.
 
+17.2.  Informative References
+
+   [draft-ietf-oauth-status-list]
+              "draft-ietf-oauth-status-list", n.d.,
+              <https://datatracker.ietf.org/doc/draft-ietf-oauth-status-
+              list>.
+
+   [ECHR-ART8]
+              "Article 8 of the European Convention on Human Rights",
+              n.d.,
+              <https://www.echr.coe.int/documents/convention_eng.pdf>.
+
+   [GDPR]     "GDPR", n.d., <https://gdpr-info.eu/>.
+
+   [ISO.mdoc] ISO/IEC JTC 1/SC 17, "ISO/IEC 18013-5:2021 ISO-compliant
+              driving licence", n.d..
+
+   [OpenID4VP]
+              OpenID Foundation, "OpenID for Verifiable Credential
+              Presentation", n.d., <https://openid.net/specs/openid-4-
+              verifiable-presentations-1_0.html>.
+
+   [SD-JWT.VC]
+              Terbu, O., Fett, D., and B. Campbell, "SD-JWT-based
+              Verifiable Credentials (SD-JWT VC)", Work in Progress,
+              Internet-Draft, draft-ietf-oauth-sd-jwt-vc-03, 4 March
+              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              oauth-sd-jwt-vc-03>.
+
 Appendix A.  Acknowledgments
 
    We would like to thank:
@@ -1405,7 +1477,7 @@ Appendix A.  Acknowledgments
 
 Appendix B.  Document History
 
-   -03
+   -02
 
    *  Removed any comparison with OAuth Status List
 
@@ -1417,8 +1489,6 @@ Appendix B.  Document History
    *  Removed any informative comparison with OAuth Status List.
 
    *  JWT and CWT typ.
-
-   -02
 
    *  Name of the draft changed from OAuth Status Attestations to OAuth
       Status Assertions.
