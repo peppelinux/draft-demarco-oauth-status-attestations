@@ -5,10 +5,10 @@
 Network Working Group                                        G. D. Marco
 Internet-Draft               Dipartimento per la trasformazione digitale
 Intended status: Informational                                 O. Steele
-Expires: 13 December 2024                                      Transmute
+Expires: 14 December 2024                                      Transmute
                                                                F. Marino
                                 Istituto Poligrafico e Zecca dello Stato
-                                                            11 June 2024
+                                                            12 June 2024
 
 
                         OAuth Status Assertions
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 December 2024.
+   This Internet-Draft will expire on 14 December 2024.
 
 Copyright Notice
 
@@ -314,33 +314,22 @@ Table of Contents
    When the JWT or CWT format are used, the JWT/CWT MUST contain the
    parameters defined in the following table.
 
-    +========+===========================================+===========+
-    | Header | Description                               | Reference |
-    +========+===========================================+===========+
-    | *typ*  | It MUST be set to status-assertion-       | [RFC7516] |
-    |        | request+jwt when JWT format is used.  It  | Section   |
-    |        | MUST be set to status-assertion-          | 4.1.1     |
-    |        | request+cwt when CWT format is used.      |           |
-    +--------+-------------------------------------------+-----------+
-    | *alg*  | A digital signature algorithm identifier  | [RFC7516] |
-    |        | such as per IANA "JSON Web Signature and  | Section   |
-    |        | Encryption Algorithms" registry.  It MUST | 4.1.1     |
-    |        | NOT be set to none or any symmetric       |           |
-    |        | algorithm (MAC) identifier.               |           |
-    +--------+-------------------------------------------+-----------+
-    | *kid*  | It is the Unique identifier of the JWK or | [RFC7515] |
-    |        | Cose_Key owned by the Holder and used for |           |
-    |        | validating the signature of the Status    |           |
-    |        | Assertion Request.  When the Credential   |           |
-    |        | confirmation method uses a cryptographic  |           |
-    |        | material, it MUST match the one contained |           |
-    |        | in the Credential.  The header parameter  |           |
-    |        | kid is required when other cryptographic  |           |
-    |        | public key identification methods are not |           |
-    |        | used, such as x5c.                        |           |
-    +--------+-------------------------------------------+-----------+
+     +========+==========================================+===========+
+     | Header | Description                              | Reference |
+     +========+==========================================+===========+
+     | *typ*  | It MUST be set to status-assertion-      | [RFC7516] |
+     |        | request+jwt when JWT format is used.  It | Section   |
+     |        | MUST be set to status-assertion-         | 4.1.1     |
+     |        | request+cwt when CWT format is used.     |           |
+     +--------+------------------------------------------+-----------+
+     | *alg*  | A digital signature algorithm identifier | [RFC7516] |
+     |        | such as per IANA "JSON Web Signature and | Section   |
+     |        | Encryption Algorithms" registry.  It     | 4.1.1     |
+     |        | MUST NOT be set to none or any symmetric |           |
+     |        | algorithm (MAC) identifier.              |           |
+     +--------+------------------------------------------+-----------+
 
-                                 Table 1
+                                  Table 1
 
    +=======================+==========================+===============+
    | Payload               | Description              | Reference     |
@@ -395,8 +384,7 @@ Table of Contents
 
    {
        "alg": "ES256",
-       "typ": "status-assertion-request+jwt",
-       "kid": $CREDENTIAL-CNF-JWKID
+       "typ": "status-assertion-request+jwt"
    }
    .
    {
@@ -418,7 +406,6 @@ Table of Contents
        / protected / << {
        / alg / 1: -7 / ES256 /
        / typ / 16: -7 / status-assertion-request+cwt /
-       / kid / 4: h'3132' / $CREDENTIAL-CNF-CWKID /
      } >>,
      / unprotected / {
      },
