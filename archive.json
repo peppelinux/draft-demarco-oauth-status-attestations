@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-13T00:51:52.721782+00:00",
+  "timestamp": "2024-06-16T00:56:17.984446+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-assertions",
   "labels": [
     {
@@ -8025,6 +8025,126 @@
           "createdAt": "2024-06-12T00:24:55Z",
           "updatedAt": "2024-06-12T00:24:55Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 76,
+      "id": "PR_kwDOK4XJ0s5ycsMd",
+      "title": "fix: CWT.cti, editorials and IANA refs",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-assertions/pull/76",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-06-14T07:35:08Z",
+      "updatedAt": "2024-06-14T15:38:35Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-assertions",
+      "baseRefName": "main",
+      "baseRefOid": "a876c920ab8f5ee0729a8f1aac7a9766f2dd6e19",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-assertions",
+      "headRefName": "ed2",
+      "headRefOid": "337af28e52160708e081038dce41790053d4cb18",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOK4XJ0s5-RS0-",
+          "commit": {
+            "abbreviatedOid": "337af28"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-14T13:56:24Z",
+          "updatedAt": "2024-06-14T13:56:25Z",
+          "comments": [
+            {
+              "originalPosition": 66,
+              "body": "```suggestion\r\ncurrent status.\r\n```",
+              "createdAt": "2024-06-14T13:56:24Z",
+              "updatedAt": "2024-06-14T13:56:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5-RTZ0",
+          "commit": {
+            "abbreviatedOid": "337af28"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-14T13:57:25Z",
+          "updatedAt": "2024-06-14T13:57:25Z",
+          "comments": [
+            {
+              "originalPosition": 66,
+              "body": "This of course assumes that status information is not limited to revocation.",
+              "createdAt": "2024-06-14T13:57:25Z",
+              "updatedAt": "2024-06-14T13:57:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5-RTyS",
+          "commit": {
+            "abbreviatedOid": "337af28"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-14T13:58:06Z",
+          "updatedAt": "2024-06-14T13:58:07Z",
+          "comments": [
+            {
+              "originalPosition": 83,
+              "body": "```suggestion\r\n: An entity that possesses Verifiable Credentials and has\r\n```",
+              "createdAt": "2024-06-14T13:58:07Z",
+              "updatedAt": "2024-06-14T13:58:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5-RULT",
+          "commit": {
+            "abbreviatedOid": "337af28"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Some nits, but I'm not attached to them",
+          "createdAt": "2024-06-14T13:58:51Z",
+          "updatedAt": "2024-06-14T13:58:51Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5-SIHf",
+          "commit": {
+            "abbreviatedOid": "337af28"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-06-14T15:38:25Z",
+          "updatedAt": "2024-06-14T15:38:35Z",
+          "comments": [
+            {
+              "originalPosition": 66,
+              "body": "Maybe it is better to say validity status instead of current status. The Status Assertion only gives a validity proof.",
+              "createdAt": "2024-06-14T15:38:25Z",
+              "updatedAt": "2024-06-14T15:38:35Z"
+            }
+          ]
         }
       ]
     }
