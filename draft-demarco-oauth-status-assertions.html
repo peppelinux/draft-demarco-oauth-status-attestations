@@ -1039,7 +1039,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Marco, et al.</td>
-<td class="center">Expires 14 December 2024</td>
+<td class="center">Expires 19 December 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1052,12 +1052,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-demarco-oauth-status-assertions-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-06-12" class="published">12 June 2024</time>
+<time datetime="2024-06-17" class="published">17 June 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-12-14">14 December 2024</time></dd>
+<dd class="expires"><time datetime="2024-12-19">19 December 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1117,7 +1117,7 @@ without requiring to query any third-party entities.<a href="#section-abstract-1
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 14 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 19 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1275,7 +1275,7 @@ without requiring to query any third-party entities.<a href="#section-abstract-1
 <p id="section-1-1">Status Assertions ensure the non-revocation of digital
 credentials, whether in JSON Web Tokens (JWT) or CBOR Web Tokens (CWT)
 format. Status Assertions function
-similarly to OCSP Stapling, allowing clients to present to the
+similarly to OCSP Stapling (<span>[<a href="#RFC6066" class="cite xref">RFC6066</a>]</span>), allowing clients to present to the
 relying parties
 time-stamped assertions provided by the credential issuer.
 The approach outlined in this specification enables the
@@ -1284,7 +1284,7 @@ direct queries to third-party systems,
 enhancing privacy, reducing latency, and
 faciliting offline verification.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">The figure below illustrates the process by which a client,
-such as a Wallet Instance,
+such as a wallet instance,
 requests and obtains a Status Assertion from the credential issuer.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-ascii-art art-text artwork" id="section-1-3">
 <pre>
@@ -1299,8 +1299,7 @@ requests and obtains a Status Assertion from the credential issuer.<a href="#sec
 </div>
 <p id="section-1-4"><strong>Figure 1</strong>: Status Assertion Issuance Flow.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">The figure below illustrates the process by which a client
-presents the Status Assertion along with the corresponding digital credential,
-to prove the non-revocation status of the digital credential to a verifier.<a href="#section-1-5" class="pilcrow">¶</a></p>
+presents the Status Assertion along with the corresponding digital credential.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <div class="alignLeft art-ascii-art art-text artwork" id="section-1-6">
 <pre>
 +-- ----------------+                             +----------+
@@ -1311,6 +1310,11 @@ to prove the non-revocation status of the digital credential to a verifier.<a hr
 </pre><a href="#section-1-6" class="pilcrow">¶</a>
 </div>
 <p id="section-1-7"><strong>Figure 2</strong>: Status Assertion Presentation Flow.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-8">In summary, the credential issuer provides the client with a
+Status Assertion, which is linked to a Digital Credential. This enables
+the client to present both the digital credential and its
+Status Assertion to a verifier as proof of the digital credential's
+validity status.<a href="#section-1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
@@ -1335,16 +1339,16 @@ defined by JSON Web Token (JWT) <span>[<a href="#RFC7519" class="cite xref">RFC7
 the term "CBOR Web Token (CWT)" defined in <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>, "Client" as
 defined <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>, "Verifiable Presentation" defined in [@OpenID4VP].<a href="#section-3-1" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-3-2">
-        <dt id="section-3-2.1">Holder:</dt>
+        <dt id="section-3-2.1">Digital Credential:</dt>
         <dd style="margin-left: 1.5em" id="section-3-2.2">
-          <p id="section-3-2.2.1">An entity that receives Verifiable Credentials and has
-control over them to present them to the Verifiers as Verifiable Presentations.<a href="#section-3-2.2.1" class="pilcrow">¶</a></p>
+          <p id="section-3-2.2.1">A set of one or more claims about a subject made by a Credential Issuer.
+Alternative names are "Verifiable Credential" or "Credential".<a href="#section-3-2.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-3-2.3">Digital Credential:</dt>
+<dt id="section-3-2.3">Holder:</dt>
         <dd style="margin-left: 1.5em" id="section-3-2.4">
-          <p id="section-3-2.4.1">A set of one or more claims about a subject made by a Credential Issuer.
-Alternative names are "Verifiable Credential" or "Credential".<a href="#section-3-2.4.1" class="pilcrow">¶</a></p>
+          <p id="section-3-2.4.1">An entity that possesses Verifiable Credentials and has
+control over them to present them to the Verifiers as Verifiable Presentations.<a href="#section-3-2.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-3-2.5">Credential Issuer:</dt>
@@ -1354,28 +1358,22 @@ The Issuer is responsible for the lifecycle of their issued
 Digital Credentials and their validity status.<a href="#section-3-2.6.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-3-2.7">Holder:</dt>
+<dt id="section-3-2.7">Verifier:</dt>
         <dd style="margin-left: 1.5em" id="section-3-2.8">
-          <p id="section-3-2.8.1">An entity that receives Verifiable Credentials and has control over
-them to present them to the Verifiers as Verifiable Presentations.<a href="#section-3-2.8.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="section-3-2.9">Verifier:</dt>
-        <dd style="margin-left: 1.5em" id="section-3-2.10">
-          <p id="section-3-2.10.1">Entity that relies on the validity of the Digital Credentials presented to it.
+          <p id="section-3-2.8.1">Entity that relies on the validity of the Digital Credentials presented to it.
 This Entity, also known as a Relying Party, verifies the authenticity and
 validity of the Digital Credentials, including their revocation status,
-before accepting them.<a href="#section-3-2.10.1" class="pilcrow">¶</a></p>
+before accepting them.<a href="#section-3-2.8.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-3-2.11">Wallet Instance:</dt>
-        <dd style="margin-left: 1.5em" id="section-3-2.12">
-          <p id="section-3-2.12.1">The digital Wallet in control of a User, also known as Wallet.
+<dt id="section-3-2.9">Wallet Instance:</dt>
+        <dd style="margin-left: 1.5em" id="section-3-2.10">
+          <p id="section-3-2.10.1">The digital Wallet in control of a User, also known as Wallet.
 It securely stores the User's Digital Credentials. It can present
 Digital Credentials to Verifiers
 and request Status Assertions from Issuers under the control of the User.
 For the purposes of this specification, the Wallet Instance is
-considered as a Client.<a href="#section-3-2.12.1" class="pilcrow">¶</a></p>
+considered as a Client.<a href="#section-3-2.10.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
@@ -1401,7 +1399,7 @@ be deemed as excessive monitoring of the End-User's activities.<a href="#section
 as outlined in
 <span>[<a href="#ECHR-ART8" class="cite xref">ECHR-ART8</a>]</span> and
 in the the European Union's General Data Protection Regulation
-(<span>[<a href="#GDPR" class="cite xref">GDPR</a>]</span>),
+<span>[<a href="#GDPR" class="cite xref">GDPR</a>]</span>,
 by creating a detailed profile of the End-User's
 Digital Credential status without explicit consent for
 such continuous surveillance.<a href="#section-4-3" class="pilcrow">¶</a></p>
@@ -1490,15 +1488,10 @@ affirming the authenticity and rightful possession of the Credential.<a href="#s
       <h2 id="name-status-assertion-request">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-status-assertion-request" class="section-name selfRef">Status Assertion Request</a>
       </h2>
-<p id="section-7-1">The Credential Issuer provides the Wallet Instance with a Status Assertion,
-which is bound to a Digital Credential.
-This allows the Wallet Instance to present it, along with the
-Digital Credential itself,
-to a Verifier as proof of the Digital Credential's non-revocation status.<a href="#section-7-1" class="pilcrow">¶</a></p>
-<p id="section-7-2">The following diagram shows the Wallet Instance requesting a
+<p id="section-7-1">The following diagram shows the Wallet Instance requesting a
 Status Assertion to a Credential Issuer,
-related to a specific Credential issued by the same Credential Issuer.<a href="#section-7-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-ascii-art art-text artwork" id="section-7-3">
+related to a specific Credential issued by the same Credential Issuer.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-7-2">
 <pre>
 +-------------------+                                  +--------------------+
 |                   |                                  |                    |
@@ -1518,25 +1511,25 @@ related to a specific Credential issued by the same Credential Issuer.<a href="#
 |  Wallet Instance  |                                  | Credential Issuer  |
 |                   |                                  |                    |
 +-------------------+                                  +--------------------+
-</pre><a href="#section-7-3" class="pilcrow">¶</a>
+</pre><a href="#section-7-2" class="pilcrow">¶</a>
 </div>
-<p id="section-7-4">The Wallet Instance sends the Status Assertion request to the
-Credential Issuer, where:<a href="#section-7-4" class="pilcrow">¶</a></p>
+<p id="section-7-3">The Wallet Instance sends the Status Assertion request to the
+Credential Issuer, where:<a href="#section-7-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7-5.1">
-          <p id="section-7-5.1.1">The request <span class="bcp14">MUST</span> contain the base64url encoded hash value of the Digital Credential's
+<li class="normal" id="section-7-4.1">
+          <p id="section-7-4.1.1">The request <span class="bcp14">MUST</span> contain the base64url encoded hash value of the Digital Credential's
 Issuer signed part, such as the Issuer Signed JWT using [@SD-JWT-VC],
 or the Mobile Security Object using [@ISO 18013-5],
 for which the Status Assertion is requested, and enveloped in a signed
-Status Assertion Request object.<a href="#section-7-5.1.1" class="pilcrow">¶</a></p>
+Status Assertion Request object.<a href="#section-7-4.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-7-5.2">
-          <p id="section-7-5.2.1">The Status Assertion Request object <span class="bcp14">MUST</span> be signed with the private key corresponding
+        <li class="normal" id="section-7-4.2">
+          <p id="section-7-4.2.1">The Status Assertion Request object <span class="bcp14">MUST</span> be signed with the private key corresponding
 to the confirmation claim assigned by the Issuer and contained within
-the Digital Credential.<a href="#section-7-5.2.1" class="pilcrow">¶</a></p>
+the Digital Credential.<a href="#section-7-4.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-7-6">When the JWT or CWT format are used, the JWT/CWT <span class="bcp14">MUST</span> contain the parameters defined in the following table.<a href="#section-7-6" class="pilcrow">¶</a></p>
+<p id="section-7-5">The Status Assertion Request object <span class="bcp14">MUST</span> contain the parameters defined in the following table.<a href="#section-7-5" class="pilcrow">¶</a></p>
 <table class="center" id="table-1">
         <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
 <thead>
@@ -1553,7 +1546,8 @@ the Digital Credential.<a href="#section-7-5.2.1" class="pilcrow">¶</a></p>
 </td>
             <td class="text-left" rowspan="1" colspan="1">It <span class="bcp14">MUST</span> be set to <code>status-assertion-request+jwt</code> when JWT format is used. It <span class="bcp14">MUST</span> be set to <code>status-assertion-request+cwt</code> when CWT format is used.</td>
             <td class="text-left" rowspan="1" colspan="1">
-              <span>[<a href="#RFC7516" class="cite xref">RFC7516</a>]</span> Section 4.1.1</td>
+              <span>[<a href="#RFC7516" class="cite xref">RFC7516</a>]</span> Section 4.1.1, <span>[<a href="#RFC9596" class="cite xref">RFC9596</a>]</span>
+</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">
@@ -1621,6 +1615,14 @@ the Digital Credential.<a href="#section-7-5.2.1" class="pilcrow">¶</a></p>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">
+              <strong>cti</strong>
+</td>
+            <td class="text-left" rowspan="1" colspan="1">Unique identifier for the CWT.</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> Section 4.1.7</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">
               <strong>credential_hash</strong>
 </td>
             <td class="text-left" rowspan="1" colspan="1">Hash value of the Digital Credential the Status Assertion is bound to.</td>
@@ -1635,10 +1637,10 @@ the Digital Credential.<a href="#section-7-5.2.1" class="pilcrow">¶</a></p>
           </tr>
         </tbody>
       </table>
-<p id="section-7-9">Below is a non-normative example of a Status Assertion Request with
-the JWT headers and payload are represented without applying signature and
-encoding:<a href="#section-7-9" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-7-10">
+<p id="section-7-8">Below is a non-normative example of a Status Assertion Request with
+the JWT headers and payload represented without applying signature and
+encoding:<a href="#section-7-8" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-7-9">
 <pre>
 {
     "alg": "ES256",
@@ -1654,12 +1656,12 @@ encoding:<a href="#section-7-9" class="pilcrow">¶</a></p>
     "credential_hash": $hash-about-Issuer-Signed-JWT
     "credential_hash_alg": "sha-256"
 }
-</pre><a href="#section-7-10" class="pilcrow">¶</a>
+</pre><a href="#section-7-9" class="pilcrow">¶</a>
 </div>
-<p id="section-7-11">Below is a non-normative example of a Status Assertion Request object in CWT format
+<p id="section-7-10">Below is a non-normative example of a Status Assertion Request object in CWT format
 represented in CBOR diagnostic notation format <span>[<a href="#RFC8152" class="cite xref">RFC8152</a>]</span>, where the CWT headers
-and payload are presented without applying signature and encoding for better readability:<a href="#section-7-11" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-7-12">
+and payload are presented without applying signature and encoding for better readability:<a href="#section-7-10" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-7-11">
 <pre>
    [
        / protected / &lt;&lt; {
@@ -1678,11 +1680,11 @@ and payload are presented without applying signature and encoding for better rea
        / credential_hash_alg / 9: sha-256 /
      } &gt;&gt;,
    ]
-</pre><a href="#section-7-12" class="pilcrow">¶</a>
+</pre><a href="#section-7-11" class="pilcrow">¶</a>
 </div>
-<p id="section-7-13">Below a non-normative example representing a Status Assertion Request array with a
-single Status Assertion Request object in JWT format.<a href="#section-7-13" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-7-14">
+<p id="section-7-12">Below a non-normative example representing a Status Assertion Request array with a
+single Status Assertion Request object in JWT format.<a href="#section-7-12" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-7-13">
 <pre>
 POST /status HTTP/1.1
 Host: issuer.example.org
@@ -1691,27 +1693,27 @@ Content-Type: application/json
 {
     "status_assertion_requests" : ["${base64url(json({typ: (some pop for status-assertion)+jwt, ...}))}.payload.signature", ... ]
 }
-</pre><a href="#section-7-14" class="pilcrow">¶</a>
+</pre><a href="#section-7-13" class="pilcrow">¶</a>
 </div>
-<p id="section-7-15">The Status Assertion HTTP request can be sent to a single Credential Issuer
+<p id="section-7-14">The Status Assertion HTTP request can be sent to a single Credential Issuer
 regarding multiple Digital Credentials, and <span class="bcp14">MUST</span> contain a JSON object with
-the member <code>status_assertion_requests</code>.<a href="#section-7-15" class="pilcrow">¶</a></p>
-<p id="section-7-16">The <code>status_assertion_requests</code> <span class="bcp14">MUST</span> be set with an array of strings, where
+the member <code>status_assertion_requests</code>.<a href="#section-7-14" class="pilcrow">¶</a></p>
+<p id="section-7-15">The <code>status_assertion_requests</code> <span class="bcp14">MUST</span> be set with an array of strings, where
 each string within the array represents a Digital Credential
-Status Assertion Request object.<a href="#section-7-16" class="pilcrow">¶</a></p>
-<p id="section-7-17">The Credential Issuer that receives the Status Assertion Request object
+Status Assertion Request object.<a href="#section-7-15" class="pilcrow">¶</a></p>
+<p id="section-7-16">The Credential Issuer that receives the Status Assertion Request object
 <span class="bcp14">MUST</span> validate that the Wallet Instance making the request is
 authorized to request Status Assertions.
-Therefore the following requirements <span class="bcp14">MUST</span> be satisfied:<a href="#section-7-17" class="pilcrow">¶</a></p>
+Therefore the following requirements <span class="bcp14">MUST</span> be satisfied:<a href="#section-7-16" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7-18.1">
-          <p id="section-7-18.1.1">The Credential Issuer <span class="bcp14">MUST</span> verify the compliance of all elements in the <code>status_assertion_requests</code> object
+<li class="normal" id="section-7-17.1">
+          <p id="section-7-17.1.1">The Credential Issuer <span class="bcp14">MUST</span> verify the compliance of all elements in the <code>status_assertion_requests</code> object
 using the confirmation method contained within the Digital Credential where the Status Assertion Request
-object is referred to;<a href="#section-7-18.1.1" class="pilcrow">¶</a></p>
+object is referred to;<a href="#section-7-17.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-7-18.2">
-          <p id="section-7-18.2.1">The Credential Issuer <span class="bcp14">MUST</span> verify that it is the legitimate Issuer of the Digital Credential
-to which each Status Assertion Request object refers.<a href="#section-7-18.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-7-17.2">
+          <p id="section-7-17.2.1">The Credential Issuer <span class="bcp14">MUST</span> verify that it is the legitimate Issuer of the Digital Credential
+to which each Status Assertion Request object refers.<a href="#section-7-17.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
@@ -2399,61 +2401,31 @@ Digital Credential ecosystem.<a href="#section-15.6-2" class="pilcrow">¶</a></p
 IANA "JSON Web Token Claims" registry <span>[<a href="#IANA.JWT" class="cite xref">IANA.JWT</a>]</span> established by <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>.<a href="#section-16.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-16.1-2.1">
-            <p id="section-16.1-2.1.1">Claim Name: <code>credential_format</code><a href="#section-16.1-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-16.1-2.1.1">Claim Name: <code>credential_hash</code><a href="#section-16.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.1-2.2">
-            <p id="section-16.1-2.2.1">Claim Description: The Digital Credential format the Status Assertion is bound to.<a href="#section-16.1-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-16.1-2.2.1">Claim Description: Hash value of the Digital Credential the Status Assertion is bound to.<a href="#section-16.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.1-2.3">
             <p id="section-16.1-2.3.1">Change Controller: IETF<a href="#section-16.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.1-2.4">
-            <p id="section-16.1-2.4.1">Specification Document(s):  [[ (#digital-credential-proof-of-possession) of this specification ]]<a href="#section-16.1-2.4.1" class="pilcrow">¶</a></p>
+            <p id="section-16.1-2.4.1">Specification Document(s): <span><a href="#status-assertion" class="internal xref">this specification</a> (<a href="#status-assertion" class="auto internal xref">Section 10</a>)</span><a href="#section-16.1-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-16.1-3"><br></p>
 <ul class="normal">
 <li class="normal" id="section-16.1-4.1">
-            <p id="section-16.1-4.1.1">Claim Name: <code>credential</code><a href="#section-16.1-4.1.1" class="pilcrow">¶</a></p>
+            <p id="section-16.1-4.1.1">Claim Name: <code>credential_hash_alg</code><a href="#section-16.1-4.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.1-4.2">
-            <p id="section-16.1-4.2.1">Claim Description: The Digital Credential the Status Assertion is bound to.<a href="#section-16.1-4.2.1" class="pilcrow">¶</a></p>
+            <p id="section-16.1-4.2.1">Claim Description: The Algorithm used of hashing the Digital Credential to which the Status Assertion is bound.<a href="#section-16.1-4.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.1-4.3">
             <p id="section-16.1-4.3.1">Change Controller: IETF<a href="#section-16.1-4.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.1-4.4">
-            <p id="section-16.1-4.4.1">Specification Document(s):  [[ (#digital-credential-proof-of-possession) of this specification ]]<a href="#section-16.1-4.4.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-<p id="section-16.1-5"><br></p>
-<ul class="normal">
-<li class="normal" id="section-16.1-6.1">
-            <p id="section-16.1-6.1.1">Claim Name: <code>credential_hash</code><a href="#section-16.1-6.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-16.1-6.2">
-            <p id="section-16.1-6.2.1">Claim Description: Hash value of the Digital Credential the Status Assertion is bound to.<a href="#section-16.1-6.2.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-16.1-6.3">
-            <p id="section-16.1-6.3.1">Change Controller: IETF<a href="#section-16.1-6.3.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-16.1-6.4">
-            <p id="section-16.1-6.4.1">Specification Document(s):  [[ (#status-assertion) of this specification ]]<a href="#section-16.1-6.4.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-<p id="section-16.1-7"><br></p>
-<ul class="normal">
-<li class="normal" id="section-16.1-8.1">
-            <p id="section-16.1-8.1.1">Claim Name: <code>credential_hash_alg</code><a href="#section-16.1-8.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-16.1-8.2">
-            <p id="section-16.1-8.2.1">Claim Description: The Algorithm used of hashing the Digital Credential to which the Status Assertion is bound.<a href="#section-16.1-8.2.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-16.1-8.3">
-            <p id="section-16.1-8.3.1">Change Controller: IETF<a href="#section-16.1-8.3.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-16.1-8.4">
-            <p id="section-16.1-8.4.1">Specification Document(s):  [[ (#status-assertion) of this specification ]]<a href="#section-16.1-8.4.1" class="pilcrow">¶</a></p>
+            <p id="section-16.1-4.4.1">Specification Document(s): <span><a href="#status-assertion" class="internal xref">this specification</a> (<a href="#status-assertion" class="auto internal xref">Section 10</a>)</span><a href="#section-16.1-4.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -2463,9 +2435,9 @@ IANA "JSON Web Token Claims" registry <span>[<a href="#IANA.JWT" class="cite xre
         <h3 id="name-media-type-registration">
 <a href="#section-16.2" class="section-number selfRef">16.2. </a><a href="#name-media-type-registration" class="section-name selfRef">Media Type Registration</a>
         </h3>
-<p id="section-16.2-1">This section requests registration of the following media types [@RFC2046] in
+<p id="section-16.2-1">This section requests registration of the following media types <span>[<a href="#RFC2046" class="cite xref">RFC2046</a>]</span> in
 the "Media Types" registry <span>[<a href="#IANA.MediaTypes" class="cite xref">IANA.MediaTypes</a>]</span> in the manner described
-in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
+in <span>[<a href="#RFC6838" class="cite xref">RFC6838</a>]</span>.<a href="#section-16.2-1" class="pilcrow">¶</a></p>
 <p id="section-16.2-2">To indicate that the content is a JWT-based Status Assertion:<a href="#section-16.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-16.2-3.1">
@@ -2484,16 +2456,16 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
             <p id="section-16.2-3.5.1">Encoding considerations: binary; A JWT-based Status Assertion Request object is a JWT; JWT values are encoded as a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') characters.<a href="#section-16.2-3.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-3.6">
-            <p id="section-16.2-3.6.1">Security considerations: See (#Security) of [[ this specification ]]<a href="#section-16.2-3.6.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-3.6.1">Security considerations: See (#Security) of <span><a href="#security-considerations" class="internal xref">this specification</a> (<a href="#security-considerations" class="auto internal xref">Section 14</a>)</span><a href="#section-16.2-3.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-3.7">
             <p id="section-16.2-3.7.1">Interoperability considerations: n/a<a href="#section-16.2-3.7.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-3.8">
-            <p id="section-16.2-3.8.1">Published specification: [[ this specification ]]<a href="#section-16.2-3.8.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-3.8.1">Published specification: this specification<a href="#section-16.2-3.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-3.9">
-            <p id="section-16.2-3.9.1">Applications that use this media type: Applications using [[ this specification ]] for requesting Status Assertions.<a href="#section-16.2-3.9.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-3.9.1">Applications that use this media type: Applications using this specification for requesting Status Assertions.<a href="#section-16.2-3.9.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-3.10">
             <p id="section-16.2-3.10.1">Fragment identifier considerations: n/a<a href="#section-16.2-3.10.1" class="pilcrow">¶</a></p>
@@ -2546,16 +2518,16 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
             <p id="section-16.2-5.5.1">Encoding considerations: binary<a href="#section-16.2-5.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-5.6">
-            <p id="section-16.2-5.6.1">Security considerations: See (#Security) of [[ this specification ]]<a href="#section-16.2-5.6.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-5.6.1">Security considerations: See (#Security) of <span><a href="#security-considerations" class="internal xref">this specification</a> (<a href="#security-considerations" class="auto internal xref">Section 14</a>)</span><a href="#section-16.2-5.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-5.7">
             <p id="section-16.2-5.7.1">Interoperability considerations: n/a<a href="#section-16.2-5.7.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-5.8">
-            <p id="section-16.2-5.8.1">Published specification: [[ this specification ]]<a href="#section-16.2-5.8.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-5.8.1">Published specification: this specification<a href="#section-16.2-5.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-5.9">
-            <p id="section-16.2-5.9.1">Applications that use this media type: Applications using [[ this specification ]] for requesting Status Assertions.<a href="#section-16.2-5.9.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-5.9.1">Applications that use this media type: Applications using this specification for requesting Status Assertions.<a href="#section-16.2-5.9.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-5.10">
             <p id="section-16.2-5.10.1">Fragment identifier considerations: n/a<a href="#section-16.2-5.10.1" class="pilcrow">¶</a></p>
@@ -2608,16 +2580,16 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
             <p id="section-16.2-7.5.1">Encoding considerations: binary<a href="#section-16.2-7.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-7.6">
-            <p id="section-16.2-7.6.1">Security considerations: See (#Security) of [[ this specification ]]<a href="#section-16.2-7.6.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-7.6.1">Security considerations: See (#Security) of <span><a href="#security-considerations" class="internal xref">this specification</a> (<a href="#security-considerations" class="auto internal xref">Section 14</a>)</span><a href="#section-16.2-7.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-7.7">
             <p id="section-16.2-7.7.1">Interoperability considerations: n/a<a href="#section-16.2-7.7.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-7.8">
-            <p id="section-16.2-7.8.1">Published specification: [[ this specification ]]<a href="#section-16.2-7.8.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-7.8.1">Published specification: this specification<a href="#section-16.2-7.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-7.9">
-            <p id="section-16.2-7.9.1">Applications that use this media type: Applications using [[ this specification ]] for issuing or presenting Status Assertions.<a href="#section-16.2-7.9.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-7.9.1">Applications that use this media type: Applications using this specification for issuing or presenting Status Assertions.<a href="#section-16.2-7.9.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-7.10">
             <p id="section-16.2-7.10.1">Fragment identifier considerations: n/a<a href="#section-16.2-7.10.1" class="pilcrow">¶</a></p>
@@ -2670,16 +2642,16 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
             <p id="section-16.2-9.5.1">Encoding considerations: binary<a href="#section-16.2-9.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-9.6">
-            <p id="section-16.2-9.6.1">Security considerations: See (#Security) of [[ this specification ]]<a href="#section-16.2-9.6.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-9.6.1">Security considerations: See (#Security) of <span><a href="#security-considerations" class="internal xref">this specification</a> (<a href="#security-considerations" class="auto internal xref">Section 14</a>)</span><a href="#section-16.2-9.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-9.7">
             <p id="section-16.2-9.7.1">Interoperability considerations: n/a<a href="#section-16.2-9.7.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-9.8">
-            <p id="section-16.2-9.8.1">Published specification: [[ this specification ]]<a href="#section-16.2-9.8.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-9.8.1">Published specification: this specification<a href="#section-16.2-9.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-9.9">
-            <p id="section-16.2-9.9.1">Applications that use this media type: Applications using [[ this specification ]] for issuing or presenting Status Assertions.<a href="#section-16.2-9.9.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-9.9.1">Applications that use this media type: Applications using this specification for issuing or presenting Status Assertions.<a href="#section-16.2-9.9.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-9.10">
             <p id="section-16.2-9.10.1">Fragment identifier considerations: n/a<a href="#section-16.2-9.10.1" class="pilcrow">¶</a></p>
@@ -2732,16 +2704,16 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
             <p id="section-16.2-11.5.1">Encoding considerations: binary<a href="#section-16.2-11.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-11.6">
-            <p id="section-16.2-11.6.1">Security considerations: See (#Security) of [[ this specification ]]<a href="#section-16.2-11.6.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-11.6.1">Security considerations: See (#Security) of <span><a href="#security-considerations" class="internal xref">this specification</a> (<a href="#security-considerations" class="auto internal xref">Section 14</a>)</span><a href="#section-16.2-11.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-11.7">
             <p id="section-16.2-11.7.1">Interoperability considerations: n/a<a href="#section-16.2-11.7.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-11.8">
-            <p id="section-16.2-11.8.1">Published specification: [[ this specification ]]<a href="#section-16.2-11.8.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-11.8.1">Published specification: this specification<a href="#section-16.2-11.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-11.9">
-            <p id="section-16.2-11.9.1">Applications that use this media type: Applications using [[ this specification ]] for issuing Status Assertions Request Errors.<a href="#section-16.2-11.9.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-11.9.1">Applications that use this media type: Applications using this specification for issuing Status Assertions Request Errors.<a href="#section-16.2-11.9.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-11.10">
             <p id="section-16.2-11.10.1">Fragment identifier considerations: n/a<a href="#section-16.2-11.10.1" class="pilcrow">¶</a></p>
@@ -2794,16 +2766,16 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
             <p id="section-16.2-13.5.1">Encoding considerations: binary<a href="#section-16.2-13.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-13.6">
-            <p id="section-16.2-13.6.1">Security considerations: See (#Security) of [[ this specification ]]<a href="#section-16.2-13.6.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-13.6.1">Security considerations: See (#Security) of <span><a href="#security-considerations" class="internal xref">this specification</a> (<a href="#security-considerations" class="auto internal xref">Section 14</a>)</span><a href="#section-16.2-13.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-13.7">
             <p id="section-16.2-13.7.1">Interoperability considerations: n/a<a href="#section-16.2-13.7.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-13.8">
-            <p id="section-16.2-13.8.1">Published specification: [[ this specification ]]<a href="#section-16.2-13.8.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-13.8.1">Published specification: this specification<a href="#section-16.2-13.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-13.9">
-            <p id="section-16.2-13.9.1">Applications that use this media type: Applications using [[ this specification ]] for issuing Status Assertions Request Errors.<a href="#section-16.2-13.9.1" class="pilcrow">¶</a></p>
+            <p id="section-16.2-13.9.1">Applications that use this media type: Applications using this specification for issuing Status Assertions Request Errors.<a href="#section-16.2-13.9.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-16.2-13.10">
             <p id="section-16.2-13.10.1">Fragment identifier considerations: n/a<a href="#section-16.2-13.10.1" class="pilcrow">¶</a></p>
@@ -2852,10 +2824,6 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
 <a href="#section-17.1" class="section-number selfRef">17.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
-<dt id="CWT.typ">[CWT.typ]</dt>
-        <dd>
-<span class="refAuthor">Jones, M. B.</span> and <span class="refAuthor">O. Steele</span>, <span class="refTitle">"COSE "typ" (type) Header Parameter"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cose-typ-header-parameter-05</span>, <time datetime="2024-04-03" class="refDate">3 April 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cose-typ-header-parameter-05">https://datatracker.ietf.org/doc/html/draft-ietf-cose-typ-header-parameter-05</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="IANA-HASH-REG">[IANA-HASH-REG]</dt>
         <dd>
 <span class="refTitle">"IANA - Named Information Hash Algorithm Registry"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.iana.org/assignments/named-information/named-information.xhtml#hash-alg">https://www.iana.org/assignments/named-information/named-information.xhtml#hash-alg</a>&gt;</span>. </dd>
@@ -2884,6 +2852,10 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
         <dd>
 <span class="refAuthor">OpenID Foundation</span>, <span class="refTitle">"OpenID for Verifiable Credential Issuance"</span>, <span>n.d.</span>, <span>&lt;<a href="https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html">https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC2046">[RFC2046]</dt>
+        <dd>
+<span class="refAuthor">Freed, N.</span> and <span class="refAuthor">N. Borenstein</span>, <span class="refTitle">"Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types"</span>, <span class="seriesInfo">RFC 2046</span>, <span class="seriesInfo">DOI 10.17487/RFC2046</span>, <time datetime="1996-11" class="refDate">November 1996</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2046">https://www.rfc-editor.org/rfc/rfc2046</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
@@ -2891,6 +2863,10 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
 <dt id="RFC6749">[RFC6749]</dt>
         <dd>
 <span class="refAuthor">Hardt, D., Ed.</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework"</span>, <span class="seriesInfo">RFC 6749</span>, <span class="seriesInfo">DOI 10.17487/RFC6749</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6749">https://www.rfc-editor.org/rfc/rfc6749</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6838">[RFC6838]</dt>
+        <dd>
+<span class="refAuthor">Freed, N.</span>, <span class="refAuthor">Klensin, J.</span>, and <span class="refAuthor">T. Hansen</span>, <span class="refTitle">"Media Type Specifications and Registration Procedures"</span>, <span class="seriesInfo">BCP 13</span>, <span class="seriesInfo">RFC 6838</span>, <span class="seriesInfo">DOI 10.17487/RFC6838</span>, <time datetime="2013-01" class="refDate">January 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6838">https://www.rfc-editor.org/rfc/rfc6838</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7515">[RFC7515]</dt>
         <dd>
@@ -2929,8 +2905,12 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
 <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Seitz, L.</span>, <span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Erdtman, S.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Proof-of-Possession Key Semantics for CBOR Web Tokens (CWTs)"</span>, <span class="seriesInfo">RFC 8747</span>, <span class="seriesInfo">DOI 10.17487/RFC8747</span>, <time datetime="2020-03" class="refDate">March 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8747">https://www.rfc-editor.org/rfc/rfc8747</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9126">[RFC9126]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Sakimura, N.</span>, <span class="refAuthor">Tonge, D.</span>, and <span class="refAuthor">F. Skokan</span>, <span class="refTitle">"OAuth 2.0 Pushed Authorization Requests"</span>, <span class="seriesInfo">RFC 9126</span>, <span class="seriesInfo">DOI 10.17487/RFC9126</span>, <time datetime="2021-09" class="refDate">September 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9126">https://www.rfc-editor.org/rfc/rfc9126</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9596">[RFC9596]</dt>
+      <dd>
+<span class="refAuthor">Jones, M.B.</span> and <span class="refAuthor">O. Steele</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE) "typ" (type) Header Parameter"</span>, <span class="seriesInfo">RFC 9596</span>, <span class="seriesInfo">DOI 10.17487/RFC9596</span>, <time datetime="2024-06" class="refDate">June 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9596">https://www.rfc-editor.org/rfc/rfc9596</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -2960,6 +2940,10 @@ in [@RFC6838].<a href="#section-16.2-1" class="pilcrow">¶</a></p>
 <dt id="OpenID4VP">[OpenID4VP]</dt>
         <dd>
 <span class="refAuthor">OpenID Foundation</span>, <span class="refTitle">"OpenID for Verifiable Credential Presentation"</span>, <span>n.d.</span>, <span>&lt;<a href="https://openid.net/specs/openid-4-verifiable-presentations-1_0.html">https://openid.net/specs/openid-4-verifiable-presentations-1_0.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6066">[RFC6066]</dt>
+        <dd>
+<span class="refTitle">"Transport Layer Security (TLS) Extensions: Extension Definitions"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/rfc6066">https://datatracker.ietf.org/doc/html/rfc6066</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SD-JWT.VC">[SD-JWT.VC]</dt>
       <dd>
