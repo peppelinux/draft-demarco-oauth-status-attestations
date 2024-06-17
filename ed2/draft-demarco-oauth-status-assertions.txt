@@ -5,10 +5,10 @@
 Network Working Group                                        G. D. Marco
 Internet-Draft               Dipartimento per la trasformazione digitale
 Intended status: Informational                                 O. Steele
-Expires: 16 December 2024                                      Transmute
+Expires: 19 December 2024                                      Transmute
                                                                F. Marino
                                 Istituto Poligrafico e Zecca dello Stato
-                                                            14 June 2024
+                                                            17 June 2024
 
 
                         OAuth Status Assertions
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 December 2024.
+   This Internet-Draft will expire on 19 December 2024.
 
 Copyright Notice
 
@@ -147,8 +147,8 @@ Table of Contents
    In summary, the credential issuer provides the client with a Status
    Assertion, which is linked to a Digital Credential.  This enables the
    client to present both the digital credential and its Status
-   Assertion to a verifier as proof of the digital credential's non-
-   revocation status.
+   Assertion to a verifier as proof of the digital credential's validity
+   status.
 
 2.  Conventions and Definitions
 
@@ -170,7 +170,7 @@ Table of Contents
       by a Credential Issuer.  Alternative names are "Verifiable
       Credential" or "Credential".
 
-   Holder:  An entity that receives Verifiable Credentials and has
+   Holder:  An entity that possesses Verifiable Credentials and has
       control over them to present them to the Verifiers as Verifiable
       Presentations.
 
