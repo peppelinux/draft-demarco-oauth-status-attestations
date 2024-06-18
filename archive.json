@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-16T00:56:17.984446+00:00",
+  "timestamp": "2024-06-18T00:52:50.556137+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-assertions",
   "labels": [
     {
@@ -8033,24 +8033,26 @@
       "id": "PR_kwDOK4XJ0s5ycsMd",
       "title": "fix: CWT.cti, editorials and IANA refs",
       "url": "https://github.com/peppelinux/draft-demarco-oauth-status-assertions/pull/76",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "peppelinux",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2024-06-14T07:35:08Z",
-      "updatedAt": "2024-06-14T15:38:35Z",
+      "updatedAt": "2024-06-17T09:08:36Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-assertions",
       "baseRefName": "main",
       "baseRefOid": "a876c920ab8f5ee0729a8f1aac7a9766f2dd6e19",
       "headRepository": "peppelinux/draft-demarco-oauth-status-assertions",
       "headRefName": "ed2",
-      "headRefOid": "337af28e52160708e081038dce41790053d4cb18",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "93f9c18d6ccf60b31c1734f006f4666bd7d458af",
+      "closedAt": "2024-06-17T09:08:36Z",
+      "mergedAt": "2024-06-17T09:08:36Z",
+      "mergedBy": "peppelinux",
+      "mergeCommit": {
+        "oid": "1af1b02435ecc351bce487a0ace16b506e579d6d"
+      },
       "comments": [],
       "reviews": [
         {
@@ -8067,9 +8069,9 @@
           "comments": [
             {
               "originalPosition": 66,
-              "body": "```suggestion\r\ncurrent status.\r\n```",
+              "body": "```suggestion\r\nvalidity status.\r\n```",
               "createdAt": "2024-06-14T13:56:24Z",
-              "updatedAt": "2024-06-14T13:56:25Z"
+              "updatedAt": "2024-06-17T09:00:47Z"
             }
           ]
         },
@@ -8145,6 +8147,19 @@
               "updatedAt": "2024-06-14T15:38:35Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5-gETq",
+          "commit": {
+            "abbreviatedOid": "93f9c18"
+          },
+          "author": "fmarino-ipzs",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-17T09:07:08Z",
+          "updatedAt": "2024-06-17T09:07:08Z",
+          "comments": []
         }
       ]
     }
