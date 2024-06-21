@@ -5,10 +5,10 @@
 Network Working Group                                        G. D. Marco
 Internet-Draft               Dipartimento per la trasformazione digitale
 Intended status: Informational                                 O. Steele
-Expires: 20 December 2024                                      Transmute
+Expires: 23 December 2024                                      Transmute
                                                                F. Marino
                                 Istituto Poligrafico e Zecca dello Stato
-                                                            18 June 2024
+                                                            21 June 2024
 
 
                         OAuth Status Assertions
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 December 2024.
+   This Internet-Draft will expire on 23 December 2024.
 
 Copyright Notice
 
@@ -926,8 +926,8 @@ Content-Type: application/json
        "exp": 1504785536,
        "credential_hash": "xnlAq6Ma8fgu1z4hdGphJnKLulaVHpLCFeZFUGpQ2dA",
        "credential_hash_alg": "sha-256",
-       "validity": false,
-       "validity_reasons": {
+       "credential_status_validity": false,
+       "credential_status": {
          "suspended": true,
        },
        "cnf": {
