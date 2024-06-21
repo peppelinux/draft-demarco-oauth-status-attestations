@@ -2263,12 +2263,12 @@ variety of scenarios.<a href="#section-13-1" class="pilcrow">¶</a></p>
       <h2 id="name-detailed-status-assertions">
 <a href="#section-14" class="section-number selfRef">14. </a><a href="#name-detailed-status-assertions" class="section-name selfRef">Detailed Status Assertions</a>
       </h2>
-<p id="section-14-1">Status assertions can be complex, and are not limited to simple boolean information.
-This enables verifier policies to be conditioned on the presence of secured information, instead of the absence of information.
-This section proposes syntax to support complex assertions.
+<p id="section-14-1">Status Assertions can introduce a more accurate level of detail, and therefore not necessarly limited to simple boolean information.
+This enables Verifier policies to be conditioned on the presence of secured information, instead of the absence of information.
+This section proposes syntax to support detailed assertions.
 The <code>credential_status_validity</code> claim <span class="bcp14">MUST</span> be present and be either <code>true</code> or <code>false</code>.
 The <code>credential_status</code> claim <span class="bcp14">MAY</span> be present and if present <span class="bcp14">MUST</span> be an object.
-The semantics of the claims within the <code>credential_status</code> object are determined by the issuer.<a href="#section-14-1" class="pilcrow">¶</a></p>
+The semantics of the claims within the <code>credential_status</code> object are determined by the Credential Issuer.<a href="#section-14-1" class="pilcrow">¶</a></p>
 <p id="section-14-2">An example of a boolean status is:<a href="#section-14-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14-3">
 <pre>
@@ -2290,7 +2290,6 @@ The semantics of the claims within the <code>credential_status</code> object are
     },
     "cnf": {
       "jwk": {
-        "kid": "1wL9OG_AZOniODhs2xvMchvFcBWhpQPz3uW29LhqvI0",
         "alg": "ES256",
         "kty": "EC",
         "crv": "P-256",
@@ -2322,7 +2321,6 @@ The semantics of the claims within the <code>credential_status</code> object are
     },
     "cnf": {
       "jwk": {
-        "kid": "1wL9OG_AZOniODhs2xvMchvFcBWhpQPz3uW29LhqvI0",
         "alg": "ES256",
         "kty": "EC",
         "crv": "P-256",
@@ -2354,7 +2352,6 @@ The semantics of the claims within the <code>credential_status</code> object are
     },
     "cnf": {
       "jwk": {
-        "kid": "1wL9OG_AZOniODhs2xvMchvFcBWhpQPz3uW29LhqvI0",
         "alg": "ES256",
         "kty": "EC",
         "crv": "P-256",
@@ -2520,8 +2517,8 @@ Digital Credential ecosystem.<a href="#section-16.6-2" class="pilcrow">¶</a></p
         <h3 id="name-validity-reasons">
 <a href="#section-16.7" class="section-number selfRef">16.7. </a><a href="#name-validity-reasons" class="section-name selfRef">Validity Reasons</a>
         </h3>
-<p id="section-16.7-1">Status assertions can reveal information about the holder or subject that was not commited to in the original credential issuance.
-Providing a reason that a digital credential is no longer valid can be essential to certian use cases, and unacceptable for others.
+<p id="section-16.7-1">Status Assertions may disclose details about the Holder or subject that were not initially committed to during the original Credential issuance. This can potentially expose additional information that was not part of the original credentialing process.
+Providing a reason that a Digital Credential is no longer valid can be essential to certain use cases, and unacceptable for others
 For example, in a healthcare setting, a patient should not have medical reasons for a suspended credential disclosed in assertions of suspension.
 However, in a supply chain context, a product suspension might benefit from additional information, such as batch or lot information.<a href="#section-16.7-1" class="pilcrow">¶</a></p>
 </section>
