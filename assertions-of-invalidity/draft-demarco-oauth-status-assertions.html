@@ -2266,9 +2266,9 @@ variety of scenarios.<a href="#section-13-1" class="pilcrow">¶</a></p>
 <p id="section-14-1">Status assertions can be complex, and are not limited to simple boolean information.
 This enables verifier policies to be conditioned on the presence of secured information, instead of the absence of information.
 This section proposes syntax to support complex assertions.
-The <code>validity</code> claim <span class="bcp14">MUST</span> be present and be either <code>true</code> or <code>false</code>.
-The <code>validity_reasons</code> claim <span class="bcp14">MAY</span> be present and if present <span class="bcp14">MUST</span> be an object.
-The semantics of the claims within the <code>validity_reasons</code> object are determined by the issuer.<a href="#section-14-1" class="pilcrow">¶</a></p>
+The <code>credential_status_validity</code> claim <span class="bcp14">MUST</span> be present and be either <code>true</code> or <code>false</code>.
+The <code>credential_status</code> claim <span class="bcp14">MAY</span> be present and if present <span class="bcp14">MUST</span> be an object.
+The semantics of the claims within the <code>credential_status</code> object are determined by the issuer.<a href="#section-14-1" class="pilcrow">¶</a></p>
 <p id="section-14-2">An example of a boolean status is:<a href="#section-14-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14-3">
 <pre>
