@@ -89,7 +89,7 @@ Table of Contents
        11.2.1.  Credential Issuer Implementation Considerations
    12. Presenting Status Assertions
    13. Considerations On Revocation Verification
-   14. Complex Status Assertions
+   14. Detailed Status Assertions
    15. Security Considerations
    16. Privacy Considerations
      16.1.  Privacy Consideration: Status Assertion Request Opacity
@@ -901,7 +901,7 @@ Content-Type: application/json
    of a Digital Credential, allowing Verifiers to examine and make
    educated conclusions based on a variety of scenarios.
 
-14.  Complex Status Assertions
+14.  Detailed Status Assertions
 
    Status assertions can be complex, and are not limited to simple
    boolean information.  This enables verifier policies to be
