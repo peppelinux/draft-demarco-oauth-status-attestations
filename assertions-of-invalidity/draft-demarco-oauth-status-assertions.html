@@ -2109,7 +2109,7 @@ where the format is JWT.<a href="#section-10-2" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">
               <strong>credential_status_validity</strong>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">Boolean value determining the absolute validity of the Credential to which the Status Assertion is bound</td>
+            <td class="text-left" rowspan="1" colspan="1">Boolean value indicating the absolute validity of the Credential linked to the Status Assertion. This parameter is <span class="bcp14">REQUIRED</span>, and the Verifier <span class="bcp14">MUST</span> verify its presence and value to assess the Credential's validity.</td>
             <td class="text-left" rowspan="1" colspan="1">this specification</td>
           </tr>
           <tr>
@@ -2529,7 +2529,7 @@ Digital Credential ecosystem.<a href="#section-16.6-2" class="pilcrow">¶</a></p
         <h3 id="name-validity-reasons">
 <a href="#section-16.7" class="section-number selfRef">16.7. </a><a href="#name-validity-reasons" class="section-name selfRef">Validity Reasons</a>
         </h3>
-<p id="section-16.7-1">Status Assertions may disclose details about the Holder or subject that were not initially committed to during the original Credential issuance. This can potentially expose additional information that was not part of the original credentialing process.
+<p id="section-16.7-1">Depending by the scopes of how the detailed Status Assertions are implemented, these may disclose details about the Holder or subject that were not initially committed to during the original Credential issuance. This can potentially expose additional information that was not part of the original credentialing process.
 Providing a reason that a Digital Credential is no longer valid can be essential to certain use cases, and unacceptable for others
 For example, in a healthcare setting, a patient should not have medical reasons for a suspended credential disclosed in assertions of suspension.
 However, in a supply chain context, a product suspension might benefit from additional information, such as batch or lot information.<a href="#section-16.7-1" class="pilcrow">¶</a></p>

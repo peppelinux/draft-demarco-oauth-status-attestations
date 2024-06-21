@@ -782,12 +782,19 @@ Content-Type: application/json
    |                              | sha-256.           |               |
    +------------------------------+--------------------+---------------+
    | *credential_status_validity* | Boolean value      | this          |
-   |                              | determining the    | specification |
+   |                              | indicating the     | specification |
    |                              | absolute validity  |               |
    |                              | of the Credential  |               |
-   |                              | to which the       |               |
-   |                              | Status Assertion   |               |
-   |                              | is bound           |               |
+   |                              | linked to the      |               |
+   |                              | Status Assertion.  |               |
+   |                              | This parameter is  |               |
+   |                              | REQUIRED, and the  |               |
+   |                              | Verifier MUST      |               |
+   |                              | verify its         |               |
+   |                              | presence and       |               |
+   |                              | value to assess    |               |
+   |                              | the Credential's   |               |
+   |                              | validity.          |               |
    +------------------------------+--------------------+---------------+
    | *cnf*                        | JSON object        | [RFC7800]     |
    |                              | containing         | Section 3.1,  |
@@ -1153,7 +1160,8 @@ Content-Type: application/json
 
 16.7.  Validity Reasons
 
-   Status Assertions may disclose details about the Holder or subject
+   Depending by the scopes of how the detailed Status Assertions are
+   implemented, these may disclose details about the Holder or subject
    that were not initially committed to during the original Credential
    issuance.  This can potentially expose additional information that
    was not part of the original credentialing process.  Providing a
