@@ -15,7 +15,8 @@ These assertions are periodically provided
 to holders, who can present these to verifier along
 with the corresponding digital credentials.
 The approach outlined in this document
-makes the verifier able to check the non-revocation of a digital credential
+makes the verifier able to check the status,
+such as the nonb-revocation, of a digital credential
 without requiring to query any third-party entities. 
     " name="description">
 <meta content="xml2rfc 3.21.0" name="generator">
@@ -1084,7 +1085,8 @@ These assertions are periodically provided
 to holders, who can present these to verifier along
 with the corresponding digital credentials.
 The approach outlined in this document
-makes the verifier able to check the non-revocation of a digital credential
+makes the verifier able to check the status,
+such as the nonb-revocation, of a digital credential
 without requiring to query any third-party entities.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
@@ -1278,7 +1280,7 @@ without requiring to query any third-party entities.<a href="#section-abstract-1
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">Status Assertions ensure the non-revocation of digital
+<p id="section-1-1">Status Assertions show the status of digital
 credentials, whether in JSON Web Tokens (JWT) or CBOR Web Tokens (CWT)
 format. Status Assertions function
 similarly to OCSP Stapling (<span>[<a href="#RFC6066" class="cite xref">RFC6066</a>]</span>), allowing clients to present to the
@@ -1445,7 +1447,7 @@ a cryptographic signature and the cryptographic public key of the
 Credential Issuer.<a href="#section-5-2.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-5-2.6">
-          <p id="section-5-2.6.1"><span class="bcp14">MUST NOT</span> contain personal information about the User who owns
+          <p id="section-5-2.6.1"><span class="bcp14">SHOULD NOT</span> contain personal information about the User who owns
 the Digital Credential to which the Status Assertion refers.<a href="#section-5-2.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
@@ -1473,7 +1475,8 @@ possession mechanisms. This includes, but is not limited to:<a href="#section-6-
           <p id="section-6-4.1.1">Having the digital representation of the Digital Credential (the bytes).<a href="#section-6-4.1.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-6-4.2">
-          <p id="section-6-4.2.1">Controlling the confirmation method of the Credential, using the Credential's <code>cnf</code> parameter.<a href="#section-6-4.2.1" class="pilcrow">¶</a></p>
+          <p id="section-6-4.2.1">Controlling the confirmation method of the Credential,
+using the Credential's <code>cnf</code> parameter.<a href="#section-6-4.2.1" class="pilcrow">¶</a></p>
 </li>
       </ol>
 <p id="section-6-5">The essence of requiring proof of possession over the Credential
@@ -1996,6 +1999,7 @@ where the format is JWT.<a href="#section-10-2" class="pilcrow">¶</a></p>
     "exp": 1504785536,
     "credential_hash": $hash-about-Issuer-Signed-JWT,
     "credential_hash_alg": "sha-256",
+    "credential_status_validity": true,
     "cnf": {
         "jwk": {...}
     }
@@ -2099,6 +2103,13 @@ where the format is JWT.<a href="#section-10-2" class="pilcrow">¶</a></p>
               <strong>credential_hash_alg</strong>
 </td>
             <td class="text-left" rowspan="1" colspan="1">The Algorithm used of hashing the Digital Credential to which the Status Assertion is bound. The value <span class="bcp14">SHOULD</span> be set to <code>sha-256</code>.</td>
+            <td class="text-left" rowspan="1" colspan="1">this specification</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">
+              <strong>credential_status_validity</strong>
+</td>
+            <td class="text-left" rowspan="1" colspan="1">Boolean value determining the absolute validity of the Credential to which the Status Assertion is bound</td>
             <td class="text-left" rowspan="1" colspan="1">this specification</td>
           </tr>
           <tr>

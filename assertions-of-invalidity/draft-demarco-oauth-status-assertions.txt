@@ -20,9 +20,9 @@ Abstract
    status of a digital credential.  These assertions are periodically
    provided to holders, who can present these to verifier along with the
    corresponding digital credentials.  The approach outlined in this
-   document makes the verifier able to check the non-revocation of a
-   digital credential without requiring to query any third-party
-   entities.
+   document makes the verifier able to check the status, such as the
+   nonb-revocation, of a digital credential without requiring to query
+   any third-party entities.
 
 About This Document
 
@@ -112,12 +112,12 @@ Table of Contents
 
 1.  Introduction
 
-   Status Assertions ensure the non-revocation of digital credentials,
-   whether in JSON Web Tokens (JWT) or CBOR Web Tokens (CWT) format.
-   Status Assertions function similarly to OCSP Stapling ([RFC6066]),
-   allowing clients to present to the relying parties time-stamped
-   assertions provided by the credential issuer.  The approach outlined
-   in this specification enables the verification of credentials against
+   Status Assertions show the status of digital credentials, whether in
+   JSON Web Tokens (JWT) or CBOR Web Tokens (CWT) format.  Status
+   Assertions function similarly to OCSP Stapling ([RFC6066]), allowing
+   clients to present to the relying parties time-stamped assertions
+   provided by the credential issuer.  The approach outlined in this
+   specification enables the verification of credentials against
    revocation without direct queries to third-party systems, enhancing
    privacy, reducing latency, and faciliting offline verification.
 
@@ -239,8 +239,8 @@ Table of Contents
       cryptographic signature and the cryptographic public key of the
       Credential Issuer.
 
-   *  MUST NOT contain personal information about the User who owns the
-      Digital Credential to which the Status Assertion refers.
+   *  SHOULD NOT contain personal information about the User who owns
+      the Digital Credential to which the Status Assertion refers.
 
 6.  Proof of Possession of a Credential
 
@@ -703,6 +703,7 @@ Content-Type: application/json
        "exp": 1504785536,
        "credential_hash": $hash-about-Issuer-Signed-JWT,
        "credential_hash_alg": "sha-256",
+       "credential_status_validity": true,
        "cnf": {
            "jwk": {...}
        }
@@ -743,55 +744,80 @@ Content-Type: application/json
 
                                  Table 6
 
-   +=======================+==========================+===============+
-   | Payload Parameter     | Description              | Reference     |
-   | Name                  |                          |               |
-   +=======================+==========================+===============+
-   | *iss*                 | It MUST be set to the    | [RFC9126],    |
-   |                       | identifier of the        | [RFC7519]     |
-   |                       | Issuer.                  |               |
-   +-----------------------+--------------------------+---------------+
-   | *iat*                 | UNIX Timestamp with the  | [RFC9126],    |
-   |                       | time of the Status       | [RFC7519]     |
-   |                       | Assertion issuance.      |               |
-   +-----------------------+--------------------------+---------------+
-   | *exp*                 | UNIX Timestamp with the  | [RFC9126],    |
-   |                       | expiration time of the   | [RFC7519],    |
-   |                       | JWT.  It MUST be greater | [RFC7515]     |
-   |                       | than the value set for   |               |
-   |                       | iat.                     |               |
-   +-----------------------+--------------------------+---------------+
-   | *credential_hash*     | Hash value of the        | this          |
-   |                       | Digital Credential the   | specification |
-   |                       | Status Assertion is      |               |
-   |                       | bound to.                |               |
-   +-----------------------+--------------------------+---------------+
-   | *credential_hash_alg* | The Algorithm used of    | this          |
-   |                       | hashing the Digital      | specification |
-   |                       | Credential to which the  |               |
-   |                       | Status Assertion is      |               |
-   |                       | bound.  The value SHOULD |               |
-   |                       | be set to sha-256.       |               |
-   +-----------------------+--------------------------+---------------+
-   | *cnf*                 | JSON object containing   | [RFC7800]     |
-   |                       | confirmation methods.    | Section 3.1,  |
-   |                       | The sub-member contained | [RFC8747]     |
-   |                       | within cnf member, such  | Section 3.1   |
-   |                       | as jwk for JWT and       |               |
-   |                       | Cose_Key for CWT, MUST   |               |
-   |                       | match with the one       |               |
-   |                       | provided within the      |               |
-   |                       | related Digital          |               |
-   |                       | Credential.  Other       |               |
-   |                       | confirmation methods can |               |
-   |                       | be utilized when the     |               |
-   |                       | referenced Digital       |               |
-   |                       | Credential supports      |               |
-   |                       | them, in accordance with |               |
-   |                       | the relevant standards.  |               |
-   +-----------------------+--------------------------+---------------+
+   +==============================+====================+===============+
+   | Payload Parameter Name       | Description        | Reference     |
+   +==============================+====================+===============+
+   | *iss*                        | It MUST be set to  | [RFC9126],    |
+   |                              | the identifier of  | [RFC7519]     |
+   |                              | the Issuer.        |               |
+   +------------------------------+--------------------+---------------+
+   | *iat*                        | UNIX Timestamp     | [RFC9126],    |
+   |                              | with the time of   | [RFC7519]     |
+   |                              | the Status         |               |
+   |                              | Assertion          |               |
+   |                              | issuance.          |               |
+   +------------------------------+--------------------+---------------+
+   | *exp*                        | UNIX Timestamp     | [RFC9126],    |
+   |                              | with the           | [RFC7519],    |
+   |                              | expiration time    | [RFC7515]     |
+   |                              | of the JWT.  It    |               |
+   |                              | MUST be greater    |               |
+   |                              | than the value     |               |
+   |                              | set for iat.       |               |
+   +------------------------------+--------------------+---------------+
+   | *credential_hash*            | Hash value of the  | this          |
+   |                              | Digital            | specification |
+   |                              | Credential the     |               |
+   |                              | Status Assertion   |               |
+   |                              | is bound to.       |               |
+   +------------------------------+--------------------+---------------+
+   | *credential_hash_alg*        | The Algorithm      | this          |
+   |                              | used of hashing    | specification |
+   |                              | the Digital        |               |
+   |                              | Credential to      |               |
+   |                              | which the Status   |               |
+   |                              | Assertion is       |               |
+   |                              | bound.  The value  |               |
+   |                              | SHOULD be set to   |               |
+   |                              | sha-256.           |               |
+   +------------------------------+--------------------+---------------+
+   | *credential_status_validity* | Boolean value      | this          |
+   |                              | determining the    | specification |
+   |                              | absolute validity  |               |
+   |                              | of the Credential  |               |
+   |                              | to which the       |               |
+   |                              | Status Assertion   |               |
+   |                              | is bound           |               |
+   +------------------------------+--------------------+---------------+
+   | *cnf*                        | JSON object        | [RFC7800]     |
+   |                              | containing         | Section 3.1,  |
+   |                              | confirmation       | [RFC8747]     |
+   |                              | methods.  The      | Section 3.1   |
+   |                              | sub-member         |               |
+   |                              | contained within   |               |
+   |                              | cnf member, such   |               |
+   |                              | as jwk for JWT     |               |
+   |                              | and Cose_Key for   |               |
+   |                              | CWT, MUST match    |               |
+   |                              | with the one       |               |
+   |                              | provided within    |               |
+   |                              | the related        |               |
+   |                              | Digital            |               |
+   |                              | Credential.        |               |
+   |                              | Other              |               |
+   |                              | confirmation       |               |
+   |                              | methods can be     |               |
+   |                              | utilized when the  |               |
+   |                              | referenced         |               |
+   |                              | Digital            |               |
+   |                              | Credential         |               |
+   |                              | supports them, in  |               |
+   |                              | accordance with    |               |
+   |                              | the relevant       |               |
+   |                              | standards.         |               |
+   +------------------------------+--------------------+---------------+
 
-                                 Table 7
+                                  Table 7
 
 11.  Interoperability of Credential Issuers Supporting Status Assertions
 
