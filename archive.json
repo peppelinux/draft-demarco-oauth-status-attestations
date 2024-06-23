@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-20T00:51:07.775909+00:00",
+  "timestamp": "2024-06-23T00:55:33.855502+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-assertions",
   "labels": [
     {
@@ -7347,7 +7347,7 @@
     {
       "number": 61,
       "id": "PR_kwDOK4XJ0s5wjTiZ",
-      "title": "Assertions of complex state",
+      "title": "Detailed status assertions",
       "url": "https://github.com/peppelinux/draft-demarco-oauth-status-assertions/pull/61",
       "state": "OPEN",
       "author": "OR13",
@@ -7358,13 +7358,13 @@
       ],
       "body": "Addressing:\r\n\r\nhttps://github.com/peppelinux/draft-demarco-oauth-status-attestations/pull/53#discussion_r1614083883\r\n\r\nThe purpose of this pull request is to define the signed information which can be conveyed to a verifier, to clarify the constraints on verifier policies.\r\n\r\nWith other status list approaches, there is an ability to communicate a single boolean, multiple boolean, or enumerations.\r\n\r\nWith our approach here, we are not limited by the bitstring data structure, so dynamic state is less constrained.\r\n\r\nThis PR also highlights the current design decision to use alg = none, to signal revocation, without providing an assertion that can be consumed by a verifier.\r\n\r\nThere may be very legitimate reasons to prefer to return unsigned information for boolean status, but for complex status, unsigned information is more dangerous to consume.\r\n\r\nI believe the specification should leave some of these decisions up to profiles.",
       "createdAt": "2024-05-25T13:19:46Z",
-      "updatedAt": "2024-06-18T22:20:50Z",
+      "updatedAt": "2024-06-21T23:23:06Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-assertions",
       "baseRefName": "main",
       "baseRefOid": "73316fd7e515056d54a3d8043d39a2f3a4ae7141",
       "headRepository": "peppelinux/draft-demarco-oauth-status-assertions",
       "headRefName": "assertions-of-invalidity",
-      "headRefOid": "acdc495af902d0e9783d4892481d4f83aa70f7c4",
+      "headRefOid": "465dcbb137d1fac0e286054bb960edf1967f441d",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -7418,6 +7418,13 @@
           "body": "I've marked this ready for review.\r\n\r\nThe general intention is to enable an issuer to convey status information that is not limited to boolean or enumerations.\r\n\r\nEnumeration status are common in workflows, where items can proceed through several states, such as \"submitted\", \"in-review\", \"accepted\", \"rejected\".\r\n\r\ncomplex state that is not boolean or enumeration is common in status updates that represent aggregations of signals, another example of where these show up is - https://blog.cloudflare.com/deep-dive-privacy-preserving-measurement",
           "createdAt": "2024-06-03T13:46:15Z",
           "updatedAt": "2024-06-03T13:46:15Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "body": "@OR13 see also these:\r\n\r\n- https://github.com/italia/eudi-wallet-it-docs/pull/302\r\n- https://github.com/italia/eudi-wallet-it-docs/issues/264",
+          "createdAt": "2024-06-20T12:44:22Z",
+          "updatedAt": "2024-06-20T12:44:22Z"
         }
       ],
       "reviews": [
@@ -7520,6 +7527,469 @@
               "updatedAt": "2024-06-18T22:18:38Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_FaPc",
+          "commit": {
+            "abbreviatedOid": "acdc495"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T08:40:33Z",
+          "updatedAt": "2024-06-21T08:40:34Z",
+          "comments": [
+            {
+              "originalPosition": 29,
+              "body": "wdyt about\r\n\r\n`validity` -> `credential_status_validity`\r\n`validity_reason` -> `credential_status`",
+              "createdAt": "2024-06-21T08:40:34Z",
+              "updatedAt": "2024-06-21T08:40:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_Faex",
+          "commit": {
+            "abbreviatedOid": "acdc495"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T08:41:03Z",
+          "updatedAt": "2024-06-21T08:41:03Z",
+          "comments": [
+            {
+              "originalPosition": 29,
+              "body": "where `credential_status_validity` is required, therefore all the other section must be updated accordingly\r\n",
+              "createdAt": "2024-06-21T08:41:03Z",
+              "updatedAt": "2024-06-21T08:41:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_G3Z1",
+          "commit": {
+            "abbreviatedOid": "acdc495"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:04:30Z",
+          "updatedAt": "2024-06-21T12:04:31Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "```suggestion\r\n    \"credential_status_validity\": false,\r\n```",
+              "createdAt": "2024-06-21T12:04:31Z",
+              "updatedAt": "2024-06-21T12:04:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_G3io",
+          "commit": {
+            "abbreviatedOid": "acdc495"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:04:51Z",
+          "updatedAt": "2024-06-21T12:04:51Z",
+          "comments": [
+            {
+              "originalPosition": 29,
+              "body": "```suggestion\r\n    \"credential_status\": {\r\n```",
+              "createdAt": "2024-06-21T12:04:51Z",
+              "updatedAt": "2024-06-21T12:04:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_G4FF",
+          "commit": {
+            "abbreviatedOid": "f201a8e"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:06:16Z",
+          "updatedAt": "2024-06-21T12:06:17Z",
+          "comments": [
+            {
+              "originalPosition": 60,
+              "body": "```suggestion\r\n    \"credential_status_validity\": false,\r\n```",
+              "createdAt": "2024-06-21T12:06:16Z",
+              "updatedAt": "2024-06-21T12:06:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_G4Ia",
+          "commit": {
+            "abbreviatedOid": "f201a8e"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:06:23Z",
+          "updatedAt": "2024-06-21T12:06:23Z",
+          "comments": [
+            {
+              "originalPosition": 92,
+              "body": "```suggestion\r\n    \"credential_status_validity\": true,\r\n```",
+              "createdAt": "2024-06-21T12:06:23Z",
+              "updatedAt": "2024-06-21T12:06:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_G4O3",
+          "commit": {
+            "abbreviatedOid": "f201a8e"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:06:37Z",
+          "updatedAt": "2024-06-21T12:06:37Z",
+          "comments": [
+            {
+              "originalPosition": 61,
+              "body": "```suggestion\r\n    \"credential_status\": {\r\n```",
+              "createdAt": "2024-06-21T12:06:37Z",
+              "updatedAt": "2024-06-21T12:06:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_G4b1",
+          "commit": {
+            "abbreviatedOid": "f201a8e"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:07:06Z",
+          "updatedAt": "2024-06-21T12:07:07Z",
+          "comments": [
+            {
+              "originalPosition": 93,
+              "body": "```suggestion\r\n    \"credential_status\": {\r\n```",
+              "createdAt": "2024-06-21T12:07:06Z",
+              "updatedAt": "2024-06-21T12:07:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_G5YT",
+          "commit": {
+            "abbreviatedOid": "b8c7314"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:09:24Z",
+          "updatedAt": "2024-06-21T12:09:24Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "```suggestion\r\nThe `credential_status_validity` claim MUST be present and be either `true` or `false`.\r\n```",
+              "createdAt": "2024-06-21T12:09:24Z",
+              "updatedAt": "2024-06-21T12:09:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_G5dv",
+          "commit": {
+            "abbreviatedOid": "b8c7314"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:09:37Z",
+          "updatedAt": "2024-06-21T12:09:37Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "```suggestion\r\nThe `credential_status` claim MAY be present and if present MUST be an object.\r\n```",
+              "createdAt": "2024-06-21T12:09:37Z",
+              "updatedAt": "2024-06-21T12:09:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_G5k8",
+          "commit": {
+            "abbreviatedOid": "b8c7314"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:09:53Z",
+          "updatedAt": "2024-06-21T12:09:54Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "```suggestion\r\nThe semantics of the claims within the `credential_status` object are determined by the issuer.\r\n```",
+              "createdAt": "2024-06-21T12:09:53Z",
+              "updatedAt": "2024-06-21T12:09:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_HBe7",
+          "commit": {
+            "abbreviatedOid": "418f232"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:29:05Z",
+          "updatedAt": "2024-06-21T12:29:05Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "```suggestion\r\n# Detailed Status Assertions\r\n```",
+              "createdAt": "2024-06-21T12:29:05Z",
+              "updatedAt": "2024-06-21T12:29:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_HBtj",
+          "commit": {
+            "abbreviatedOid": "418f232"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "ILGTM in general and for the value of this additional feature\r\n\r\nwe need to to ana accurate revision to find any misalignment than might occur, such as the one related to the general requirements\r\n\r\nwe need to align all the other non-normative example introducing the claim `credential_status_validity` and add the normative checks in the related section about the verifiers in particular",
+          "createdAt": "2024-06-21T12:29:37Z",
+          "updatedAt": "2024-06-21T12:34:56Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\r\nStatus Assertions can introduce a more accurate level of detail, and therefore not necessarly limited to simple boolean information.\r\n```",
+              "createdAt": "2024-06-21T12:29:37Z",
+              "updatedAt": "2024-06-21T12:34:56Z"
+            },
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\r\nThis enables Verifier policies to be conditioned on the presence of secured information, instead of the absence of information.\r\n```",
+              "createdAt": "2024-06-21T12:29:55Z",
+              "updatedAt": "2024-06-21T12:34:56Z"
+            },
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\r\nThis section proposes syntax to support detailed assertions.\r\n```",
+              "createdAt": "2024-06-21T12:30:14Z",
+              "updatedAt": "2024-06-21T12:34:56Z"
+            },
+            {
+              "originalPosition": 11,
+              "body": "```suggestion\r\nThe semantics of the claims within the `credential_status` object are determined by the Credential Issuer.\r\n```",
+              "createdAt": "2024-06-21T12:30:38Z",
+              "updatedAt": "2024-06-21T12:34:56Z"
+            },
+            {
+              "originalPosition": 132,
+              "body": "```suggestion\r\nStatus Assertions may disclose details about the Holder or subject that were not initially committed to during the original Credential issuance. This can potentially expose additional information that was not part of the original credentialing process.\r\n```\r\n\r\nok, we need to align the general requirements mandating not having subject's information within the assertions",
+              "createdAt": "2024-06-21T12:32:26Z",
+              "updatedAt": "2024-06-21T12:34:56Z"
+            },
+            {
+              "originalPosition": 133,
+              "body": "```suggestion\r\nProviding a reason that a Digital Credential is no longer valid can be essential to certain use cases, and unacceptable for others\r\n```",
+              "createdAt": "2024-06-21T12:32:45Z",
+              "updatedAt": "2024-06-21T12:34:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_HE-E",
+          "commit": {
+            "abbreviatedOid": "418f232"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:36:57Z",
+          "updatedAt": "2024-06-21T12:36:57Z",
+          "comments": [
+            {
+              "originalPosition": 30,
+              "body": "What about define at least two known credential_statuses\r\n\r\nsuspendend, revoked\r\n\r\n(we might find them also in the EUDIW ARF 1.4)\r\n\r\n",
+              "createdAt": "2024-06-21T12:36:57Z",
+              "updatedAt": "2024-06-21T12:36:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_HFBy",
+          "commit": {
+            "abbreviatedOid": "418f232"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:37:07Z",
+          "updatedAt": "2024-06-21T12:37:07Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2024-06-21T12:37:07Z",
+              "updatedAt": "2024-06-21T12:37:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_HFL-",
+          "commit": {
+            "abbreviatedOid": "418f232"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:37:31Z",
+          "updatedAt": "2024-06-21T12:37:31Z",
+          "comments": [
+            {
+              "originalPosition": 66,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2024-06-21T12:37:31Z",
+              "updatedAt": "2024-06-21T12:37:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_HFPy",
+          "commit": {
+            "abbreviatedOid": "418f232"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:37:40Z",
+          "updatedAt": "2024-06-21T12:37:41Z",
+          "comments": [
+            {
+              "originalPosition": 98,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2024-06-21T12:37:40Z",
+              "updatedAt": "2024-06-21T12:37:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_HG_w",
+          "commit": {
+            "abbreviatedOid": "3003acd"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:41:49Z",
+          "updatedAt": "2024-06-21T12:41:49Z",
+          "comments": [
+            {
+              "originalPosition": 30,
+              "body": "```suggestion\r\n      \"revoked\": false,\r\n      \"suspended\": true,\r\n```",
+              "createdAt": "2024-06-21T12:41:49Z",
+              "updatedAt": "2024-06-21T12:41:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_HLw7",
+          "commit": {
+            "abbreviatedOid": "79709aa"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:52:26Z",
+          "updatedAt": "2024-06-21T12:52:26Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\r\nsuch as the non-revocation, of a digital credential\r\n```",
+              "createdAt": "2024-06-21T12:52:26Z",
+              "updatedAt": "2024-06-21T12:52:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_HMlx",
+          "commit": {
+            "abbreviatedOid": "1d878b1"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:54:16Z",
+          "updatedAt": "2024-06-21T12:54:16Z",
+          "comments": [
+            {
+              "originalPosition": 183,
+              "body": "```suggestion\r\nDepending by the scopes of how the detailed Status Assertions are implemented, these may disclose details about the Holder or subject that were not initially committed to during the original Credential issuance. This can potentially expose additional information that was not part of the original credentialing process.\r\n```",
+              "createdAt": "2024-06-21T12:54:16Z",
+              "updatedAt": "2024-06-21T12:54:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_HN49",
+          "commit": {
+            "abbreviatedOid": "1d878b1"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-21T12:57:02Z",
+          "updatedAt": "2024-06-21T12:57:03Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "```suggestion\r\n| **credential_status_validity**| Boolean value indicating the absolute validity of the Credential linked to the Status Assertion. This parameter is REQUIRED, and the Verifier MUST verify its presence and value to assess the Credential's validity. | this specification |\r\n```",
+              "createdAt": "2024-06-21T12:57:02Z",
+              "updatedAt": "2024-06-21T12:57:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s5_KtNd",
+          "commit": {
+            "abbreviatedOid": "465dcbb"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-21T23:23:06Z",
+          "updatedAt": "2024-06-21T23:23:06Z",
+          "comments": []
         }
       ]
     },
@@ -8182,6 +8652,34 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 77,
+      "id": "PR_kwDOK4XJ0s5zLmnS",
+      "title": "some hints about the detailes status",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-assertions/pull/77",
+      "state": "MERGED",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-06-21T12:43:42Z",
+      "updatedAt": "2024-06-21T12:46:30Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-assertions",
+      "baseRefName": "assertions-of-invalidity",
+      "baseRefOid": "3003acdb3a4179bfbcf1f59ba147f16c22285d2b",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-assertions",
+      "headRefName": "detailed-status",
+      "headRefOid": "5d9c4ca0c446a0b0f97bc3680edd5fe1941a7d18",
+      "closedAt": "2024-06-21T12:46:30Z",
+      "mergedAt": "2024-06-21T12:46:30Z",
+      "mergedBy": "OR13",
+      "mergeCommit": {
+        "oid": "79709aa1f997e59dd008d24cb6580b6f61dcb6bd"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
