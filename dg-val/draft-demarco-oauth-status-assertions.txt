@@ -5,14 +5,14 @@
 Network Working Group                                        G. D. Marco
 Internet-Draft               Dipartimento per la trasformazione digitale
 Intended status: Informational                                 O. Steele
-Expires: 26 November 2024                                      Transmute
+Expires: 27 December 2024                                      Transmute
                                                                F. Marino
                                 Istituto Poligrafico e Zecca dello Stato
-                                                             25 May 2024
+                                                            25 June 2024
 
 
                         OAuth Status Assertions
-             draft-demarco-oauth-status-attestations-latest
+              draft-demarco-oauth-status-assertions-latest
 
 Abstract
 
@@ -29,13 +29,13 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://peppelinux.github.io/draft-demarco-status-attestations/draft-
-   demarco-status-attestations.html.  Status information for this
-   document may be found at https://datatracker.ietf.org/doc/draft-
-   demarco-oauth-status-attestations/.
+   https://peppelinux.github.io/draft-demarco-oauth-status-assertions/
+   draft-demarco-oauth-status-assertions.html.  Status information for
+   this document may be found at https://datatracker.ietf.org/doc/draft-
+   demarco-oauth-status-assertions/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/peppelinux/draft-demarco-status-attestations.
+   https://github.com/peppelinux/draft-demarco-oauth-status-assertions.
 
 Status of This Memo
 
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 November 2024.
+   This Internet-Draft will expire on 27 December 2024.
 
 Copyright Notice
 
@@ -79,6 +79,8 @@ Table of Contents
    7.  Status Assertion Request
    8.  Status Assertion Response
    9.  Status Assertion Error
+     9.1.  Rationale About The Unsigned Status Assertion Errors
+     9.2.  Status Assertion Error Values
    10. Status Assertion
    11. Interoperability of Credential Issuers Supporting Status
            Assertions
@@ -99,7 +101,9 @@ Table of Contents
    16. IANA Considerations
      16.1.  JSON Web Token Claims Registration
      16.2.  Media Type Registration
-   17. Normative References
+   17. References
+     17.1.  Normative References
+     17.2.  Informative References
    Appendix A.  Acknowledgments
    Appendix B.  Document History
    Authors' Addresses
@@ -108,15 +112,15 @@ Table of Contents
 
    Status Assertions ensure the non-revocation of digital credentials,
    whether in JSON Web Tokens (JWT) or CBOR Web Tokens (CWT) format.
-   Status Assertions function similarly to OCSP Stapling, allowing
-   clients to present to the relying parties time-stamped assertions
-   provided by the credential issuer.  The approach outlined in this
-   specification enables the verification of credentials against
+   Status Assertions function similarly to OCSP Stapling ([RFC6066]),
+   allowing clients to present to the relying parties time-stamped
+   assertions provided by the credential issuer.  The approach outlined
+   in this specification enables the verification of credentials against
    revocation without direct queries to third-party systems, enhancing
    privacy, reducing latency, and faciliting offline verification.
 
    The figure below illustrates the process by which a client, such as a
-   Wallet Instance, requests and obtains a Status Assertion from the
+   wallet instance, requests and obtains a Status Assertion from the
    credential issuer.
 
   +-----------------+                              +-------------------+
@@ -130,9 +134,7 @@ Table of Contents
    *Figure 1*: Status Assertion Issuance Flow.
 
    The figure below illustrates the process by which a client presents
-   the Status Assertion along with the corresponding digital credential,
-   to prove the non-revocation status of the digital credential to a
-   verifier.
+   the Status Assertion along with the corresponding digital credential.
 
    +-- ----------------+                             +----------+
    |                   | Presents Digital Credential |          |
@@ -141,6 +143,12 @@ Table of Contents
    +-------------------+                             +----------+
 
    *Figure 2*: Status Assertion Presentation Flow.
+
+   In summary, the credential issuer provides the client with a Status
+   Assertion, which is linked to a Digital Credential.  This enables the
+   client to present both the digital credential and its Status
+   Assertion to a verifier as proof of the digital credential's validity
+   status.
 
 2.  Conventions and Definitions
 
@@ -153,26 +161,23 @@ Table of Contents
 3.  Terminology
 
    This specification uses the terms "End-User", "Entity" as defined by
-   OpenID Connect Core [@OpenID.Core], the term "JSON Web Token (JWT)"
+   OpenID Connect Core [OpenID.Core], the term "JSON Web Token (JWT)"
    defined by JSON Web Token (JWT) [RFC7519], the term "CBOR Web Token
-   (CWT)" defined in [RFC8392], "Client" as defined [RFC6749]
-
-   Holder:  An entity that receives Verifiable Credentials and has
-      control over them to present them to the Verifiers as Verifiable
-      Presentations.
+   (CWT)" defined in [RFC8392], "Client" as defined [RFC6749],
+   "Verifiable Presentation" defined in [@OpenID4VP].
 
    Digital Credential:  A set of one or more claims about a subject made
       by a Credential Issuer.  Alternative names are "Verifiable
       Credential" or "Credential".
 
+   Holder:  An entity that possesses Verifiable Credentials and has
+      control over them to present them to the Verifiers as Verifiable
+      Presentations.
+
    Credential Issuer:  Entity that is responsible for the issuance of
       the Digital Credentials.  The Issuer is responsible for the
       lifecycle of their issued Digital Credentials and their validity
       status.
-
-   Holder:  An entity that receives Verifiable Credentials and has
-      control over them to present them to the Verifiers as Verifiable
-      Presentations.
 
    Verifier:  Entity that relies on the validity of the Digital
       Credentials presented to it.  This Entity, also known as a Relying
@@ -196,18 +201,16 @@ Table of Contents
    with national privacy regulations.
 
    For instance, consider a scenario where a Verifier's repeated access
-   to a status list, such as the one defined in draft-ietf-oauth-status-
-   list (https://datatracker.ietf.org/doc/draft-ietf-oauth-status-list/)
-   to check the revocation status of a Digital Credential could be
-   deemed as excessive monitoring of the End-User's activities.
+   to a status list, such as the one defined in
+   [draft-ietf-oauth-status-list] to check the revocation status of a
+   Digital Credential could be deemed as excessive monitoring of the
+   End-User's activities.
 
    This could potentially infringe upon the End-User's right to privacy,
-   as outlined in [Article 8 of the European Convention on Human Rights]
-   (https://www.echr.coe.int/documents/convention_eng.pdf) and in the
-   the European Union's General Data Protection Regulation (GDPR
-   (https://gdpr-info.eu/)), by creating a detailed profile of the End-
-   User's Digital Credential status without explicit consent for such
-   continuous surveillance.
+   as outlined in [ECHR-ART8] and in the the European Union's General
+   Data Protection Regulation [GDPR], by creating a detailed profile of
+   the End-User's Digital Credential status without explicit consent for
+   such continuous surveillance.
 
 5.  Requirements
 
@@ -223,11 +226,13 @@ Table of Contents
       which is at or after the time of Digital Credential issuance which
       it refers;
 
-   *  MUST contain the expiration datetime after which both the Status
-      Assertion and the Digital Credential it refers MUST NOT be
-      considered valid anymore.  The expiration datetime MUST be
-      superior to the Status Assertion issuance datetime and it MUST end
-      before the expiration datetime of the Digital Credential;
+   *  MUST contain the expiration datetime after which the Status
+      Assertion MUST NOT be considered valid anymore, and the Digital
+      Credential referred to SHOULD NOT be considered as having a valid
+      status, since it appears without verification against any
+      revocation.  The expiration datetime MUST be superior to the
+      Status Assertion issuance datetime and it MUST end before the
+      expiration datetime of the Digital Credential;
 
    *  MUST enable the offline use cases by employing validation using a
       cryptographic signature and the cryptographic public key of the
@@ -241,12 +246,13 @@ Table of Contents
    The concept of Proof of Possession (PoP) of a Credential within the
    framework of the Status Assertion specification encompasses a broader
    perspective than merely possessing the digital bytes of the
-   Credential.  It involves demonstrating rightful control or ownership
-   over the Credential, which can manifest in various forms depending on
-   the technology employed and the nature of the Digital Credential
-   itself.  For instance, a Digital Credential could be presented
-   visually (de-visu) with a personal portrait serving as a binding
-   element.
+   Credential.
+
+   It involves demonstrating rightful control or ownership over the
+   Credential, which can manifest in various forms depending on the
+   technology employed and the nature of the Digital Credential itself.
+   For instance, a Digital Credential could be presented visually (de-
+   visu) with a personal portrait serving as a binding element.
 
    While this specification does not prescribe any additional methods
    for the proof of possession of the Credential, it aims to offer
@@ -256,30 +262,22 @@ Table of Contents
    1.  Having the digital representation of the Digital Credential (the
        bytes).
 
-   2.  Controlling a private key that corresponds to a public key
-       associated with the Credential, often indicated within the
-       Credential's cnf (confirmation) claim or through a similar
-       mechanism.
+   2.  Controlling the confirmation method of the Credential, using the
+       Credential's cnf parameter.
 
-   The essence of requiring control over the private key and its
-   demonstration through a cryptographic operation (e.g., signing a
-   challenge or a token) is to ensure that the entity in possession of
-   the Credential can execute actions exclusively reserved for the
-   legitimate subject.  The dual-layered approach of requiring both
-   possession of the Credential and control over the corresponding
-   private key indeed reinforces the security and integrity of the
-   status assertion process.  It also ensures that the entity requesting
-   a Status Attestation is indeed the same entity to which the
-   Credential was originally issued, affirming the authenticity and
-   rightful possession of the Credential.
+   The essence of requiring proof of possession over the Credential
+   through the confirmation method, such has proving the control of the
+   cryptographic material related to a Credential, is to ensure that the
+   entity in possession of the Credential can execute actions
+   exclusively reserved to the legitimate Holder.  The dual-layered
+   approach of requiring both possession of the Credential and control
+   over it, reinforces the security and integrity of the Status
+   Assertion process.  This ensures that the Holder requesting a Status
+   Assertion is indeed the same Holder to which the Credential was
+   originally issued, affirming the authenticity and rightful possession
+   of the Credential.
 
 7.  Status Assertion Request
-
-   The Credential Issuer provides the Wallet Instance with a Status
-   Assertion, which is bound to a Digital Credential.  This allows the
-   Wallet Instance to present it, along with the Digital Credential
-   itself, to a Verifier as proof of the Digital Credential's non-
-   revocation status.
 
    The following diagram shows the Wallet Instance requesting a Status
    Assertion to a Credential Issuer, related to a specific Credential
@@ -305,23 +303,28 @@ Table of Contents
 +-------------------+                                  +--------------------+
 
    The Wallet Instance sends the Status Assertion request to the
-   Credential Issuer, where: - The request MUST contain the base64url
-   encoded hash value of the Digital Credential, for which the Status
-   Assertion is requested, and enveloped in a signed Status Assertion
-   Request object. - The Status Assertion Request object MUST be signed
-   with the private key corresponding to the confirmation claim assigned
-   by the Issuer and contained within the Digital Credential.
+   Credential Issuer, where:
 
-   When the JWT or CWT format are used, the JWT/CWT MUST contain the
-   parameters defined in the following table.
+   *  The request MUST contain the base64url encoded hash value of the
+      Digital Credential's Issuer signed part, such as the Issuer Signed
+      JWT using [@SD-JWT-VC], or the Mobile Security Object using [@ISO
+      18013-5], for which the Status Assertion is requested, and
+      enveloped in a signed Status Assertion Request object.
+
+   *  The Status Assertion Request object MUST be signed with the
+      private key corresponding to the confirmation claim assigned by
+      the Issuer and contained within the Digital Credential.
+
+   The Status Assertion Request object MUST contain the parameters
+   defined in the following table.
 
      +========+==========================================+===========+
      | Header | Description                              | Reference |
      +========+==========================================+===========+
-     | *typ*  | It MUST be set to status-attestation+jwt | [RFC7516] |
-     |        | when JWT format is used.  It MUST be set | Section   |
-     |        | to status-attestation+cwt when CWT       | 4.1.1     |
-     |        | format is used.                          |           |
+     | *typ*  | It MUST be set to status-assertion-      | [RFC7516] |
+     |        | request+jwt when JWT format is used.  It | Section   |
+     |        | MUST be set to status-assertion-         | 4.1.1,    |
+     |        | request+cwt when CWT format is used.     | [RFC9596] |
      +--------+------------------------------------------+-----------+
      | *alg*  | A digital signature algorithm identifier | [RFC7516] |
      |        | such as per IANA "JSON Web Signature and | Section   |
@@ -329,69 +332,67 @@ Table of Contents
      |        | MUST NOT be set to none or any symmetric |           |
      |        | algorithm (MAC) identifier.              |           |
      +--------+------------------------------------------+-----------+
-     | *kid*  | Unique identifier of the JWK or Cose_Key | [RFC7515] |
-     |        | used for the signature of the Status     |           |
-     |        | Attestation Request, it MUST match the   |           |
-     |        | one contained in the Credential.         |           |
-     +--------+------------------------------------------+-----------+
 
                                   Table 1
 
-   +=======================+==========================+===============+
-   | Payload               | Description              | Reference     |
-   +=======================+==========================+===============+
-   | *iss*                 | Status Assertion Request | [RFC9126],    |
-   |                       | Issuer identifier.  The  | [RFC7519]     |
-   |                       | value is supposed to be  |               |
-   |                       | used for identifying the |               |
-   |                       | Wallet that has issued   |               |
-   |                       | the request.  It is out  |               |
-   |                       | of scope for this        |               |
-   |                       | document defining how    |               |
-   |                       | this value must be set.  |               |
-   +-----------------------+--------------------------+---------------+
-   | *aud*                 | It MUST be set with the  | [RFC9126],    |
-   |                       | Credential Issuer Status | [RFC7519]     |
-   |                       | Attestation endpoint URL |               |
-   |                       | as value that identify   |               |
-   |                       | the intended audience.   |               |
-   +-----------------------+--------------------------+---------------+
-   | *exp*                 | UNIX Timestamp with the  | [RFC9126],    |
-   |                       | expiration time of the   | [RFC7519],    |
-   |                       | JWT.  It MUST be         | [RFC7515]     |
-   |                       | superior to the value    |               |
-   |                       | set for iat .            |               |
-   +-----------------------+--------------------------+---------------+
-   | *iat*                 | UNIX Timestamp with the  | [RFC9126],    |
-   |                       | time of JWT/CWT          | [RFC7519]     |
-   |                       | issuance.                |               |
-   +-----------------------+--------------------------+---------------+
-   | *jti*                 | Unique identifier for    | [RFC7519]     |
-   |                       | the JWT.                 | Section 4.1.7 |
-   +-----------------------+--------------------------+---------------+
-   | *credential_hash*     | Hash value of the        | this          |
-   |                       | Digital Credential the   | specification |
-   |                       | Status Attestation is    |               |
-   |                       | bound to.                |               |
-   +-----------------------+--------------------------+---------------+
-   | *credential_hash_alg* | The Algorithm used of    | this          |
-   |                       | hashing the Digital      | specification |
-   |                       | Credential to which the  |               |
-   |                       | Status Attestation is    |               |
-   |                       | bound.  The value SHOULD |               |
-   |                       | be set to sha-256.       |               |
-   +-----------------------+--------------------------+---------------+
+   +=======================+===========================+===============+
+   | Payload               | Description               | Reference     |
+   +=======================+===========================+===============+
+   | *iss*                 | Status Assertion Request  | [RFC9126],    |
+   |                       | Issuer identifier.  The   | [RFC7519]     |
+   |                       | value is supposed to be   |               |
+   |                       | used for identifying the  |               |
+   |                       | Wallet that has issued    |               |
+   |                       | the request.  It is out   |               |
+   |                       | of scope for this         |               |
+   |                       | document defining how     |               |
+   |                       | this value should be      |               |
+   |                       | set.                      |               |
+   +-----------------------+---------------------------+---------------+
+   | *aud*                 | It MUST be set with the   | [RFC9126],    |
+   |                       | Credential Issuer Status  | [RFC7519]     |
+   |                       | Assertion endpoint URL    |               |
+   |                       | as value that identify    |               |
+   |                       | the intended audience.    |               |
+   +-----------------------+---------------------------+---------------+
+   | *exp*                 | UNIX Timestamp with the   | [RFC9126],    |
+   |                       | expiration time of the    | [RFC7519],    |
+   |                       | JWT.  It MUST be          | [RFC7515]     |
+   |                       | superior to the value     |               |
+   |                       | set for iat .             |               |
+   +-----------------------+---------------------------+---------------+
+   | *iat*                 | UNIX Timestamp with the   | [RFC9126],    |
+   |                       | time of JWT/CWT           | [RFC7519]     |
+   |                       | issuance.                 |               |
+   +-----------------------+---------------------------+---------------+
+   | *jti*                 | Unique identifier for     | [RFC7519]     |
+   |                       | the JWT.                  | Section 4.1.7 |
+   +-----------------------+---------------------------+---------------+
+   | *cti*                 | Unique identifier for     | [RFC7519]     |
+   |                       | the CWT.                  | Section 4.1.7 |
+   +-----------------------+---------------------------+---------------+
+   | *credential_hash*     | Hash value of the         | this          |
+   |                       | Digital Credential the    | specification |
+   |                       | Status Assertion is       |               |
+   |                       | bound to.                 |               |
+   +-----------------------+---------------------------+---------------+
+   | *credential_hash_alg* | The Algorithm used of     | this          |
+   |                       | hashing the Digital       | specification |
+   |                       | Credential to which the   |               |
+   |                       | Status Assertion is       |               |
+   |                       | bound.  The value SHOULD  |               |
+   |                       | be set to sha-256.        |               |
+   +-----------------------+---------------------------+---------------+
 
-                                 Table 2
+                                  Table 2
 
    Below is a non-normative example of a Status Assertion Request with
-   the JWT headers and payload are represented without applying
-   signature and encoding:
+   the JWT headers and payload represented without applying signature
+   and encoding:
 
    {
        "alg": "ES256",
-       "typ": "status-assertion-request+jwt",
-       "kid": $CREDENTIAL-CNF-JWKID
+       "typ": "status-assertion-request+jwt"
    }
    .
    {
@@ -400,7 +401,7 @@ Table of Contents
        "iat": 1698744039,
        "exp": 1698830439,
        "jti": "6f204f7e-e453-4dfd-814e-9d155319408c",
-       "credential_hash": $Issuer-Signed-JWT-Hash
+       "credential_hash": $hash-about-Issuer-Signed-JWT
        "credential_hash_alg": "sha-256"
    }
 
@@ -412,24 +413,23 @@ Table of Contents
    [
        / protected / << {
        / alg / 1: -7 / ES256 /
-       / typ / 16: -7 / status-attestation-request+cwt /
-       / kid / 4: h'3132' / $CREDENTIAL-CNF-CWKID /
+       / typ / 16: -7 / status-assertion-request+cwt /
      } >>,
      / unprotected / {
      },
      / payload / << {
        / iss    / 1: 0b434530-e151-4c40-98b7-74c75a5ef760 /,
-       / aud    / 3: https://issuer.example.org/status-attestation-endpoint /,
+       / aud    / 3: https://issuer.example.org/status-assertion-endpoint /,
        / iat    / 6: 1698744039 /,
        / exp    / 4: 1698830439 /,
        / cti    / 7: 6f204f7e-e453-4dfd-814e-9d155319408c /,
-       / credential_hash / 8: $Issuer-Signed-JWT-Hash /,
+       / credential_hash / 8: $hash-about-MobileSecurityObject /,
        / credential_hash_alg / 9: sha-256 /
      } >>,
    ]
 
    Below a non-normative example representing a Status Assertion Request
-   array with a single Status Assertion Reuqest object in JWT format.
+   array with a single Status Assertion Request object in JWT format.
 
 POST /status HTTP/1.1
 Host: issuer.example.org
@@ -469,7 +469,7 @@ Content-Type: application/json
    Wallet Instance.  In the non-normative example below is represented
    an HTTP Response with the status_assertion_responses JSON member:
 
-HTTP/1.1 200 Created
+HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
@@ -485,14 +485,17 @@ Content-Type: application/json
    For each entry in the status_assertion_responses array, the following
    requirements are met: - Each element in the array MUST match the
    corresponding element in the request array at the same position index
-   to which it is related, eg: _[requestAboutA, requestAboutB]_ produces
-   _[responseAboutA, responseErrorAboutB]_. - Each element MUST contain
-   the error or the status of the assertion using the typ member. set to
-   "status-assertion+{jwt,cwt}" or "status-assertion-error+{jwt,cwt}",
-   depending by the object type. - The corresponding entry in the
-   response MUST be of the same data format as requested.  For example,
-   if the entry in the request is "jwt", then the entry at the same
-   position in the response MUST also be "jwt".
+   to which it is related, eg: _[requestAboutA, requestAboutB]_ may
+   produce _[responseAboutA, responseErrorAboutB]_. - Each element MUST
+   contain the error or the status of the assertion, using the typ
+   member set to "status-assertion+{jwt,cwt}" or "status-assertion-
+   error+{jwt,cwt}", depending by the object type. - The corresponding
+   entry in the response MUST be of the same data format as requested.
+   For example, if the entry in the request is "jwt", then the entry at
+   the same position in the response MUST also be "jwt". - The
+   corresponding entry in the response MUST NOT contain any information
+   regarding the Verifier to whom it may be presented, such as the
+   Verifier identifier as the intended audience.
 
 9.  Status Assertion Error
 
@@ -502,68 +505,180 @@ Content-Type: application/json
    status_assertion_responses array with the related Status Assertion
    Error object.
 
-   The Status Assertion Error object must contain the parameters
+   The Status Assertion Error MUST NOT be presented or provided to a
+   Verifier, the only audience of the Status Assertion Error is the
+   Holder of the Credential that has requested the Status Assertion.
+   Therefore, it is not necessary that the Status Assertion Error
+   contains the parameter aud; if present, it MUST be set to the same
+   value as the iss parameter used by the Wallet in the corresponding
+   Status Assertion Request object.
+
+   Below a non-normative example of a Status Assertion Error object in
+   JWT format, with the headers and payload represented in JSON and
+   without applying the signature.
+
+   {
+       "alg": "ES256",
+       "typ": "status-assertion-error+jwt",
+       "kid": "Issuer-JWK-KID"
+   }
+   .
+   {
+       "iss": "https://issuer.example.org",
+       "jti": "6f204f7e-e453-4dfd-814e-9d155319408c"
+       "credential_hash": $hash-about-Issuer-Signed-JWT,
+       "credential_hash_alg": "sha-256",
+       "error": "credential_revoked",
+       "error_description": "Credential is revoked."
+       }
+   }
+
+   The Status Assertion Error object MUST contain the parameters
    described in the table below:
 
      +========+==========================================+===========+
      | Header | Description                              | Reference |
      +========+==========================================+===========+
-     | *typ*  | Depending on the related Status          | [RFC7516] |
-     |        | Assertion Request object format, it MUST | Section   |
-     |        | be set to status-attestation-error+jwt   | 4.1.1     |
-     |        | or status-attestation-error+cwt.         |           |
+     | *typ*  | REQUIRED.  Depending on the related      | [RFC7516] |
+     |        | Status Assertion Request object format,  | Section   |
+     |        | it MUST be set to status-assertion-      | 4.1.1     |
+     |        | error+jwt or status-assertion-error+cwt. |           |
      +--------+------------------------------------------+-----------+
-     | *alg*  | It MUST set to none.                     | [RFC7516] |
-     |        |                                          | Section   |
-     |        |                                          | 4.1.1     |
+     | *alg*  | REQUIRED.  Algorithm used to verify the  | [RFC7516] |
+     |        | cryptographic signature of the Status    | Section   |
+     |        | Assertion Error.  Status Assertion Error | 4.1.1     |
+     |        | that do not need to be signed SHOULD set |           |
+     |        | the alg value to none.  For further      |           |
+     |        | clarification about the requirement of   |           |
+     |        | signing the Status Assertion Errors, see |           |
+     |        | Section Rationale About The Unsigned     |           |
+     |        | Status Assertion Errors (Section 9.1).   |           |
      +--------+------------------------------------------+-----------+
 
                                   Table 3
 
-    +=====================+=============================+=============+
-    |Payload              |Description                  |Reference    |
-    +=====================+=============================+=============+
-    |*iss*                |It MUST be set to the        |[RFC9126],   |
-    |                     |identifier of the Issuer.    |[RFC7519]    |
-    +---------------------+-----------------------------+-------------+
-    |*jti*                |Unique identifier for the    |[RFC7519]    |
-    |                     |JWT.                         |Section 4.1.7|
-    +---------------------+-----------------------------+-------------+
-    |*credential_hash*    |Hash value of the Digital    |this         |
-    |                     |Credential the Status        |specification|
-    |                     |Attestation is bound to,     |             |
-    |                     |according to the related     |             |
-    |                     |Status Assertion Request     |             |
-    |                     |object.                      |             |
-    +---------------------+-----------------------------+-------------+
-    |*credential_hash_alg*|The Algorithm used of hashing|this         |
-    |                     |the Digital Credential to    |specification|
-    |                     |which the Status Attestation |             |
-    |                     |is bound.  The value SHOULD  |             |
-    |                     |be set to sha-256.           |             |
-    +---------------------+-----------------------------+-------------+
-    |*error*              |The value SHOULD be assigned |[RFC7519]    |
-    |                     |one of the error types as    |Section 4.1.7|
-    |                     |specified in the [RFC6749]   |             |
-    |                     |Section 5.2                  |             |
-    |                     |(https://tools.ietf.org/html/|             |
-    |                     |rfc6749#section-5.2) or the  |             |
-    |                     |others as defined in table   |             |
-    |                     |below                        |             |
-    +---------------------+-----------------------------+-------------+
-    |*error_description*  |Text in human-readable form  |[RFC7519]    |
-    |                     |that offers more details to  |Section 4.1.7|
-    |                     |clarify the nature of the    |             |
-    |                     |error encountered (for       |             |
-    |                     |instance, changes in some    |             |
-    |                     |attributes, reasons for      |             |
-    |                     |revocation, other).          |             |
-    +---------------------+-----------------------------+-------------+
+   +=====================+===============================+=============+
+   |Payload              | Description                   |Reference    |
+   +=====================+===============================+=============+
+   |*iss*                | REQUIRED.  It MUST be set to  |[RFC9126],   |
+   |                     | the identifier of the Issuer. |[RFC7519]    |
+   +---------------------+-------------------------------+-------------+
+   |*jti*                | REQUIRED.  Unique identifier  |[RFC7519]    |
+   |                     | for the JWT.                  |Section 4.1.7|
+   +---------------------+-------------------------------+-------------+
+   |*credential_hash*    | REQUIRED.  The hash value     |this         |
+   |                     | MUST match the one contained  |specification|
+   |                     | in the Status Assertion       |             |
+   |                     | Request to which the Status   |             |
+   |                     | Assertion Error is related.   |             |
+   +---------------------+-------------------------------+-------------+
+   |*credential_hash_alg*| REQUIRED.  The hash algorithm |this         |
+   |                     | MUST match the one contained  |specification|
+   |                     | in the Status Assertion       |             |
+   |                     | Request to which the Status   |             |
+   |                     | Assertion Error is related.   |             |
+   +---------------------+-------------------------------+-------------+
+   |*error*              | REQUIRED.  The value SHOULD   |[RFC7519]    |
+   |                     | be assigned with one of the   |Section 4.1.7|
+   |                     | error types defined in        |             |
+   |                     | [RFC6749]Section 5.2          |             |
+   |                     | (https://tools.ietf.org/html/ |             |
+   |                     | rfc6749#section-5.2) or       |             |
+   |                     | defined in the Section Status |             |
+   |                     | Assertion Error Values        |             |
+   |                     | (status-assertion-error-      |             |
+   |                     | values).                      |             |
+   +---------------------+-------------------------------+-------------+
+   |*error_description*  | OPTIONAL.  Text that          |[RFC7519]    |
+   |                     | clarifies the nature of the   |Section 4.1.7|
+   |                     | error, such as attribute      |             |
+   |                     | changes, revocation reasons,  |             |
+   |                     | in relation to the error      |             |
+   |                     | value.                        |             |
+   +---------------------+-------------------------------+-------------+
 
                                   Table 4
 
-   TODO: Table enumerating the additional error identifiers,
-   specifically related to the status assertions.
+9.1.  Rationale About The Unsigned Status Assertion Errors
+
+   To mitigate potential resource exhaustion attacks where an adversary
+   could issue hundreds of fake Status Assertion Requests to force an
+   Issuer to sign numerous Status Assertion Errors, it is advisable to
+   set the header parameteralg value to none for Status Assertion Errors
+   that do not require signatures.  This approach conserves
+   computational resources and prevents abuse, especially in scenarios
+   where the Issuer's implementation could be vulnerable to resource
+   exhaustion attacks.  However, even if it is out of the scopes of this
+   specification determine in which the Status Error Assertion
+   signatures are necessary, when the Issuer signs the Status Assertion
+   Errors the Client that received them MUST validate the signature.
+
+9.2.  Status Assertion Error Values
+
+   The error parameter for the Status Assertion Error object MUST be set
+   with one of the values defined in the table below, in addition to the
+   values specified in [RFC6749]:
+
+   +=============================+======================+=============+
+   | Error Parameter Value       | Description          |Reference    |
+   +=============================+======================+=============+
+   | *credential_revoked*        | The Digital          |this         |
+   |                             | Credential results   |specification|
+   |                             | as already revoked.  |             |
+   |                             | The reason of        |             |
+   |                             | revocation MAY be    |             |
+   |                             | provided in the      |             |
+   |                             | error_description    |             |
+   |                             | field.               |             |
+   +-----------------------------+----------------------+-------------+
+   | *credential_updated*        | One or more          |this         |
+   |                             | information          |specification|
+   |                             | contained in the     |             |
+   |                             | Digital Credential   |             |
+   |                             | are changed.  The    |             |
+   |                             | error_description    |             |
+   |                             | field SHOULD contain |             |
+   |                             | a human-readable     |             |
+   |                             | text describing the  |             |
+   |                             | general parameters   |             |
+   |                             | updated without      |             |
+   |                             | specifying each one. |             |
+   +-----------------------------+----------------------+-------------+
+   | *credential_invalid*        | The Digital          |this         |
+   |                             | Credential is        |specification|
+   |                             | invalid.  The        |             |
+   |                             | error_description    |             |
+   |                             | field SHOULD contain |             |
+   |                             | the reason of        |             |
+   |                             | invalidation.        |             |
+   +-----------------------------+----------------------+-------------+
+   | *invalid_request_signature* | The Status Assertion |this         |
+   |                             | Request signature    |specification|
+   |                             | validation has       |             |
+   |                             | failed.  This error  |             |
+   |                             | type is used when    |             |
+   |                             | the proof of         |             |
+   |                             | possession of the    |             |
+   |                             | Digital Credential   |             |
+   |                             | is found not valid   |             |
+   |                             | within the Status    |             |
+   |                             | Assertion Request.   |             |
+   +-----------------------------+----------------------+-------------+
+   | *credential_not_found*      | The credential_hash  |this         |
+   |                             | value provided in    |specification|
+   |                             | the Status Assertion |             |
+   |                             | Request doesn't      |             |
+   |                             | match with any       |             |
+   |                             | active Digital       |             |
+   |                             | Credential.          |             |
+   +-----------------------------+----------------------+-------------+
+   | *unsupported_hash_alg*      | The hash algorithm   |this         |
+   |                             | set in               |specification|
+   |                             | credential_hash_alg  |             |
+   |                             | is not supported.    |             |
+   +-----------------------------+----------------------+-------------+
+
+                                 Table 5
 
 10.  Status Assertion
 
@@ -585,7 +700,7 @@ Content-Type: application/json
        "iss": "https://issuer.example.org",
        "iat": 1504699136,
        "exp": 1504785536,
-       "credential_hash": $CREDENTIAL-HASH,
+       "credential_hash": $hash-about-Issuer-Signed-JWT,
        "credential_hash_alg": "sha-256",
        "cnf": {
            "jwk": {...}
@@ -607,16 +722,25 @@ Content-Type: application/json
     |           | algorithm (MAC) identifier.        |               |
     +-----------+------------------------------------+---------------+
     | *typ*     | It MUST be set to status-          | [RFC7515],    |
-    |           | attestation+jwt when JWT format is | [RFC7517] and |
+    |           | assertion+jwt when JWT format is   | [RFC7517] and |
     |           | used.  It MUST be set to status-   | this          |
-    |           | attestation+cwt when CWT format is | specification |
+    |           | assertion+cwt when CWT format is   | specification |
     |           | used.                              |               |
     +-----------+------------------------------------+---------------+
     | *kid*     | Unique identifier of the           | [RFC7515]     |
-    |           | Credential Issuer JWK              |               |
+    |           | Credential Issuer JWK.  It is      |               |
+    |           | required when x5c or other         |               |
+    |           | cryptographic public key           |               |
+    |           | resolution identifiers are not     |               |
+    |           | used.                              |               |
+    +-----------+------------------------------------+---------------+
+    | *x5c*     | X.509 certificate chain about the  | [RFC7515]     |
+    |           | Credential Issuer.  It is required |               |
+    |           | when kid or other parameter are    |               |
+    |           | not used.                          |               |
     +-----------+------------------------------------+---------------+
 
-                                 Table 5
+                                 Table 6
 
    +=======================+==========================+===============+
    | Payload Parameter     | Description              | Reference     |
@@ -666,7 +790,7 @@ Content-Type: application/json
    |                       | the relevant standards.  |               |
    +-----------------------+--------------------------+---------------+
 
-                                 Table 6
+                                 Table 7
 
 11.  Interoperability of Credential Issuers Supporting Status Assertions
 
@@ -677,7 +801,7 @@ Content-Type: application/json
 11.1.  Credential Issuer Metadata
 
    The Credential Issuers that uses the Status Assertions MUST include
-   in their OpenID4VCI [@!OpenID.VCI] metadata the claims:
+   in their OpenID4VCI [OpenID4VCI] metadata the claims:
 
    *  status_assertion_endpoint.  REQUIRED.  It MUST be an HTTPs URL
       indicating the endpoint where the Wallet Instances can request
@@ -686,9 +810,7 @@ Content-Type: application/json
    *  credential_hash_alg_supported.  REQUIRED.  The supported Algorithm
       used by the Wallet Instance to hash the Digital Credential for
       which the Status Assertion is requested, using one of the hash
-      algorithms listed in the [IANA - Named Information Hash Algorithm
-      Registry] (https://www.iana.org/assignments/named-information/
-      named-information.xhtml#hash-alg).
+      algorithms listed in the [IANA-HASH-REG].
 
 11.2.  Issued Digital Credentials
 
@@ -699,14 +821,12 @@ Content-Type: application/json
 
    *  credential_hash_alg.  REQUIRED.  The Algorithm used of hashing the
       Digital Credential to which the Status Assertion is bound, using
-      one of the hash algorithms listed in the [IANA - Named Information
-      Hash Algorithm Registry] (https://www.iana.org/assignments/named-
-      information/named-information.xhtml#hash-alg).  Among the hash
-      algorithms, sha-256 is recommended and SHOULD be implemented by
-      all systems.
+      one of the hash algorithms listed in the [IANA-HASH-REG].  Among
+      the hash algorithms, sha-256 is recommended and SHOULD be
+      implemented by all systems.
 
-   The non-normative example of an unsecured payload of an SD-JWT VC is
-   shown below.
+   The non-normative example of an unsecured payload of an [SD-JWT.VC]
+   is shown below.
 
    {
     "vct": "https://credentials.example.com/identity_credential",
@@ -733,7 +853,7 @@ Content-Type: application/json
 
 11.2.1.  Credential Issuer Implementation Considerations
 
-   When the Digital Credential is issued, the Credential Issuer SHOULD
+   When the Digital Credential is issued, the Credential Issuer should
    calculate the hash value using the algorithm specified in
    status.status_assertion.credential_hash_alg and store this
    information in its database.  This practice enhances efficiency by
@@ -744,8 +864,8 @@ Content-Type: application/json
 12.  Presenting Status Assertions
 
    The Wallet Instance that provides the Status Assertions using
-   [@OpenID4VP], SHOULD include in the vp_token JSON array, as defined
-   in [@OpenID4VP], the Status Assertion along with the related Digital
+   [OpenID4VP], SHOULD include in the vp_token JSON array, as defined in
+   [OpenID4VP], the Status Assertion along with the related Digital
    Credential.
 
    The Verifier that receives a Digital Credential supporting the Status
@@ -795,20 +915,20 @@ Content-Type: application/json
 
    The request for a Status Assertion does not transmit the Digital
    Credential for which the status is being attested.  Instead, it
-   includes a proof of possession (PoP) of the credential that is only
-   interpretable by the Credential Issuer who issued the digital
-   credential for which the Status Assertion is requested.  This PoP can
+   includes a proof of possession (PoP) of the Digital Credential that
+   is only interpretable by the Credential Issuer who issued the Digital
+   Credential for which the Status Assertion is requested.  This PoP can
    be achieved through a cryptographic signature using the public key
    contained within the Digital Credential over the request.  This
    method is essential for preventing the potential for fraudulent
    requests intended to mislead or disclose sensitive information to
    unintended parties.  By separating the Digital Credential from the
-   status assertion request, the system ensures that the request does
+   Status Assertion Request, the system ensures that the request does
    not inadvertently disclose any information about the Digital
-   Credential or its holder.  This strategy significantly enhances the
+   Credential or its Holder.  This strategy significantly enhances the
    privacy and security of the system by preventing the assertion
    process from being used to collect information about Digital
-   Credentials or their holders through deceptive requests.
+   Credentials or their Holders through deceptive requests.
 
 15.2.  Privacy Consideration: Opacity of Status Assertion Content
 
@@ -829,7 +949,7 @@ Content-Type: application/json
 
    Status Assertions are designed to uphold privacy by allowing
    Verifiers to operate independently, without the need for interaction
-   or information disclosure to third-party entities or other verifiers.
+   or information disclosure to third-party entities or other Verifiers.
    This design is pivotal in ensuring unlinkability between Verifiers,
    where actions taken by one Verifier cannot be correlated or linked to
    actions taken by another.  Verifiers can directly validate the status
@@ -855,7 +975,7 @@ Content-Type: application/json
    A fundamental aspect of the privacy-preserving attributes of Status
    Assertions is their ability to address the "phone home" problem,
    which is the prevention of tracking by Digital Credential Issuers.
-   Traditional models often require verifiers to query a central status
+   Traditional models often require Verifiers to query a central status
    list or contact the issuer directly, a process that can inadvertently
    allow Credential Issuers to track when and where a Digital Credential
    is verified.  Status Assertions, however, encapsulate all necessary
@@ -863,10 +983,10 @@ Content-Type: application/json
    choice ensures that Credential Issuers are unable to monitor the
    verification activities of their issued Digital Credentials, thereby
    significantly enhancing the privacy of the Holder.  By removing the
-   need for real-time communication with the issuer for status checks,
-   Status Assertions effectively prevent the issuer from tracking
+   need for real-time communication with the Issuer for status checks,
+   Status Assertions effectively prevent the Issuer from tracking
    verification activities, further reinforcing the system's dedication
-   to protecting user privacy.
+   to protecting User privacy.
 
 15.5.  Minimization of Data Exposure
 
@@ -884,8 +1004,8 @@ Content-Type: application/json
    data.  By implementing robust cryptographic techniques and limiting
    the information contained in Status Assertions, the system reduces
    the feasibility of such attacks.  This consideration is vital for
-   safeguarding the privacy of the credential holders and for ensuring
-   the integrity of the verification process.
+   safeguarding the privacy of the Holders and for ensuring the
+   integrity of the verification process.
 
    Status Assertions are based on a privacy-by-design approach,
    reflecting a deliberate effort to balance security and privacy needs
@@ -896,32 +1016,8 @@ Content-Type: application/json
 16.1.  JSON Web Token Claims Registration
 
    This specification requests registration of the following Claims in
-   the IANA "JSON Web Token Claims" registry [@IANA.JWT] established by
+   the IANA "JSON Web Token Claims" registry [IANA.JWT] established by
    [RFC7519].
-
-   *  Claim Name: credential_format
-
-   *  Claim Description: The Digital Credential format the Status
-      Assertion is bound to.
-
-   *  Change Controller: IETF
-
-   *  Specification Document(s): [[ (#digital-credential-proof-of-
-      possession) of this specification ]]
-
-
-
-   *  Claim Name: credential
-
-   *  Claim Description: The Digital Credential the Status Assertion is
-      bound to.
-
-   *  Change Controller: IETF
-
-   *  Specification Document(s): [[ (#digital-credential-proof-of-
-      possession) of this specification ]]
-
-
 
    *  Claim Name: credential_hash
 
@@ -930,8 +1026,7 @@ Content-Type: application/json
 
    *  Change Controller: IETF
 
-   *  Specification Document(s): [[ (#status-assertion) of this
-      specification ]]
+   *  Specification Document(s): this specification (Section 10)
 
 
 
@@ -942,14 +1037,13 @@ Content-Type: application/json
 
    *  Change Controller: IETF
 
-   *  Specification Document(s): [[ (#status-assertion) of this
-      specification ]]
+   *  Specification Document(s): this specification (Section 10)
 
 16.2.  Media Type Registration
 
    This section requests registration of the following media types
-   [@RFC2046] in the "Media Types" registry [@IANA.MediaTypes] in the
-   manner described in [@RFC6838].
+   [RFC2046] in the "Media Types" registry [IANA.MediaTypes] in the
+   manner described in [RFC6838].
 
    To indicate that the content is a JWT-based Status Assertion:
 
@@ -966,15 +1060,101 @@ Content-Type: application/json
       base64url-encoded values (some of which may be the empty string)
       separated by period ('.') characters.
 
-   *  Security considerations: See (#Security) of [[ this specification
-      ]]
+   *  Security considerations: See (#Security) of this specification
+      (Section 14)
 
    *  Interoperability considerations: n/a
 
-   *  Published specification: [[ this specification ]]
+   *  Published specification: this specification
 
-   *  Applications that use this media type: Applications using [[ this
-      specification ]] for updated status information of tokens
+   *  Applications that use this media type: Applications using this
+      specification for requesting Status Assertions.
+
+   *  Fragment identifier considerations: n/a
+
+   *  Additional information:
+
+      -  File extension(s): n/a
+
+      -  Macintosh file type code(s): n/a
+
+   *  Person & email address to contact for further information:
+      Giuseppe De Marco, gi.demarco@innovazione.gov.it
+
+   *  Intended usage: COMMON
+
+   *  Restrictions on usage: none
+
+   *  Author: Giuseppe De Marco, gi.demarco@innovazione.gov.it
+
+   *  Change controller: IETF
+
+   *  Provisional registration?  No
+
+   To indicate that the content is a CWT-based Status Assertion Request:
+
+   *  Type name: application
+
+   *  Subtype name: status-assertion-request+cwt
+
+   *  Required parameters: n/a
+
+   *  Optional parameters: n/a
+
+   *  Encoding considerations: binary
+
+   *  Security considerations: See (#Security) of this specification
+      (Section 14)
+
+   *  Interoperability considerations: n/a
+
+   *  Published specification: this specification
+
+   *  Applications that use this media type: Applications using this
+      specification for requesting Status Assertions.
+
+   *  Fragment identifier considerations: n/a
+
+   *  Additional information:
+
+      -  File extension(s): n/a
+
+      -  Macintosh file type code(s): n/a
+
+   *  Person & email address to contact for further information:
+      Giuseppe De Marco, gi.demarco@innovazione.gov.it
+
+   *  Intended usage: COMMON
+
+   *  Restrictions on usage: none
+
+   *  Author: Giuseppe De Marco, gi.demarco@innovazione.gov.it
+
+   *  Change controller: IETF
+
+   *  Provisional registration?  No
+
+   To indicate that the content is a JWT-based Status Assertion:
+
+   *  Type name: application
+
+   *  Subtype name: status-assertion+jwt
+
+   *  Required parameters: n/a
+
+   *  Optional parameters: n/a
+
+   *  Encoding considerations: binary
+
+   *  Security considerations: See (#Security) of this specification
+      (Section 14)
+
+   *  Interoperability considerations: n/a
+
+   *  Published specification: this specification
+
+   *  Applications that use this media type: Applications using this
+      specification for issuing or presenting Status Assertions.
 
    *  Fragment identifier considerations: n/a
 
@@ -1009,16 +1189,15 @@ Content-Type: application/json
 
    *  Encoding considerations: binary
 
-   *  Security considerations: See (#Security) of [[ this specification
-      ]]
+   *  Security considerations: See (#Security) of this specification
+      (Section 14)
 
    *  Interoperability considerations: n/a
 
-   *  Published specification: [[ this specification ]]
+   *  Published specification: this specification
 
-   *  Applications that use this media type: Applications using [[ this
-      specification ]] for status assertion of tokens and Digital
-      Credentials
+   *  Applications that use this media type: Applications using this
+      specification for issuing or presenting Status Assertions.
 
    *  Fragment identifier considerations: n/a
 
@@ -1041,7 +1220,130 @@ Content-Type: application/json
 
    *  Provisional registration?  No
 
-17.  Normative References
+   To indicate that the content is a JWT-based Status Assertion Error:
+
+   *  Type name: application
+
+   *  Subtype name: status-assertion-error+jwt
+
+   *  Required parameters: n/a
+
+   *  Optional parameters: n/a
+
+   *  Encoding considerations: binary
+
+   *  Security considerations: See (#Security) of this specification
+      (Section 14)
+
+   *  Interoperability considerations: n/a
+
+   *  Published specification: this specification
+
+   *  Applications that use this media type: Applications using this
+      specification for issuing Status Assertions Request Errors.
+
+   *  Fragment identifier considerations: n/a
+
+   *  Additional information:
+
+      -  File extension(s): n/a
+
+      -  Macintosh file type code(s): n/a
+
+   *  Person & email address to contact for further information:
+      Giuseppe De Marco, gi.demarco@innovazione.gov.it
+
+   *  Intended usage: COMMON
+
+   *  Restrictions on usage: none
+
+   *  Author: Giuseppe De Marco, gi.demarco@innovazione.gov.it
+
+   *  Change controller: IETF
+
+   *  Provisional registration?  No
+
+   To indicate that the content is a CWT-based Status Assertion Error:
+
+   *  Type name: application
+
+   *  Subtype name: status-assertion-error+cwt
+
+   *  Required parameters: n/a
+
+   *  Optional parameters: n/a
+
+   *  Encoding considerations: binary
+
+   *  Security considerations: See (#Security) of this specification
+      (Section 14)
+
+   *  Interoperability considerations: n/a
+
+   *  Published specification: this specification
+
+   *  Applications that use this media type: Applications using this
+      specification for issuing Status Assertions Request Errors.
+
+   *  Fragment identifier considerations: n/a
+
+   *  Additional information:
+
+      -  File extension(s): n/a
+
+      -  Macintosh file type code(s): n/a
+
+   *  Person & email address to contact for further information:
+      Giuseppe De Marco, gi.demarco@innovazione.gov.it
+
+   *  Intended usage: COMMON
+
+   *  Restrictions on usage: none
+
+   *  Author: Giuseppe De Marco, gi.demarco@innovazione.gov.it
+
+   *  Change controller: IETF
+
+   *  Provisional registration?  No
+
+17.  References
+
+17.1.  Normative References
+
+   [IANA-HASH-REG]
+              "IANA - Named Information Hash Algorithm Registry", n.d.,
+              <https://www.iana.org/assignments/named-information/named-
+              information.xhtml#hash-alg>.
+
+   [IANA.CWT] IANA, "CBOR Web Token (CWT) Claims", n.d.,
+              <https://www.iana.org/assignments/cwt/cwt.xhtml>.
+
+   [IANA.JOSE]
+              IANA, "JSON Object Signing and Encryption (JOSE)", n.d.,
+              <https://www.iana.org/assignments/jose/jose.xhtml>.
+
+   [IANA.JWT] IANA, "JSON Web Token Claims", n.d.,
+              <https://www.iana.org/assignments/jwt/jwt.xhtml>.
+
+   [IANA.MediaTypes]
+              IANA, "Media Types", n.d.,
+              <https://www.iana.org/assignments/media-types/media-
+              types.xhtml>.
+
+   [OpenID.Core]
+              IANA, "Media Types", n.d.,
+              <https://www.iana.org/assignments/media-types/media-
+              types.xhtml>.
+
+   [OpenID4VCI]
+              OpenID Foundation, "OpenID for Verifiable Credential
+              Issuance", n.d., <https://openid.net/specs/openid-4-
+              verifiable-credential-issuance-1_0.html>.
+
+   [RFC2046]  Freed, N. and N. Borenstein, "Multipurpose Internet Mail
+              Extensions (MIME) Part Two: Media Types", RFC 2046,
+              DOI 10.17487/RFC2046, November 1996,
+              <https://www.rfc-editor.org/rfc/rfc2046>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1051,6 +1353,11 @@ Content-Type: application/json
    [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
               RFC 6749, DOI 10.17487/RFC6749, October 2012,
               <https://www.rfc-editor.org/rfc/rfc6749>.
+
+   [RFC6838]  Freed, N., Klensin, J., and T. Hansen, "Media Type
+              Specifications and Registration Procedures", BCP 13,
+              RFC 6838, DOI 10.17487/RFC6838, January 2013,
+              <https://www.rfc-editor.org/rfc/rfc6838>.
 
    [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
               Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
@@ -1095,6 +1402,44 @@ Content-Type: application/json
               RFC 9126, DOI 10.17487/RFC9126, September 2021,
               <https://www.rfc-editor.org/rfc/rfc9126>.
 
+   [RFC9596]  Jones, M.B. and O. Steele, "CBOR Object Signing and
+              Encryption (COSE) "typ" (type) Header Parameter",
+              RFC 9596, DOI 10.17487/RFC9596, June 2024,
+              <https://www.rfc-editor.org/rfc/rfc9596>.
+
+17.2.  Informative References
+
+   [draft-ietf-oauth-status-list]
+              "draft-ietf-oauth-status-list", n.d.,
+              <https://datatracker.ietf.org/doc/draft-ietf-oauth-status-
+              list>.
+
+   [ECHR-ART8]
+              "Article 8 of the European Convention on Human Rights",
+              n.d.,
+              <https://www.echr.coe.int/documents/convention_eng.pdf>.
+
+   [GDPR]     "GDPR", n.d., <https://gdpr-info.eu/>.
+
+   [ISO.mdoc] ISO/IEC JTC 1/SC 17, "ISO/IEC 18013-5:2021 ISO-compliant
+              driving licence", n.d..
+
+   [OpenID4VP]
+              OpenID Foundation, "OpenID for Verifiable Credential
+              Presentation", n.d., <https://openid.net/specs/openid-4-
+              verifiable-presentations-1_0.html>.
+
+   [RFC6066]  "Transport Layer Security (TLS) Extensions: Extension
+              Definitions", n.d.,
+              <https://datatracker.ietf.org/doc/html/rfc6066>.
+
+   [SD-JWT.VC]
+              Terbu, O., Fett, D., and B. Campbell, "SD-JWT-based
+              Verifiable Credentials (SD-JWT VC)", Work in Progress,
+              Internet-Draft, draft-ietf-oauth-sd-jwt-vc-03, 4 March
+              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              oauth-sd-jwt-vc-03>.
+
 Appendix A.  Acknowledgments
 
    We would like to thank:
@@ -1117,9 +1462,9 @@ Appendix A.  Acknowledgments
 
 Appendix B.  Document History
 
-   -03
+   -02
 
-   *  Removed any comparison with OAuth Status List
+   *  Removed several comparisons with OAuth Status List
 
    *  Status Assertion Request and Response is now a json array with
       multiple entries.
@@ -1130,10 +1475,11 @@ Appendix B.  Document History
 
    *  JWT and CWT typ.
 
-   -02
-
    *  Name of the draft changed from OAuth Status Attestations to OAuth
       Status Assertions.
+
+   *  Extended Status Assertion errors table added in the section Status
+      Error (Section 9).
 
 Authors' Addresses
 
