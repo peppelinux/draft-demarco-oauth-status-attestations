@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-25T00:52:12.598740+00:00",
+  "timestamp": "2024-06-27T00:52:37.991915+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-assertions",
   "labels": [
     {
@@ -8678,6 +8678,32 @@
       "mergeCommit": {
         "oid": "79709aa1f997e59dd008d24cb6580b6f61dcb6bd"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 78,
+      "id": "PR_kwDOK4XJ0s5zfnzu",
+      "title": "Further clarifications about credential validity without status assertions",
+      "url": "https://github.com/peppelinux/draft-demarco-oauth-status-assertions/pull/78",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "As discussed this PR offers more details about what we intend to be valid/invalid following the evidence brought or not borught using hte status assertions",
+      "createdAt": "2024-06-25T12:44:08Z",
+      "updatedAt": "2024-06-25T12:44:09Z",
+      "baseRepository": "peppelinux/draft-demarco-oauth-status-assertions",
+      "baseRefName": "main",
+      "baseRefOid": "73316fd7e515056d54a3d8043d39a2f3a4ae7141",
+      "headRepository": "peppelinux/draft-demarco-oauth-status-assertions",
+      "headRefName": "dg-val",
+      "headRefOid": "a962b9fc14ac146109526b6abc93b1a3fb5c9312",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
