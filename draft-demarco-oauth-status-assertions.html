@@ -1035,11 +1035,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">OAuth Status Assertions</td>
-<td class="right">June 2024</td>
+<td class="right">July 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Marco, et al.</td>
-<td class="center">Expires 20 December 2024</td>
+<td class="center">Expires 2 January 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1052,12 +1052,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-demarco-oauth-status-assertions-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-06-18" class="published">18 June 2024</time>
+<time datetime="2024-07-01" class="published">1 July 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-12-20">20 December 2024</time></dd>
+<dd class="expires"><time datetime="2025-01-02">2 January 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1117,7 +1117,7 @@ without requiring to query any third-party entities.<a href="#section-abstract-1
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 20 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 2 January 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1428,8 +1428,9 @@ Digital Credential issuance which it refers;<a href="#section-5-2.3.1" class="pi
         <li class="normal" id="section-5-2.4">
           <p id="section-5-2.4.1"><span class="bcp14">MUST</span> contain the expiration datetime after which
 the Status Assertion <span class="bcp14">MUST NOT</span> be considered valid anymore,
-and the Digital Credential it refers
-<span class="bcp14">SHOULD NOT</span> be considered valid anymore. The expiration datetime <span class="bcp14">MUST</span> be
+and the Digital Credential referred to <span class="bcp14">SHOULD NOT</span>
+be considered as having a valid status, unless there exists some specific verifier policy that provides stronger guidance.
+The expiration datetime <span class="bcp14">MUST</span> be
 superior to the Status Assertion issuance datetime and it <span class="bcp14">MUST</span> end before
 the expiration datetime of the Digital Credential;<a href="#section-5-2.4.1" class="pilcrow">¶</a></p>
 </li>
