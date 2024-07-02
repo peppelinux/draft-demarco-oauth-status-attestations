@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-30T00:57:00.599155+00:00",
+  "timestamp": "2024-07-02T00:52:53.746236+00:00",
   "repo": "peppelinux/draft-demarco-oauth-status-assertions",
   "labels": [
     {
@@ -8686,24 +8686,26 @@
       "id": "PR_kwDOK4XJ0s5zfnzu",
       "title": "Further clarifications about credential validity without status assertions",
       "url": "https://github.com/peppelinux/draft-demarco-oauth-status-assertions/pull/78",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "peppelinux",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "As discussed this PR offers more details about what we intend to be valid/invalid following the evidence brought or not borught using hte status assertions",
       "createdAt": "2024-06-25T12:44:08Z",
-      "updatedAt": "2024-06-29T09:39:05Z",
+      "updatedAt": "2024-07-01T14:16:45Z",
       "baseRepository": "peppelinux/draft-demarco-oauth-status-assertions",
       "baseRefName": "main",
       "baseRefOid": "73316fd7e515056d54a3d8043d39a2f3a4ae7141",
       "headRepository": "peppelinux/draft-demarco-oauth-status-assertions",
       "headRefName": "dg-val",
-      "headRefOid": "a962b9fc14ac146109526b6abc93b1a3fb5c9312",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "e76c8904cc377bf725e6aa546e55fb78aab62efa",
+      "closedAt": "2024-07-01T14:16:45Z",
+      "mergedAt": "2024-07-01T14:16:45Z",
+      "mergedBy": "OR13",
+      "mergeCommit": {
+        "oid": "b49765707b9ab30139beab7045aecef5c58461a9"
+      },
       "comments": [],
       "reviews": [
         {
@@ -8751,6 +8753,19 @@
               "updatedAt": "2024-06-29T09:39:05Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOK4XJ0s6AJyGn",
+          "commit": {
+            "abbreviatedOid": "e76c890"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-30T13:03:15Z",
+          "updatedAt": "2024-06-30T13:03:15Z",
+          "comments": []
         }
       ]
     }
